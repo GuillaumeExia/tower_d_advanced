@@ -1,126 +1,138 @@
 package com.towerdefense.towerdefense.entities.mobs;
 
-import com.towerdefense.towerdefense.entities.CanDieMoveAttack;
-import com.towerdefense.towerdefense.entities.EntityType;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
 
-import java.awt.*;
+import com.towerdefense.towerdefense.entities.EntityType;
 
 public abstract class Mob {
 
+	public static int previousMobSpawnTime = 0;
 	private int healthPoints;
 	private int damageValue;
 	private int movementSpeed;
 	private int rangeValue;
 	private int reward;
+	private int ultimDamage;
+
 	private EntityType type;
-    public static int previousMobSpawnTime = 0;
 
-    public void setSpawnTime(int spawnTime) {
-        this.spawnTime = previousMobSpawnTime + spawnTime;
-        previousMobSpawnTime = this.spawnTime;
-    }
+	private int protection;
+	private int spawnTime = 0;
 
-    private int protection;
-    private int spawnTime = 0;
+	private Image image;
 
-    public int getSpawnTime() {
-        return spawnTime;
-    }
+	private int x;
+	private int y;
 
-    private Image image;
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private int lastX = 0;
+	private int width;
 
-    public int getLastX() {
-        return lastX;
-    }
+	private int height;
+	private int lastX = 0;
+	private int lastY = 0;
 
-    public void setLastX(int lastX) {
-        this.lastX = lastX;
-    }
+	public Mob(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    public int getLastY() {
-        return lastY;
-    }
-
-    public void setLastY(int lastY) {
-        this.lastY = lastY;
-    }
-
-    private int lastY = 0;
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setWidth(int width) { this.width = width; }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    //@Override
+	// @Override
 	public void attack() {
 		// TODO Auto-generated method stub
 
 	}
 
-	//@Override
+	// @Override
 	public void die() {
 		// TODO Auto-generated method stub
 
 	}
 
+	public void draw(Graphics g) {
+		g.drawImage(this.image, this.x, this.y, null);
+	}
+
+	public Rectangle getBounds() {
+		return new Rectangle(this.width, this.height, this.x, this.y);
+	}
+
+	public Point getCenterPoint() {
+		return new Point((this.width / 2) + this.x, (this.height / 2) + this.y);
+	}
+
 	public int getDamageValue() {
-		return damageValue;
+		return this.damageValue;
 	}
 
 	public int getHealthPoints() {
-		return healthPoints;
+		return this.healthPoints;
+	}
+
+	public int getHeight() {
+		return this.height;
+	}
+
+	public Image getImage() {
+		return this.image;
+	}
+
+	public int getLastX() {
+		return this.lastX;
+	}
+
+	public int getLastY() {
+		return this.lastY;
 	}
 
 	public int getMovementSpeed() {
-		return movementSpeed;
+		return this.movementSpeed;
 	}
 
 	public int getProtection() {
-		return protection;
+		return this.protection;
 	}
 
 	public int getRangeValue() {
-		return rangeValue;
+		return this.rangeValue;
 	}
 
 	public int getReward() {
-		return reward;
+		return this.reward;
+	}
+
+	public int getSpawnTime() {
+		return this.spawnTime;
 	}
 
 	public EntityType getType() {
-		return type;
+		return this.type;
 	}
 
-    public void setX(int x) {
-        this.x = x;
-    }
+	public int getUltimDamage() {
+		return this.ultimDamage;
+	}
 
-    public void setY(int y) {
-        this.y = y;
-    }
+	public int getWidth() {
+		return this.width;
+	}
 
-    //@Override
+	public int getX() {
+		return this.x;
+	}
+
+	public int getY() {
+		return this.y;
+	}
+
+	// @Override
 	public void move(int dx, int dy) {
-        this.lastX = this.x;
-        this.lastY = this.y;
+		this.lastX = this.x;
+		this.lastY = this.y;
 
-        this.x += movementSpeed * dx;
-        this.y += movementSpeed * dy;
+		this.x += this.movementSpeed * dx;
+		this.y += this.movementSpeed * dy;
 	}
 
 	public void setDamageValue(int damageValue) {
@@ -129,6 +141,22 @@ public abstract class Mob {
 
 	public void setHealthPoints(int healthPoints) {
 		this.healthPoints = healthPoints;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public void setLastX(int lastX) {
+		this.lastX = lastX;
+	}
+
+	public void setLastY(int lastY) {
+		this.lastY = lastY;
 	}
 
 	public void setMovementSpeed(int movementSpeed) {
@@ -147,41 +175,29 @@ public abstract class Mob {
 		this.reward = reward;
 	}
 
+	public void setSpawnTime(int spawnTime) {
+		this.spawnTime = previousMobSpawnTime + spawnTime;
+		previousMobSpawnTime = this.spawnTime;
+	}
+
 	public void setType(EntityType type) {
 		this.type = type;
 	}
 
-    public Mob(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+	public void setUltimDamage(int ultimDamage) {
+		this.ultimDamage = ultimDamage;
+	}
 
-    public Image getImage() {
-        return image;
-    }
+	public void setWidth(int width) {
+		this.width = width;
+	}
 
-    public int getX() {
-        return x;
-    }
+	public void setX(int x) {
+		this.x = x;
+	}
 
-    public int getY() {
-        return y;
-    }
-
-    public Rectangle getBounds(){
-        return new Rectangle(width, height, x, y);
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public Point getCenterPoint(){
-        return new Point(width/2 + x, height/2 + y);
-    }
-
-    public void draw(Graphics g){
-        g.drawImage(image, this.x, this.y, null);
-    }
+	public void setY(int y) {
+		this.y = y;
+	}
 
 }

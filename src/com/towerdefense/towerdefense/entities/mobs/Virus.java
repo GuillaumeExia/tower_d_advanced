@@ -4,7 +4,7 @@ import com.towerdefense.towerdefense.GlobalVariables;
 
 public class Virus extends Mob {
 	public final static int SPEED = 1;
-	public final static int WIDTH = 31;
+	public final static int WIDTH = 32;
 	public final static int HEIGHT = 32;
 
 	public static String MOB_TYPE = "error";
@@ -12,11 +12,11 @@ public class Virus extends Mob {
 
 	public Virus(int x, int y) {
 		super(x, y);
-		setWidth(WIDTH);
-		setHeight(HEIGHT);
-		setMovementSpeed(SPEED);
+		this.setWidth(WIDTH);
+		this.setHeight(HEIGHT);
+		this.setMovementSpeed(SPEED);
 
-		this.setImage(GlobalVariables.getSprite().getSubimage(178, 0, WIDTH, HEIGHT));
+		this.setImage(GlobalVariables.getSprite().getSubimage(179, 0, WIDTH, HEIGHT));
 	}
 
 	@Override
@@ -31,10 +31,10 @@ public class Virus extends Mob {
 
 	}
 
-	/*@Override
-	public void move() {
-		// TODO Auto-generated method stub
-
-	}*/
+	/*
+	 * @Override public void move() { // TODO Auto-generated method stub
+	 * 
+	 * }
+	 */
 
 }

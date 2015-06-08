@@ -19,8 +19,8 @@ public class Window extends JFrame implements ActionListener {
 	private static CardLayout cardManager;
 
 	public static JPanel main;
-
 	public static JMenuItem pause = new JMenuItem("Pause");
+
 	public static JMenuItem menu = new JMenuItem("Menu");
 	public static JMenuItem save = new JMenuItem("Save");
 	public static JMenuItem exit = new JMenuItem("Exit");
@@ -33,6 +33,8 @@ public class Window extends JFrame implements ActionListener {
 		Window.pause.setEnabled(true);
 		Window.save.setEnabled(true);
 	}
+
+	public JPanel[] panels;
 
 	private int nbrOfPanels = 4;
 	private JMenuBar menuBar = new JMenuBar();
@@ -63,6 +65,11 @@ public class Window extends JFrame implements ActionListener {
 
 	private void initMenuBar() {
 		Window.pause.setEnabled(false);
+		Window.pause.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+			}
+		});
 		this.game.add(Window.pause);
 		this.game.addSeparator();
 		Window.save.setEnabled(false);
@@ -97,19 +104,19 @@ public class Window extends JFrame implements ActionListener {
 
 	private void initPanels() {
 		main = new JPanel(cardManager = new CardLayout());
-		JPanel[] panels = new JPanel[this.nbrOfPanels];
+		this.panels = new JPanel[this.nbrOfPanels];
 
-		panels[0] = new PanelMenu();
-		main.add(panels[0], "panelMenu");
+		this.panels[0] = new PanelMenu();
+		main.add(this.panels[0], "panelMenu");
 
-		panels[1] = new PanelGame();
-		main.add(panels[1], "panelGame");
+		this.panels[1] = new PanelGame();
+		main.add(this.panels[1], "panelGame");
 
-		panels[2] = new PanelLoad();
-		main.add(panels[2], "panelLoad");
+		this.panels[2] = new PanelLoad();
+		main.add(this.panels[2], "panelLoad");
 
-		panels[3] = new PanelLeaderBoard();
-		main.add(panels[3], "panelLeaderBoard");
+		this.panels[3] = new PanelLeaderBoard();
+		main.add(this.panels[3], "panelLeaderBoard");
 
 		this.add(main, BorderLayout.CENTER);
 	}
