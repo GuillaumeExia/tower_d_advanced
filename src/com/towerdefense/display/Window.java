@@ -3,7 +3,6 @@ package com.towerdefense.display;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,25 +12,17 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import com.towerdefense.events.MouseHandler;
-
 public class Window extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private static String title = "Tower Defense";
 	private static Dimension sizeDimension = new Dimension(800, 600);
-	public static MouseHandler mouseEvent = new MouseHandler();
-	public static MouseHandler mouseMotionEvent = new MouseHandler();
-	public static Point mouse = new Point(0, 0);
 	private static CardLayout cardManager;
 
 	public static JPanel main;
 
 	public static JMenuItem pause = new JMenuItem("Pause");
-
 	public static JMenuItem menu = new JMenuItem("Menu");
-
 	public static JMenuItem save = new JMenuItem("Save");
-
 	public static JMenuItem exit = new JMenuItem("Exit");
 
 	public static void changePanel(String name) {
@@ -46,7 +37,6 @@ public class Window extends JFrame implements ActionListener {
 	private int nbrOfPanels = 4;
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu game = new JMenu("Game");
-
 	private JMenu window = new JMenu("Window");
 
 	public Window() {
@@ -79,7 +69,7 @@ public class Window extends JFrame implements ActionListener {
 		Window.save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				Window.changePanel("panelSave");
+				NicknameAsker nicknameAsker = new NicknameAsker();
 			}
 		});
 

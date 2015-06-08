@@ -25,10 +25,9 @@ public class PanelMenu extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 
-		// TODO : Select nickname only when the game is save.
-
 		if (action.equals("Play")) {
-			NicknameAsker asker = new NicknameAsker();
+			MapAsker mapAsker = new MapAsker();
+			Window.enableMenuItem();
 			this.repaint();
 			this.revalidate();
 		}

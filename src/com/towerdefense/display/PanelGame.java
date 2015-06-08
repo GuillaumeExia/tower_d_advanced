@@ -2,7 +2,6 @@ package com.towerdefense.display;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,10 +16,8 @@ import com.towerdefense.towerdefense.Map;
 public class PanelGame extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	public static Point mouse = new Point(0, 0);
-	public String nickname;
-	public StatusBar statusBar;
-	public Timer timer;
+	private StatusBar statusBar;
+	private Timer timer;
 
 	public PanelGame() {
 		this.addMouseListener(new MouseHandler());
@@ -49,6 +46,14 @@ public class PanelGame extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	}
 
+	public StatusBar getStatusBar() {
+		return this.statusBar;
+	}
+
+	public Timer getTimer() {
+		return this.timer;
+	}
+
 	@Override
 	public void paintComponent(Graphics g) {
 		Map.getSelectedMap().draw(g);
@@ -62,6 +67,14 @@ public class PanelGame extends JPanel implements ActionListener {
 			}
 		});
 		this.timer.start();
+	}
+
+	public void setStatusBar(StatusBar statusBar) {
+		this.statusBar = statusBar;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
 	}
 
 }
