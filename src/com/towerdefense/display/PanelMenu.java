@@ -33,11 +33,13 @@ public class PanelMenu extends JPanel implements ActionListener {
 		}
 		else if (action.equals("Load")) {
 			Window.changePanel("panelLoad");
+			Window.disableMenuItem();
 			this.repaint();
 			this.revalidate();
 		}
 		else if (action.equals("LeaderBoard")) {
 			Window.changePanel("panelLeaderBoard");
+			Window.disableMenuItem();
 			this.repaint();
 			this.revalidate();
 		}
@@ -48,6 +50,8 @@ public class PanelMenu extends JPanel implements ActionListener {
 	}
 
 	public void initMenu() {
+		Window.disableMenuItem();
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };

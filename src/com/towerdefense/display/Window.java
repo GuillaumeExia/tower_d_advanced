@@ -29,6 +29,11 @@ public class Window extends JFrame implements ActionListener {
 		cardManager.show(main, name);
 	}
 
+	public static void disableMenuItem() {
+		Window.pause.setEnabled(false);
+		Window.save.setEnabled(false);
+	}
+
 	public static void enableMenuItem() {
 		Window.pause.setEnabled(true);
 		Window.save.setEnabled(true);
@@ -64,7 +69,7 @@ public class Window extends JFrame implements ActionListener {
 	}
 
 	private void initMenuBar() {
-		Window.pause.setEnabled(false);
+		Window.disableMenuItem();
 		Window.pause.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -72,7 +77,6 @@ public class Window extends JFrame implements ActionListener {
 		});
 		this.game.add(Window.pause);
 		this.game.addSeparator();
-		Window.save.setEnabled(false);
 		Window.save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -87,6 +91,7 @@ public class Window extends JFrame implements ActionListener {
 		Window.menu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Window.disableMenuItem();
 				Window.changePanel("panelMenu");
 			}
 		});

@@ -25,9 +25,6 @@ public class PanelGame extends JPanel implements ActionListener {
 		this.setBackground(Color.CYAN);
 		this.setLayout(null);
 
-		Window.pause.setEnabled(true);
-		Window.save.setEnabled(true);
-
 		this.statusBar = new StatusBar();
 		this.add(this.statusBar);
 

@@ -19,6 +19,7 @@ public class PanelLoad extends JPanel implements ActionListener {
 	JLabel test = new JLabel("Je suis le panel load");
 
 	public PanelLoad() {
+		Window.disableMenuItem();
 		this.addMouseListener(new MouseHandler());
 		this.addMouseMotionListener(new MouseHandler());
 		this.setBackground(Color.RED);

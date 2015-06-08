@@ -33,7 +33,7 @@ public class NicknameAsker extends JDialog implements ActionListener {
 		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLayout(new FlowLayout());
 
 		this.enterNickname = new JLabel();
@@ -56,11 +56,17 @@ public class NicknameAsker extends JDialog implements ActionListener {
 		if (actionString.equals("Ok")) {
 			if (NicknameAsker.getNickname().getText().equals("")) {
 				this.optionPaneVerif = new JOptionPane();
-				this.optionPaneVerif.showMessageDialog(this, "Please enter a nickname", "Erreur", JOptionPane.ERROR_MESSAGE);
+				this.optionPaneVerif.showMessageDialog(this, "Please enter a nickname", "Error", JOptionPane.ERROR_MESSAGE);
+				Window.changePanel("panelGame");
+				this.setVisible(false);
 			}
-			GlobalVariables.nickname = nickname.getText();
-			Window.changePanel("panelGame");
-			this.setVisible(false);
+			else {
+				GlobalVariables.nickname = nickname.getText();
+				Window.changePanel("panelMenu");
+				Window.disableMenuItem();
+				System.out.println("Je simule la sauvegarde ici !");
+				this.setVisible(false);
+			}
 		}
 	}
 }
