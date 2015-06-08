@@ -36,7 +36,7 @@ public class Map {
 	private Tower workstation;
 	private ArrayList<Mob> mobs;
 
-	private int wave = 1;
+	private int wave = 30;
 
 	private int waveTime = 0;
 
@@ -79,7 +79,7 @@ public class Map {
 		this.drawTowers(g);
 		this.testWaveEnding();
 		TowerShop.getTowerShop().draw(g);
-		g.drawString("Wave : " + this.wave, 200, 10);
+		g.drawString("Wave : " + this.wave, 730, 15);
 	}
 
 	public void drawMobs(Graphics g) {

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import com.towerdefense.events.MouseHandler;
+import com.towerdefense.towerdefense.GlobalVariables;
 import com.towerdefense.towerdefense.Map;
 
 public class PanelGame extends JPanel implements ActionListener {
@@ -57,13 +58,13 @@ public class PanelGame extends JPanel implements ActionListener {
 	}
 
 	public void refreshPanel() {
-		this.timer = new Timer(30, new ActionListener() {
+		GlobalVariables.timer = new Timer(30, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PanelGame.this.repaint();
 			}
 		});
-		this.timer.start();
+		GlobalVariables.timer.start();
 	}
 
 	public void setStatusBar(StatusBar statusBar) {
