@@ -1,212 +1,227 @@
 package com.towerdefense.towerdefense;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Random;
+
 import com.towerdefense.display.TowerShop;
 import com.towerdefense.events.TowerShopListener;
 import com.towerdefense.towerdefense.database.DBLink;
 import com.towerdefense.towerdefense.entities.Workstation;
-import com.towerdefense.towerdefense.entities.mobs.Bug;
 import com.towerdefense.towerdefense.entities.mobs.Mob;
 import com.towerdefense.towerdefense.entities.mobs.MobFactory;
 import com.towerdefense.towerdefense.entities.towers.Tower;
 import com.towerdefense.towerdefense.entities.towers.TowerFactory;
 import com.towerdefense.towerdefense.objects.Ground;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Map {
+	private static Map selectedMap;
+
+	public static Map getSelectedMap() {
+		return selectedMap;
+	}
+
+	public static void setSelectedMap(Map selectedMap) {
+		Map.selectedMap = selectedMap;
+	}
+
 	private int width;
 	private int height;
 	private String name;
-    private int id;
-    private ArrayList<Ground> grounds;
+	private int id;
+	private ArrayList<Ground> grounds;
 	private ArrayList<Tower> towers;
-    private Tower workstation;
+	private Tower workstation;
 	private ArrayList<Mob> mobs;
-    private static Map selectedMap;
-    private int wave = 1;
-    private int waveTime = 0;
 
-    public Map(String name, int width, int height, int id) {
-        this.name = name;
-        this.width = width;
-        this.height = height;
-        this.id = id;
-    }
+	private int wave = 1;
 
-    public void init(){
-        fetchTerrain();
-        mobs = new ArrayList();
-        spawnMobs();
+	private int waveTime = 0;
 
-        towers = new ArrayList();
-        TowerShop towerShop = new TowerShop();
-        towerShop.addTowerShopListener(new TowerShopListener() {
-            @Override
-            public void onTowerAdd(int idTower, int x, int y) {
-                System.out.println(idTower);
-                towers.add(TowerFactory.createTower(idTower, x, y));
-            }
-        });
-    }
+	public Map(String name, int width, int height, int id) {
+		this.name = name;
+		this.width = width;
+		this.height = height;
+		this.id = id;
+	}
 
-    public int getWidth() { return width; }
+	public boolean detectCollision(Mob mob, int newPosX, int newPosY) {
+		for (Ground currentGround : this.grounds) {
+			Rectangle newPosMob = new Rectangle(newPosX, newPosY, mob.getWidth(), mob.getHeight());
+			Rectangle ground = currentGround.getBounds();
+			if (ground.intersects(newPosMob)) {
+				// currentGround.debugColor = Color.green;
+				// currentGround.debug = true;
+				if (!currentGround.isWalkable()) {
+					currentGround.debugColor = Color.red;
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
-    public int getHeight() { return height; }
+	public boolean detectWorkstationCollision(int i) {
+		if (this.mobs.get(i).getBounds().intersects(this.workstation.getActionZone())) {
+			this.mobs.remove(i);
+			return true;
+		}
+		return false;
+	}
 
-    public String getName() { return name; }
+	public void draw(Graphics g) {
+		this.waveTime += 30;
+		this.drawTerrain(g);
+		this.drawWorkstation(g);
+		this.drawMobs(g);
+		this.drawTowers(g);
+		this.testWaveEnding();
+		TowerShop.getTowerShop().draw(g);
+		g.drawString("Wave : " + this.wave, 200, 10);
+	}
 
-    public static Map getSelectedMap() {
-        return selectedMap;
-    }
+	public void drawMobs(Graphics g) {
+		for (int i = 0; i < this.mobs.size(); i++) {
+			if (!this.detectWorkstationCollision(i) && (this.waveTime > this.mobs.get(i).getSpawnTime())) {
+				this.mobMove(this.mobs.get(i));
+				this.mobs.get(i).draw(g);
+			}
+		}
+	}
 
-    public static void setSelectedMap(Map selectedMap) {
-        Map.selectedMap = selectedMap;
-    }
+	public void drawTerrain(Graphics g) {
+		for (Ground ground : this.grounds) {
+			ground.draw(g);
+		}
+	}
 
-    public int getId() { return id; }
+	public void drawTowers(Graphics g) {
+		for (Tower tower : this.towers) {
+			tower.draw(g);
+		}
+	}
 
-    public void fetchTerrain(){
-        if(this.grounds == null){
-            DBLink dbLink = new DBLink();
-            this.grounds = dbLink.mapSelection(this.id);
-        }
-    }
+	public void drawWorkstation(Graphics g) {
+		this.workstation = Workstation.getWorkstation();
+		if (this.workstation != null) {
+			this.workstation.draw(g);
+		}
+	}
 
-    public void drawTerrain(Graphics g){
-        for(Ground ground : grounds){
-            ground.draw(g);
-        }
-    }
+	public void fetchTerrain() {
+		if (this.grounds == null) {
+			DBLink dbLink = new DBLink();
+			this.grounds = dbLink.mapSelection(this.id);
+		}
+	}
 
-    public void drawTowers(Graphics g){
-        for(Tower tower : towers){
-            tower.draw(g);
-        }
-    }
+	public int getHeight() {
+		return this.height;
+	}
 
-    public void drawWorkstation(Graphics g){
-        workstation = Workstation.getWorkstation();
-        if(workstation != null){ workstation.draw(g); }
-    }
+	public int getId() {
+		return this.id;
+	}
 
-    public void drawMobs(Graphics g){
-        for(int i = 0; i < mobs.size(); i++) {
-            if(!detectWorkstationCollision(i) && waveTime > mobs.get(i).getSpawnTime()) {
-                mobMove(mobs.get(i));
-                mobs.get(i).draw(g);
-            }
-        }
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public void mobMove(Mob mob){
-        int xMob = mob.getX();
-        int yMob = mob.getY();
-        int speed = mob.getMovementSpeed();
+	public Mob getRandomMob() {
+		Random random = new Random();
+		return MobFactory.createMob(random.nextInt(MobFactory.MOB_TYPE_AMOUNT) + 1);
+	}
 
-        if(detectCollision(mob, xMob + speed, yMob) && mob.getLastX() != (xMob + speed)){
-            mob.move(1, 0);
-        }
-        else if(detectCollision(mob, xMob, yMob + speed) && mob.getLastY() != (yMob + speed)){
-            mob.move(0, 1);
-        }
-        else if(detectCollision(mob, xMob - speed, yMob) && mob.getLastX() != (xMob - speed)){
-            mob.move(-1, 0);
-        }
-        else if(detectCollision(mob, xMob, yMob - speed) && mob.getLastY() != (yMob - speed)){
-            mob.move(0, -1);
-        }
-    }
+	public int getRandomTime() {
+		Random rand = new Random();
 
-    public boolean detectCollision(Mob mob, int newPosX, int newPosY){
-        for(Ground currentGround : grounds){
-            Rectangle newPosMob = new Rectangle(newPosX, newPosY, mob.getWidth(), mob.getHeight());
-            Rectangle ground = currentGround.getBounds();
-            if(ground.intersects(newPosMob)){
-                //currentGround.debugColor = Color.green;
-                //currentGround.debug = true;
-                if(!currentGround.isWalkable()){
-                    currentGround.debugColor = Color.red;
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+		return rand.nextInt(2500) + 500;
+	}
 
-    public boolean detectWorkstationCollision(int i){
-        if(mobs.get(i).getBounds().intersects(workstation.getActionZone())){
-            mobs.remove(i);
-            return true;
-        }
-        return false;
-    }
+	public int getWidth() {
+		return this.width;
+	}
 
-    public void draw(Graphics g){
-        waveTime += 30;
-        drawTerrain(g);
-        drawWorkstation(g);
-        drawMobs(g);
-        drawTowers(g);
-        testWaveEnding();
-        TowerShop.getTowerShop().draw(g);
-        g.drawString("Wave : " +  wave, 200, 10);
-    }
+	public void init() {
+		this.fetchTerrain();
+		this.mobs = new ArrayList();
+		this.spawnMobs();
 
-    public void nextWave() {
-        waveTime = 0;
-        Mob.previousMobSpawnTime = 0;
-        wave++;
-        spawnMobs();
-    }
+		this.towers = new ArrayList();
+		TowerShop towerShop = new TowerShop();
+		towerShop.addTowerShopListener(new TowerShopListener() {
+			@Override
+			public void onTowerAdd(int idTower, int x, int y) {
+				System.out.println(idTower);
+				Map.this.towers.add(TowerFactory.createTower(idTower, x, y));
+			}
+		});
+	}
 
-    public boolean spawnMob(final int choice) {
-        if (choice == -1) {
-            Mob mob = getRandomMob();
-            mob.setSpawnTime(getRandomTime());
-            mobs.add(mob);
-            return true;
-        } else if ((choice <= MobFactory.MOB_TYPE_AMOUNT) && (choice >= 0)) {
-            mobs.add(MobFactory.createMob(choice));
-            return true;
-        } else {
-            return false;
-        }
-    }
+	public void mobMove(Mob mob) {
+		int xMob = mob.getX();
+		int yMob = mob.getY();
+		int speed = mob.getMovementSpeed();
 
-    public int getRandomTime(){
-        Random rand = new Random();
+		if (this.detectCollision(mob, xMob + speed, yMob) && (mob.getLastX() != (xMob + speed))) {
+			mob.move(1, 0);
+		}
+		else if (this.detectCollision(mob, xMob, yMob + speed) && (mob.getLastY() != (yMob + speed))) {
+			mob.move(0, 1);
+		}
+		else if (this.detectCollision(mob, xMob - speed, yMob) && (mob.getLastX() != (xMob - speed))) {
+			mob.move(-1, 0);
+		}
+		else if (this.detectCollision(mob, xMob, yMob - speed) && (mob.getLastY() != (yMob - speed))) {
+			mob.move(0, -1);
+		}
+	}
 
-        return rand.nextInt(2500) + 500;
-    }
+	public void nextWave() {
+		this.waveTime = 0;
+		Mob.previousMobSpawnTime = 0;
+		this.wave++;
+		this.spawnMobs();
+	}
 
-    public void testWaveEnding(){
-        if(mobs.size() == 0){
-            nextWave();
-        }
-    }
+	public boolean spawnMob(final int choice) {
+		if (choice == -1) {
+			Mob mob = this.getRandomMob();
+			mob.setSpawnTime(this.getRandomTime());
+			this.mobs.add(mob);
+			return true;
+		}
+		else if ((choice <= MobFactory.MOB_TYPE_AMOUNT) && (choice >= 0)) {
+			this.mobs.add(MobFactory.createMob(choice));
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
-    public void spawnMobs() {
-        int mobAmount = 0;
-        int amountAtStart = 3;
-        double multiplier = 1.3;
-        mobAmount = (int) (amountAtStart * Math.pow(multiplier, wave));
-        for (int i = 0; i < mobAmount; i++) {
-            spawnMob(-1);
-        }
-    }
+	public void spawnMobs() {
+		int mobAmount = 0;
+		int amountAtStart = 3;
+		double multiplier = 1.3;
+		mobAmount = (int) (amountAtStart * Math.pow(multiplier, this.wave));
+		for (int i = 0; i < mobAmount; i++) {
+			this.spawnMob(-1);
+		}
+	}
 
-    public Mob getRandomMob() {
-        Random random = new Random();
-        return MobFactory.createMob(random.nextInt(MobFactory.MOB_TYPE_AMOUNT) + 1);
-    }
+	public void testWaveEnding() {
+		if (this.mobs.size() == 0) {
+			this.nextWave();
+		}
+	}
 
-    /*public boolean spawnTower(final int choice) {
-        if ((choice <= TowerFactory.TOWER_TYPE_AMOUNT) && (choice >= 0)) {
-            towers.add(TowerFactory.createTower(choice));
-            return true;
-        } else {
-            return false;
-        }
-    }*/
+	/*
+	 * public boolean spawnTower(final int choice) { if ((choice <=
+	 * TowerFactory.TOWER_TYPE_AMOUNT) && (choice >= 0)) {
+	 * towers.add(TowerFactory.createTower(choice)); return true; } else {
+	 * return false; } }
+	 */
 }

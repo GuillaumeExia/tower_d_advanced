@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class Window extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private static String title = "Tower Defense";
-	private static Dimension sizeDimension = new Dimension(800, 600);
+	private static Dimension sizeDimension = new Dimension(804, 608);
 	private static CardLayout cardManager;
 
 	public static JPanel main;
