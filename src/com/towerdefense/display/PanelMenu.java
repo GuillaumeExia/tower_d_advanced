@@ -9,9 +9,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.towerdefense.events.Stopwatch;
+
 public class PanelMenu extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	static Stopwatch stopwatch = new Stopwatch();
 	JButton btnPlay = new JButton("Play");
 	JButton btnLoad = new JButton("Load");
 	JButton btnLeaderBoard = new JButton("LeaderBoard");

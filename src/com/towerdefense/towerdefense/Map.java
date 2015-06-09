@@ -36,7 +36,7 @@ public class Map {
 	private Tower workstation;
 	private ArrayList<Mob> mobs;
 
-	private int wave = 30;
+	private int wave = 1;
 
 	private int waveTime = 0;
 
@@ -66,7 +66,7 @@ public class Map {
 	public boolean detectWorkstationCollision(int i) {
 		if (this.mobs.get(i).getBounds().intersects(this.workstation.getActionZone())) {
 			this.mobs.remove(i);
-			return true;
+			GlobalVariables.life -= this.mobs.get(i).getDamageValue();
 		}
 		return false;
 	}
@@ -79,7 +79,7 @@ public class Map {
 		this.drawTowers(g);
 		this.testWaveEnding();
 		TowerShop.getTowerShop().draw(g);
-		g.drawString("Wave : " + this.wave, 730, 15);
+		g.drawString("Wave : " + this.wave, 125, 15);
 	}
 
 	public void drawMobs(Graphics g) {
@@ -146,7 +146,7 @@ public class Map {
 
 	public void init() {
 		this.fetchTerrain();
-		this.mobs = new ArrayList();
+		this.mobs = new ArrayList<Mob>();
 		this.spawnMobs();
 
 		this.towers = new ArrayList();
