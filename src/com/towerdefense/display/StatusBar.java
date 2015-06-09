@@ -60,7 +60,6 @@ public class StatusBar extends JPanel implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PanelMenu.stopwatch.getTimeIs();
-				// PanelMenu.stopwatch.getDurationInText();
 			}
 		});
 	}

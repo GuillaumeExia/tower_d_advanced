@@ -12,6 +12,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import com.towerdefense.towerdefense.GlobalVariables;
+
 public class Window extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private static String title = "Tower Defense";
@@ -20,6 +22,7 @@ public class Window extends JFrame implements ActionListener {
 
 	public static JPanel main;
 	public static JMenuItem pause = new JMenuItem("Pause");
+	public static JMenuItem resume = new JMenuItem("Resume");
 
 	public static JMenuItem menu = new JMenuItem("Menu");
 	public static JMenuItem save = new JMenuItem("Save");
@@ -32,11 +35,13 @@ public class Window extends JFrame implements ActionListener {
 	public static void disableMenuItem() {
 		Window.pause.setEnabled(false);
 		Window.save.setEnabled(false);
+		Window.resume.setEnabled(false);
 	}
 
 	public static void enableMenuItem() {
 		Window.pause.setEnabled(true);
 		Window.save.setEnabled(true);
+		Window.resume.setEnabled(true);
 	}
 
 	public JPanel[] panels;
@@ -73,13 +78,27 @@ public class Window extends JFrame implements ActionListener {
 		Window.pause.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
+				PanelMenu.stopwatch.pause();
+				GlobalVariables.timer.stop();
 			}
 		});
 		this.game.add(Window.pause);
+
+		Window.resume.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PanelMenu.stopwatch.resume();
+				GlobalVariables.timer.start();
+			}
+		});
+		this.game.add(Window.resume);
+
 		this.game.addSeparator();
+
 		Window.save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
+				PanelMenu.stopwatch.pause();
 				NicknameAsker nicknameAsker = new NicknameAsker();
 			}
 		});
