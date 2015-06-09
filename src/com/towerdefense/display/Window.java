@@ -79,7 +79,6 @@ public class Window extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				PanelMenu.stopwatch.pause();
-				GlobalVariables.timer.stop();
 			}
 		});
 		this.game.add(Window.pause);
@@ -99,6 +98,7 @@ public class Window extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				PanelMenu.stopwatch.pause();
+				GlobalVariables.timer.stop();
 				NicknameAsker nicknameAsker = new NicknameAsker();
 			}
 		});
