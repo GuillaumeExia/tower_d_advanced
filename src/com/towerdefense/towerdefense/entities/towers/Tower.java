@@ -39,11 +39,12 @@ public abstract class Tower extends Entity {
 	}
 
 	public void draw(Graphics g) {
+		double ratio = 25 / MAXHEALTH;
 		g.drawImage(this.image, this.x, this.y, null);
 		g.setColor(Color.black);
-		g.fillRect(this.x + 1, this.y + 26, 27, 5);
+		g.fillRect(this.x, this.y + 26, 27, 5);
 		g.setColor(Color.green);
-		g.fillRect(this.x + 2, this.y + 26, (int) ((this.getHealth() / 500) * 25), 3);
+		g.fillRect(this.x + 1, this.y + 26, (int) (this.getHealth() * 0.05), 3);
 		g.setColor(Color.black);
 	}
 
