@@ -33,6 +33,7 @@ public class TowerShop {
 	private int centreY;
 	private int rayon;
 	private int mode;
+	private int busy = 0;
 	private Object objectCaller;
 	private ArrayList<TowerShopListener> towerShopListeners = new ArrayList<TowerShopListener>();
 	private ArrayList<Rectangle> items = new ArrayList<Rectangle>();
@@ -51,18 +52,18 @@ public class TowerShop {
 		this.rayon = this.WIDTH / 2;
 
 		MouseHandler.addEventObserver(new MouseHandler() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				for (int i = 0; i < TowerShop.this.items.size(); i++) {
+					System.out.println("je selectionne une cae tour");
 					if (TowerShop.this.items.get(i).contains(e.getPoint())) {
-						if (TowerShop.this.mode == TOWER) {
+						if ((TowerShop.this.mode == TOWER)) {
 							Ground towerZone = (TowerZone) TowerShop.this.objectCaller; // Revoir
 							TowerShop.this.fireTowerAdd(i + 1, towerZone.getX(), towerZone.getY());
-							System.out.println("je pose une tour!");
 						}
 						TowerShop.this.items.clear();
 					}
-
 				}
 			}
 		});
