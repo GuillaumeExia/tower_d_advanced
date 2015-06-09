@@ -11,8 +11,10 @@ import com.towerdefense.towerdefense.entities.Entity;
 
 public abstract class Tower extends Entity {
 
+	public final static int MAXHEALTH = 500;
 	private int width;
 	private int height;
+
 	private Rectangle actionZone;
 
 	private Image image;
@@ -40,9 +42,8 @@ public abstract class Tower extends Entity {
 		g.drawImage(this.image, this.x, this.y, null);
 		g.setColor(Color.black);
 		g.fillRect(this.x + 1, this.y + 26, 27, 5);
-
 		g.setColor(Color.green);
-		g.fillRect(this.x + 1, this.y + 26, 25, 3);
+		g.fillRect(this.x + 2, this.y + 26, (int) ((this.getHealth() / 500) * 25), 3);
 		g.setColor(Color.black);
 	}
 
