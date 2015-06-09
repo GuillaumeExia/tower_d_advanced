@@ -1,6 +1,13 @@
 package com.towerdefense.towerdefense.entities;
+
 public interface CanDie {
 
-	public abstract void die();
+	public void die();
+
+	public void dropHealth(final int amount);
+
+	public int getHealth();
+
+	public void setHealth(final int amount);
 
 }

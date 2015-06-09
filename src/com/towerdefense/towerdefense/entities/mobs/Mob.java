@@ -1,35 +1,28 @@
 package com.towerdefense.towerdefense.entities.mobs;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
-import com.towerdefense.towerdefense.entities.EntityType;
+import com.towerdefense.towerdefense.entities.CanMove;
+import com.towerdefense.towerdefense.entities.Entity;
+import com.towerdefense.towerdefense.entities.towers.Tower;
 
-public abstract class Mob {
+public abstract class Mob extends Entity implements CanMove {
 
 	public static int previousMobSpawnTime = 0;
 	private static int mobCount = 0;
-	private int healthPoints;
-	private int damageValue;
 	private int movementSpeed;
-	private int rangeValue;
 	private int reward;
 	private int ultimDamage;
-
-	private EntityType type;
-
 	private int protection;
 	private int spawnTime = 0;
-
-	private Image image;
-
 	private int x;
 	private int y;
-
 	private int width;
-
 	private int height;
 	private int lastX = 0;
 	private int lastY = 0;
@@ -39,44 +32,37 @@ public abstract class Mob {
 		this.y = y;
 	}
 
-	// @Override
-	public void attack() {
-		// TODO Auto-generated method stub
+	@Override
+	public void attack(final ArrayList<Tower> towers) {
+		getNearestTower(towerCollision(towers));
 
 	}
 
-	// @Override
+	@Override
 	public void die() {
 		// TODO Auto-generated method stub
 
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(image, x, y, null);
+		g.drawImage(getImage(), x, y, null);
 	}
 
 	public Rectangle getBounds() {
 		return new Rectangle(width, height, x, y);
 	}
 
+	public Rectangle getBoundsRange() {
+		return new Rectangle(width + (getRangeValue() * 2), height
+				+ (getRangeValue() * 2), x, y);
+	}
+
 	public Point getCenterPoint() {
 		return new Point((width / 2) + x, (height / 2) + y);
 	}
 
-	public int getDamageValue() {
-		return damageValue;
-	}
-
-	public int getHealthPoints() {
-		return healthPoints;
-	}
-
 	public int getHeight() {
 		return height;
-	}
-
-	public Image getImage() {
-		return image;
 	}
 
 	public int getLastX() {
@@ -91,12 +77,30 @@ public abstract class Mob {
 		return movementSpeed;
 	}
 
-	public int getProtection() {
-		return protection;
+	public Tower getNearestTower(final ArrayList<Tower> towers) {
+		int ghostX = 0, ghostY = 0, minimum = -1;
+		HashMap<Integer, Tower> distance = new HashMap<Integer, Tower>();
+		for (Tower tower : towers) {
+			ghostX = tower.getX();
+			ghostY = tower.getY();
+			if (ghostX < 0) {
+				ghostX = -ghostX;
+			}
+			if (ghostY < 0) {
+				ghostY = -ghostY;
+			}
+			distance.put(ghostX + ghostY, tower);
+		}
+		for (Entry<Integer, Tower> entry : distance.entrySet()) {
+			if ((minimum == -1) || (minimum > entry.getKey())) {
+				minimum = entry.getKey();
+			}
+		}
+		return distance.get(minimum);
 	}
 
-	public int getRangeValue() {
-		return rangeValue;
+	public int getProtection() {
+		return protection;
 	}
 
 	public int getReward() {
@@ -105,10 +109,6 @@ public abstract class Mob {
 
 	public int getSpawnTime() {
 		return spawnTime;
-	}
-
-	public EntityType getType() {
-		return type;
 	}
 
 	public int getUltimDamage() {
@@ -127,7 +127,7 @@ public abstract class Mob {
 		return y;
 	}
 
-	// @Override
+	@Override
 	public void move(int dx, int dy) {
 		lastX = x;
 		lastY = y;
@@ -136,20 +136,8 @@ public abstract class Mob {
 		y += movementSpeed * dy;
 	}
 
-	public void setDamageValue(int damageValue) {
-		this.damageValue = damageValue;
-	}
-
-	public void setHealthPoints(int healthPoints) {
-		this.healthPoints = healthPoints;
-	}
-
 	public void setHeight(int height) {
 		this.height = height;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
 	}
 
 	public void setLastX(int lastX) {
@@ -168,10 +156,6 @@ public abstract class Mob {
 		this.protection = protection;
 	}
 
-	public void setRangeValue(int rangeValue) {
-		this.rangeValue = rangeValue;
-	}
-
 	public void setReward(int reward) {
 		this.reward = reward;
 	}
@@ -179,10 +163,6 @@ public abstract class Mob {
 	public void setSpawnTime(int spawnTime) {
 		this.spawnTime = previousMobSpawnTime + spawnTime;
 		previousMobSpawnTime = this.spawnTime;
-	}
-
-	public void setType(EntityType type) {
-		this.type = type;
 	}
 
 	public void setUltimDamage(int ultimDamage) {
@@ -199,6 +179,16 @@ public abstract class Mob {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public ArrayList<Tower> towerCollision(final ArrayList<Tower> towers) {
+		ArrayList<Tower> result = new ArrayList<Tower>();
+		for (Tower tower : towers) {
+			if (tower.getBounds().intersects(getBoundsRange())) {
+				result.add(tower);
+			}
+		}
+		return result;
 	}
 
 }
