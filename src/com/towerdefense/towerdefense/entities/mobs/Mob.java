@@ -18,7 +18,7 @@ public abstract class Mob extends Entity implements CanMove {
 	private int movementSpeed;
 	private int reward;
 	private int ultimDamage;
-	private int protection;
+	private double protection;
 	private int spawnTime = 0;
 	private int x;
 	private int y;
@@ -33,13 +33,15 @@ public abstract class Mob extends Entity implements CanMove {
 	}
 
 	@Override
-	public void attack(final ArrayList<Tower> towers) {
-		getNearestTower(towerCollision(towers));
-
+	public void attack(ArrayList<Tower> towers) {
+		if (towerCollision(towers) != null) {
+			getNearestTower(towerCollision(towers)).dropHealth(towers,
+					getDamageValue());
+		}
 	}
 
 	@Override
-	public void die() {
+	public void die(ArrayList<?> list) {
 		// TODO Auto-generated method stub
 
 	}
@@ -99,7 +101,7 @@ public abstract class Mob extends Entity implements CanMove {
 		return distance.get(minimum);
 	}
 
-	public int getProtection() {
+	public double getProtection() {
 		return protection;
 	}
 
@@ -152,7 +154,7 @@ public abstract class Mob extends Entity implements CanMove {
 		this.movementSpeed = movementSpeed;
 	}
 
-	public void setProtection(int protection) {
+	public void setProtection(double protection) {
 		this.protection = protection;
 	}
 
@@ -182,13 +184,20 @@ public abstract class Mob extends Entity implements CanMove {
 	}
 
 	public ArrayList<Tower> towerCollision(final ArrayList<Tower> towers) {
+		boolean empty = true;
 		ArrayList<Tower> result = new ArrayList<Tower>();
 		for (Tower tower : towers) {
 			if (tower.getBounds().intersects(getBoundsRange())) {
 				result.add(tower);
+				System.out.println("collision détectée");
+				empty = false;
 			}
 		}
-		return result;
+		if (!empty) {
+			return result;
+		} else {
+			return null;
+		}
 	}
 
 }

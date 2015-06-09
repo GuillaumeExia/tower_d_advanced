@@ -4,13 +4,18 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
-public abstract class Tower {
+import com.towerdefense.towerdefense.entities.Entity;
+
+public abstract class Tower extends Entity {
 
 	private int width;
 	private int height;
 	private Rectangle actionZone;
+
 	private Image image;
+
 	private int x;
 	private int y;
 	private int cost;
@@ -18,6 +23,16 @@ public abstract class Tower {
 	public Tower(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	@Override
+	public void attack(ArrayList<Tower> towers) {
+
+	}
+
+	@Override
+	public void die(ArrayList<?> list) {
+		list.remove(this);
 	}
 
 	public void draw(Graphics g) {
@@ -36,6 +51,10 @@ public abstract class Tower {
 		return new Point((width / 2) + x, (height / 2) + y);
 	}
 
+	public int getCost() {
+		return cost;
+	}
+
 	public int getX() {
 		return x;
 	}
@@ -49,10 +68,15 @@ public abstract class Tower {
 				getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
 	}
 
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+
 	public void setHeight(int height) {
 		this.height = height;
 	}
 
+	@Override
 	public void setImage(Image image) {
 		this.image = image;
 	}

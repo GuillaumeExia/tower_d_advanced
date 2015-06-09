@@ -1,12 +1,18 @@
 package com.towerdefense.towerdefense.entities.mobs;
 
 import com.towerdefense.towerdefense.GlobalVariables;
+import com.towerdefense.towerdefense.entities.EntityType;
 
 public class Bug extends Mob {
 	public final static int SPEED = 4;
 	public final static int WIDTH = 32;
 	public final static int HEIGHT = 32;
 	public final static int RANGE = 32;
+	public final static int DAMAGE = 10;
+	public final static int COOLDOWN = 20;
+	public final static int HEALTH = 500;
+	public final static int REWARD = 500;
+	public final static double PROTECTION = 0.9;
 
 	public static String MOB_TYPE = "error";
 	public static final int MOB_IDENTIFIER = 1;
@@ -17,6 +23,12 @@ public class Bug extends Mob {
 		setHeight(HEIGHT);
 		setMovementSpeed(SPEED);
 		setRangeValue(RANGE);
+		setType(EntityType.Error);
+		setDamageValue(DAMAGE);
+		setCooldown(COOLDOWN);
+		setHealth(HEALTH);
+		setReward(REWARD);
+		setProtection(PROTECTION);
 
 		setImage(GlobalVariables.getSprite().getSubimage(147, 0, WIDTH, HEIGHT));
 	}

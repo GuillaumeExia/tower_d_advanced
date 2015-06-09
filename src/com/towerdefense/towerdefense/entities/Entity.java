@@ -1,6 +1,7 @@
 package com.towerdefense.towerdefense.entities;
 
 import java.awt.Image;
+import java.util.ArrayList;
 
 public abstract class Entity implements CanDieAttack {
 	private int health;
@@ -12,8 +13,12 @@ public abstract class Entity implements CanDieAttack {
 	private Image image;
 
 	@Override
-	public void dropHealth(int amount) {
-		// TODO Auto-generated method stub
+	public void dropHealth(ArrayList<?> list, int amount) {
+		if ((amount < health) && (amount > 0)) {
+			health -= amount;
+		} else if (amount >= health) {
+			die(list);
+		}
 
 	}
 
@@ -27,7 +32,6 @@ public abstract class Entity implements CanDieAttack {
 
 	@Override
 	public int getHealth() {
-		// TODO Auto-generated method stub
 		return health;
 	}
 
@@ -58,7 +62,6 @@ public abstract class Entity implements CanDieAttack {
 	@Override
 	public void setHealth(int amount) {
 		health = amount;
-
 	}
 
 	public void setIdentifier(int identifier) {

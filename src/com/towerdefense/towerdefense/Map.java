@@ -181,9 +181,13 @@ public class Map {
 				&& (mob.getLastY() != (yMob - speed))) {
 			mob.move(0, -1);
 		}
+		mob.attack(towers);
 	}
 
 	public void nextWave() {
+		for (Tower tower : towers) {
+			System.out.println(tower.getHealth());
+		}
 		waveTime = 0;
 		Mob.previousMobSpawnTime = 0;
 		wave++;

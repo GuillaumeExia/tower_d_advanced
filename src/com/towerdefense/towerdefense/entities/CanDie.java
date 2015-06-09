@@ -1,10 +1,12 @@
 package com.towerdefense.towerdefense.entities;
 
+import java.util.ArrayList;
+
 public interface CanDie {
 
-	public void die();
+	public void die(ArrayList<?> list);
 
-	public void dropHealth(final int amount);
+	public void dropHealth(ArrayList<?> list, int amount);
 
 	public int getHealth();
 
