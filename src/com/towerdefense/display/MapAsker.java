@@ -61,6 +61,7 @@ public class MapAsker extends JDialog implements ActionListener {
 				if (this.mapList.getSelectedItem().equals(map.getName())) {
 					Map.setSelectedMap(map);
 					map.init();
+					PanelMenu.stopwatch.start();
 				}
 			}
 			Window.changePanel("panelGame");

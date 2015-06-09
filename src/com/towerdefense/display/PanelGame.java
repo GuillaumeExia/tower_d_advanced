@@ -25,7 +25,6 @@ public class PanelGame extends JPanel implements ActionListener {
 		this.addMouseMotionListener(new MouseHandler());
 		this.setBackground(Color.CYAN);
 		this.setLayout(null);
-
 		this.statusBar = new StatusBar();
 		this.add(this.statusBar);
 
