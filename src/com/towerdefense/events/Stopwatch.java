@@ -9,16 +9,15 @@ public class Stopwatch implements Runnable {
 
 		String resultString = "";
 
-		if (m > 0) {
-			resultString += m + ":";
+		if ((m < 10) && (s < 10)) {
+			resultString += "0" + m + ":" + "0" + s;
 		}
-		if (s > 0) {
-			resultString += s + "";
+		else if ((m < 10) && (s >= 10)) {
+			resultString += "0" + m + ":" + s;
 		}
-		if ((m <= 0) && (s <= 0)) {
-			resultString = "0";
+		else if ((m > 10) && (s < 10)) {
+			resultString = m + ":" + s;
 		}
-
 		return resultString;
 
 	}

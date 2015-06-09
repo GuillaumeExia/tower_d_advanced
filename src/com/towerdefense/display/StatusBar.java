@@ -1,6 +1,7 @@
 package com.towerdefense.display;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +41,8 @@ public class StatusBar extends JPanel implements ActionListener {
 
 	public void drawTime(Graphics g) {
 		this.refreshTime();
-		g.drawString("" + PanelMenu.stopwatch.getTimeIs(), 730, 15);
+		g.setFont(new Font("Digiface", Font.PLAIN, 20));
+		g.drawString("" + PanelMenu.stopwatch.getTimeIs(), 730, 19);
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class StatusBar extends JPanel implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PanelMenu.stopwatch.getTimeIs();
-				PanelMenu.stopwatch.getDurationInText();
+				// PanelMenu.stopwatch.getDurationInText();
 			}
 		});
 	}
