@@ -1,6 +1,7 @@
 package com.towerdefense.towerdefense;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -19,7 +20,7 @@ public class GlobalVariables {
 	public static BufferedImage getSprite() {
 		if (sprite == null) {
 			try {
-				sprite = ImageIO.read(GlobalVariables.class.getResource("/res/images/sprite.png"));
+				sprite = ImageIO.read(new File("res/images/sprite.png"));
 			}
 			catch (IOException e) {
 			}
