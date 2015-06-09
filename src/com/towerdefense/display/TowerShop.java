@@ -58,6 +58,7 @@ public class TowerShop {
 						if (TowerShop.this.mode == TOWER) {
 							Ground towerZone = (TowerZone) TowerShop.this.objectCaller; // Revoir
 							TowerShop.this.fireTowerAdd(i + 1, towerZone.getX(), towerZone.getY());
+							System.out.println("je pose une tour!");
 						}
 						TowerShop.this.items.clear();
 					}
@@ -82,7 +83,7 @@ public class TowerShop {
 					int xc = (int) (this.centreX + (this.rayon * Math.cos((Math.PI * i) / 180)));
 					int yc = (int) (this.centreY + (this.rayon * Math.sin((Math.PI * i) / 180)));
 					this.items
-							.add(new Rectangle(xc - (this.towerImages[j].getWidth() / 2), yc - (this.towerImages[j].getHeight() / 2), this.towerImages[j].getWidth(), this.towerImages[j].getHeight()));
+					.add(new Rectangle(xc - (this.towerImages[j].getWidth() / 2), yc - (this.towerImages[j].getHeight() / 2), this.towerImages[j].getWidth(), this.towerImages[j].getHeight()));
 					g.drawImage(this.towerImages[j], xc - (this.towerImages[j].getWidth() / 2), yc - (this.towerImages[j].getHeight() / 2), null);
 				}
 			}

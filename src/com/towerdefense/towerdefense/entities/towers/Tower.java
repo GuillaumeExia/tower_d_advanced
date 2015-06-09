@@ -1,5 +1,6 @@
 package com.towerdefense.towerdefense.entities.towers;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -36,36 +37,41 @@ public abstract class Tower extends Entity {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(image, x, y, null);
+		g.drawImage(this.image, this.x, this.y, null);
+		g.setColor(Color.black);
+		g.fillRect(this.x + 1, this.y + 26, 27, 5);
+
+		g.setColor(Color.green);
+		g.fillRect(this.x + 1, this.y + 26, 25, 3);
+		g.setColor(Color.black);
 	}
 
 	public Rectangle getActionZone() {
-		return actionZone;
+		return this.actionZone;
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(this.x, this.y, this.width, this.height);
 	}
 
 	public Point getCenterPoint() {
-		return new Point((width / 2) + x, (height / 2) + y);
+		return new Point((this.width / 2) + this.x, (this.height / 2) + this.y);
 	}
 
 	public int getCost() {
-		return cost;
+		return this.cost;
 	}
 
 	public int getX() {
-		return x;
+		return this.x;
 	}
 
 	public int getY() {
-		return y;
+		return this.y;
 	}
 
 	public void setActionZone(int[] zone) {
-		actionZone = new Rectangle(getCenterPoint().x - (zone[0] / 2),
-				getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
+		this.actionZone = new Rectangle(this.getCenterPoint().x - (zone[0] / 2), this.getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
 	}
 
 	public void setCost(int cost) {
