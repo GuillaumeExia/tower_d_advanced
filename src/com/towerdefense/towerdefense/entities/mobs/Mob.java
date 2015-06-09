@@ -10,6 +10,7 @@ import com.towerdefense.towerdefense.entities.EntityType;
 public abstract class Mob {
 
 	public static int previousMobSpawnTime = 0;
+	private static int mobCount = 0;
 	private int healthPoints;
 	private int damageValue;
 	private int movementSpeed;
@@ -51,88 +52,88 @@ public abstract class Mob {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(this.image, this.x, this.y, null);
+		g.drawImage(image, x, y, null);
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(this.width, this.height, this.x, this.y);
+		return new Rectangle(width, height, x, y);
 	}
 
 	public Point getCenterPoint() {
-		return new Point((this.width / 2) + this.x, (this.height / 2) + this.y);
+		return new Point((width / 2) + x, (height / 2) + y);
 	}
 
 	public int getDamageValue() {
-		return this.damageValue;
+		return damageValue;
 	}
 
 	public int getHealthPoints() {
-		return this.healthPoints;
+		return healthPoints;
 	}
 
 	public int getHeight() {
-		return this.height;
+		return height;
 	}
 
 	public Image getImage() {
-		return this.image;
+		return image;
 	}
 
 	public int getLastX() {
-		return this.lastX;
+		return lastX;
 	}
 
 	public int getLastY() {
-		return this.lastY;
+		return lastY;
 	}
 
 	public int getMovementSpeed() {
-		return this.movementSpeed;
+		return movementSpeed;
 	}
 
 	public int getProtection() {
-		return this.protection;
+		return protection;
 	}
 
 	public int getRangeValue() {
-		return this.rangeValue;
+		return rangeValue;
 	}
 
 	public int getReward() {
-		return this.reward;
+		return reward;
 	}
 
 	public int getSpawnTime() {
-		return this.spawnTime;
+		return spawnTime;
 	}
 
 	public EntityType getType() {
-		return this.type;
+		return type;
 	}
 
 	public int getUltimDamage() {
-		return this.ultimDamage;
+		return ultimDamage;
 	}
 
 	public int getWidth() {
-		return this.width;
+		return width;
 	}
 
 	public int getX() {
-		return this.x;
+		return x;
 	}
 
 	public int getY() {
-		return this.y;
+		return y;
 	}
 
 	// @Override
 	public void move(int dx, int dy) {
-		this.lastX = this.x;
-		this.lastY = this.y;
+		lastX = x;
+		lastY = y;
 
-		this.x += this.movementSpeed * dx;
-		this.y += this.movementSpeed * dy;
+		x += movementSpeed * dx;
+		y += movementSpeed * dy;
 	}
 
 	public void setDamageValue(int damageValue) {
