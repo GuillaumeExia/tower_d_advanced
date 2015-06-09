@@ -53,6 +53,7 @@ public class PanelMenu extends JPanel implements ActionListener {
 	}
 
 	public void initMenu() {
+
 		Window.disableMenuItem();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
