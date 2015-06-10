@@ -40,9 +40,24 @@ public class Window extends JFrame implements ActionListener {
 		Window.resume.setEnabled(false);
 	}
 
+	public static void disablePauseItem() {
+		Window.pause.setEnabled(false);
+	}
+
+	public static void disableResumeItem() {
+		Window.resume.setEnabled(true);
+	}
+
 	public static void enableMenuItem() {
 		Window.pause.setEnabled(true);
 		Window.save.setEnabled(true);
+	}
+
+	public static void enablePauseItem() {
+		Window.resume.setEnabled(true);
+	}
+
+	public static void enableResumeItem() {
 		Window.resume.setEnabled(true);
 	}
 
@@ -115,6 +130,7 @@ public class Window extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				Window.disableMenuItem();
 				Window.changePanel("panelMenu");
+				// Window.this.panels[1].disable();
 			}
 		});
 		this.window.add(Window.menu);
@@ -139,23 +155,26 @@ public class Window extends JFrame implements ActionListener {
 		this.add(main, BorderLayout.CENTER);
 	}
 
-	private void initPauseItem() {
+	public void initPauseItem() {
 		Window.pause.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				PanelMenu.stopwatch.pause();
 				GlobalVariables.timer.stop();
+				enableResumeItem();
 			}
 		});
 		this.game.add(Window.pause);
 	}
 
-	private void initResumeItem() {
+	public void initResumeItem() {
 		Window.resume.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PanelMenu.stopwatch.resume();
 				GlobalVariables.timer.start();
+				Window.enablePauseItem();
+				Window.disableResumeItem();
 			}
 		});
 		this.game.add(Window.resume);
