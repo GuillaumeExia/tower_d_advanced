@@ -6,8 +6,11 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import com.towerdefense.towerdefense.entities.Entity;
+import com.towerdefense.towerdefense.entities.mobs.Mob;
 
 public abstract class Tower extends Entity {
 
@@ -30,12 +33,15 @@ public abstract class Tower extends Entity {
 
 	@Override
 	public void attack(ArrayList<?> mobs) {
-
-	}
-
-	@Override
-	public void die(ArrayList<?> list) {
-		list.remove(this);
+		if (isMobCollision((ArrayList<Mob>) mobs)) {
+			System.out.println("collision detected");
+			if (getCooldownCounter() >= getCooldown()) {
+				getNearestMob(mobCollision((ArrayList<Mob>) mobs)).dropHealth(
+						mobs, getDamageValue());
+				setCooldownCounter(0);
+			}
+		}
+		setCooldownCounter(getCooldownCounter() + 1);
 	}
 
 	public void draw(Graphics g) {
@@ -57,12 +63,39 @@ public abstract class Tower extends Entity {
 		return new Rectangle(x, y, width, height);
 	}
 
+	public Rectangle getBoundsRange() {
+		return new Rectangle(x - (width / 2), y - (height / 2), width
+				+ (getRangeValue() * 2), height + (getRangeValue() * 2));
+	}
+
 	public Point getCenterPoint() {
 		return new Point((width / 2) + x, (height / 2) + y);
 	}
 
 	public int getCost() {
 		return cost;
+	}
+
+	public Mob getNearestMob(final ArrayList<Mob> mobs) {
+		int ghostX = 0, ghostY = 0, minimum = -1;
+		HashMap<Integer, Mob> distance = new HashMap<Integer, Mob>();
+		for (Mob mob : mobs) {
+			ghostX = mob.getX();
+			ghostY = mob.getY();
+			if (ghostX < 0) {
+				ghostX = -ghostX;
+			}
+			if (ghostY < 0) {
+				ghostY = -ghostY;
+			}
+			distance.put(ghostX + ghostY, mob);
+		}
+		for (Entry<Integer, Mob> entry : distance.entrySet()) {
+			if ((minimum == -1) || (minimum > entry.getKey())) {
+				minimum = entry.getKey();
+			}
+		}
+		return distance.get(minimum);
 	}
 
 	@Override
@@ -73,6 +106,32 @@ public abstract class Tower extends Entity {
 	@Override
 	public int getY() {
 		return y;
+	}
+
+	public boolean isMobCollision(final ArrayList<Mob> mobs) {
+		boolean detection = false;
+		for (Mob mob : mobs) {
+			if (getBoundsRange().intersects(mob.getBounds())) {
+				detection = true;
+			}
+		}
+		return detection;
+	}
+
+	public ArrayList<Mob> mobCollision(final ArrayList<Mob> mobs) {
+		boolean empty = true;
+		ArrayList<Mob> result = new ArrayList<Mob>();
+		for (Mob mob : mobs) {
+			if (mob.getBounds().intersects(getBoundsRange())) {
+				result.add(mob);
+				empty = false;
+			}
+		}
+		if (!empty) {
+			return result;
+		} else {
+			return null;
+		}
 	}
 
 	public void setActionZone(int[] zone) {

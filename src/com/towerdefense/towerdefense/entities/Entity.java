@@ -23,6 +23,11 @@ public abstract class Entity implements CanDieAttack {
 	protected int height;
 
 	@Override
+	public void die(ArrayList<?> list) {
+		list.remove(this);
+	}
+
+	@Override
 	public void dropHealth(ArrayList<?> list, int amount) {
 		if ((amount < health) && (amount > 0)) {
 			health -= amount;

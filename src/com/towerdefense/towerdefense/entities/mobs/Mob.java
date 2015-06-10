@@ -42,14 +42,7 @@ public abstract class Mob extends Entity implements CanMove {
 				setCooldownCounter(0);
 			}
 		}
-
 		setCooldownCounter(getCooldownCounter() + 1);
-	}
-
-	@Override
-	public void die(ArrayList<?> list) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void draw(Graphics g) {
