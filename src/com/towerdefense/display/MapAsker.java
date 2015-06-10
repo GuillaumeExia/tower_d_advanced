@@ -32,7 +32,7 @@ public class MapAsker extends JDialog implements ActionListener {
 		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLayout(new FlowLayout());
 
 		this.chooseMap = new JLabel();
