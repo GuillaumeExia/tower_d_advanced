@@ -34,7 +34,6 @@ public abstract class Tower extends Entity {
 	@Override
 	public void attack(ArrayList<?> mobs) {
 		if (isMobCollision((ArrayList<Mob>) mobs)) {
-			System.out.println("collision detected");
 			if (getCooldownCounter() >= getCooldown()) {
 				getNearestMob(mobCollision((ArrayList<Mob>) mobs)).dropHealth(
 						mobs, getDamageValue());

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.towerdefense.towerdefense.GlobalVariables;
 import com.towerdefense.towerdefense.entities.CanMove;
 import com.towerdefense.towerdefense.entities.Entity;
 import com.towerdefense.towerdefense.entities.towers.Tower;
@@ -15,7 +16,6 @@ import com.towerdefense.towerdefense.entities.towers.Tower;
 public abstract class Mob extends Entity implements CanMove {
 
 	public static int previousMobSpawnTime = 0;
-	private static int mobCount = 0;
 	private int movementSpeed;
 	private int reward;
 	private int ultimDamage;
@@ -38,11 +38,17 @@ public abstract class Mob extends Entity implements CanMove {
 		if (isTowerCollision((ArrayList<Tower>) towers)) {
 			if (getCooldownCounter() >= getCooldown()) {
 				getNearestTower(towerCollision((ArrayList<Tower>) towers))
-						.dropHealth(towers, getDamageValue());
+				.dropHealth(towers, getDamageValue());
 				setCooldownCounter(0);
 			}
 		}
 		setCooldownCounter(getCooldownCounter() + 1);
+	}
+
+	@Override
+	public void die(ArrayList<?> list) {
+		GlobalVariables.money += reward;
+		list.remove(this);
 	}
 
 	public void draw(Graphics g) {
