@@ -56,7 +56,7 @@ public class Map {
 			Rectangle ground = currentGround.getBounds();
 			if (ground.intersects(newPosMob)) {
 				// currentGround.debugColor = Color.green;
-				// currentGround.debug = true;
+				// currentGround.debug = true
 				if (!currentGround.isWalkable()) {
 					currentGround.debugColor = Color.red;
 					return false;
