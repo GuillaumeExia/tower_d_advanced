@@ -21,17 +21,18 @@ public class PanelGame extends JPanel implements ActionListener {
 	private Timer timer;
 
 	public PanelGame() {
-		this.setLayout(null);
-		this.statusBar = new StatusBar();
-		this.add(this.statusBar);
-		this.addMouseListener(new MouseAdapter() {
+		setLayout(null);
+		statusBar = new StatusBar();
+		this.add(statusBar);
+		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				TowerShop.getTowerShop().hide();
+				TowerShop.OPEN = false;
 				MouseHandler.fireMouseClicked(e);
 			}
 		});
-		this.refreshPanel();
+		refreshPanel();
 	}
 
 	@Override
@@ -45,18 +46,18 @@ public class PanelGame extends JPanel implements ActionListener {
 	}
 
 	public StatusBar getStatusBar() {
-		return this.statusBar;
+		return statusBar;
 	}
 
 	public Timer getTimer() {
-		return this.timer;
+		return timer;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		Map.getSelectedMap().draw(g);
 		if (GlobalVariables.timer.isRunning() == false) {
-			this.drawPause(g);
+			drawPause(g);
 		}
 
 	}

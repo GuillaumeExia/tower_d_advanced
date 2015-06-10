@@ -9,13 +9,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.towerdefense.towerdefense.GlobalVariables;
 import com.towerdefense.towerdefense.entities.Entity;
 import com.towerdefense.towerdefense.entities.mobs.Mob;
 
 public abstract class Tower extends Entity {
 
 	public final static int MAXHEALTH = 500;
+
 	private int width;
+
 	private int height;
 
 	private Rectangle actionZone;
@@ -131,6 +134,14 @@ public abstract class Tower extends Entity {
 		} else {
 			return null;
 		}
+	}
+
+	public boolean payForTower() {
+		if (GlobalVariables.money >= cost) {
+			GlobalVariables.money -= cost;
+			return true;
+		}
+		return false;
 	}
 
 	public void setActionZone(int[] zone) {

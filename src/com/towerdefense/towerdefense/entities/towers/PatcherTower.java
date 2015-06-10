@@ -7,7 +7,7 @@ public class PatcherTower extends Tower {
 	public final static int WIDTH = 24;
 	public final static int HEIGHT = 32;
 	public final static int RANGE = 32;
-	public final static int DAMAGE = 10;
+	public final static int DAMAGE = 50;
 	public final static int COOLDOWN = 20;
 	public final static int MAXHEALTH = 500;
 	public final static int COST = 500;
@@ -17,15 +17,15 @@ public class PatcherTower extends Tower {
 
 	public PatcherTower(int x, int y) {
 		super(x, y);
-		this.setWidth(WIDTH);
-		this.setHeight(HEIGHT);
-		this.setRangeValue(RANGE);
-		this.setType(EntityType.Error);
-		this.setDamageValue(DAMAGE);
-		this.setCooldown(COOLDOWN);
-		this.setHealth(MAXHEALTH);
-		this.setCost(COST);
+		setWidth(WIDTH);
+		setHeight(HEIGHT);
+		setRangeValue(RANGE);
+		setType(EntityType.Error);
+		setDamageValue(DAMAGE);
+		setCooldown(COOLDOWN);
+		setHealth(MAXHEALTH);
+		setCost(COST);
 
-		this.setImage(GlobalVariables.getSprite().getSubimage(390, 0, WIDTH, HEIGHT));
+		setImage(GlobalVariables.getSprite().getSubimage(390, 0, WIDTH, HEIGHT));
 	}
 }

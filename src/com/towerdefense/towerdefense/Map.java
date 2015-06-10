@@ -25,8 +25,16 @@ public class Map {
 		return selectedMap;
 	}
 
+	public static int getWave() {
+		return wave;
+	}
+
 	public static void setSelectedMap(Map selectedMap) {
 		Map.selectedMap = selectedMap;
+	}
+
+	public static void setWave(int wave) {
+		Map.wave = wave;
 	}
 
 	private int width;
@@ -34,10 +42,12 @@ public class Map {
 	private String name;
 	private int id;
 	private ArrayList<Ground> grounds;
+
 	private ArrayList<Tower> towers;
 	private Tower workstation;
 
 	private ArrayList<Mob> mobs;
+
 	private ArrayList<Mob> mobToRemove = new ArrayList<Mob>();
 
 	private int waveTime = 0;
@@ -84,17 +94,18 @@ public class Map {
 	}
 
 	public void drawMobs(Graphics g) {
-		for(Mob mob : mobs){
-            if ((waveTime > mob.getSpawnTime()) && !detectWorkstationCollision(mob)) {
-                mobMove(mob);
-                mob.draw(g);
-            }
-        }
+		for (Mob mob : mobs) {
+			if ((waveTime > mob.getSpawnTime())
+					&& !detectWorkstationCollision(mob)) {
+				mobMove(mob);
+				mob.draw(g);
+			}
+		}
 
-        for(Mob mob : mobToRemove){
-            mobs.remove(mob);
-        }
-        mobToRemove.clear();
+		for (Mob mob : mobToRemove) {
+			mobs.remove(mob);
+		}
+		mobToRemove.clear();
 	}
 
 	public void drawTerrain(Graphics g) {
@@ -162,7 +173,15 @@ public class Map {
 		towerShop.addTowerShopListener(new TowerShopListener() {
 			@Override
 			public void onTowerAdd(int idTower, int x, int y) {
-				towers.add(TowerFactory.createTower(idTower, x, y));
+				try {
+					towers.add(TowerFactory.createTower(idTower, x, y));
+					if (!towers.get(towers.size() - 1).payForTower()) {
+						towers.remove(towers.size() - 1);
+						System.out.println("Plus de sous maggle");
+					}
+				} catch (Exception e) {
+					// Ajouter un option pane
+				}
 			}
 		});
 	}
@@ -223,14 +242,6 @@ public class Map {
 		if (mobs.size() == 0) {
 			nextWave();
 		}
-	}
-
-	public static int getWave() {
-		return wave;
-	}
-
-	public static void setWave(int wave) {
-		Map.wave = wave;
 	}
 
 	/*

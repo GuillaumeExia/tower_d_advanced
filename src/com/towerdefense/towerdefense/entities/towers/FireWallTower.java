@@ -7,7 +7,7 @@ public class FireWallTower extends Tower {
 	public final static int WIDTH = 24;
 	public final static int HEIGHT = 32;
 	public final static int RANGE = 32;
-	public final static int DAMAGE = 10;
+	public final static int DAMAGE = 50;
 	public final static int COOLDOWN = 20;
 	public final static int COST = 500;
 	public final static int MAXHEALTH = 500;
