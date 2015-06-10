@@ -11,6 +11,7 @@ public abstract class Entity implements CanDieAttack {
 	private int identifier;
 	private int cooldown;
 	private Image image;
+	private int cooldownCounter;
 
 	@Override
 	public void dropHealth(ArrayList<?> list, int amount) {
@@ -24,6 +25,10 @@ public abstract class Entity implements CanDieAttack {
 
 	public int getCooldown() {
 		return cooldown;
+	}
+
+	public int getCooldownCounter() {
+		return cooldownCounter;
 	}
 
 	public int getDamageValue() {
@@ -53,6 +58,10 @@ public abstract class Entity implements CanDieAttack {
 
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
+	}
+
+	public void setCooldownCounter(int cooldownCounter) {
+		this.cooldownCounter = cooldownCounter;
 	}
 
 	public void setDamageValue(int damageValue) {
