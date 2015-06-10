@@ -39,7 +39,6 @@ public class Stopwatch {
 
 	public void pause() {
 		this.startPause = System.currentTimeMillis();
-		//this.endPause = 0;
 	}
 
 	public void resume() {
