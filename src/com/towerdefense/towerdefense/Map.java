@@ -38,6 +38,7 @@ public class Map {
 	private Tower workstation;
 
 	private ArrayList<Mob> mobs;
+	private ArrayList<Mob> mobToRemove = new ArrayList<Mob>();
 
 	private int waveTime = 0;
 
@@ -65,10 +66,9 @@ public class Map {
 		return true;
 	}
 
-	public boolean detectWorkstationCollision(int i) {
-		if (mobs.get(i).getBounds().intersects(workstation.getActionZone())) {
-			mobs.remove(i);
-			GlobalVariables.life -= mobs.get(i).getDamageValue();
+	public boolean detectWorkstationCollision(Mob m) {
+		if (m.getBounds().intersects(workstation.getActionZone())) {
+			mobToRemove.add(m);
 		}
 		return false;
 	}
@@ -84,13 +84,17 @@ public class Map {
 	}
 
 	public void drawMobs(Graphics g) {
-		for (int i = 0; i < mobs.size(); i++) {
-			if (!detectWorkstationCollision(i)
-					&& (waveTime > mobs.get(i).getSpawnTime())) {
-				mobMove(mobs.get(i));
-				mobs.get(i).draw(g);
-			}
-		}
+		for(Mob mob : mobs){
+            if ((waveTime > mob.getSpawnTime()) && !detectWorkstationCollision(mob)) {
+                mobMove(mob);
+                mob.draw(g);
+            }
+        }
+
+        for(Mob mob : mobToRemove){
+            mobs.remove(mob);
+        }
+        mobToRemove.clear();
 	}
 
 	public void drawTerrain(Graphics g) {
@@ -153,12 +157,11 @@ public class Map {
 		mobs = new ArrayList<Mob>();
 		spawnMobs();
 
-		towers = new ArrayList();
+		towers = new ArrayList<Tower>();
 		TowerShop towerShop = new TowerShop();
 		towerShop.addTowerShopListener(new TowerShopListener() {
 			@Override
 			public void onTowerAdd(int idTower, int x, int y) {
-				System.out.println(idTower);
 				towers.add(TowerFactory.createTower(idTower, x, y));
 			}
 		});
@@ -186,9 +189,6 @@ public class Map {
 	}
 
 	public void nextWave() {
-		for (Tower tower : towers) {
-			System.out.println(tower.getHealth());
-		}
 		waveTime = 0;
 		Mob.previousMobSpawnTime = 0;
 		setWave(getWave() + 1);
