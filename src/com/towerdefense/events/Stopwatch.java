@@ -33,6 +33,7 @@ public class Stopwatch {
 
 	public String getTimeIs() {
 		this.duration = (((System.currentTimeMillis() - (this.startTime)) - ((this.endPause - this.startPause))) / 1000);
+
 		return timeToString(this.duration);
 	}
 

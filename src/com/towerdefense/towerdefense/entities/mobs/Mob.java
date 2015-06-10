@@ -35,7 +35,7 @@ public abstract class Mob extends Entity implements CanMove {
 
 	@Override
 	public void attack(ArrayList<Tower> towers) {
-		if (this.towerCollision(towers) != null) {
+		if (this.isTowerCollision(towers)) {
 			this.getNearestTower(this.towerCollision(towers)).dropHealth(towers, this.getDamageValue());
 		}
 	}
@@ -56,11 +56,11 @@ public abstract class Mob extends Entity implements CanMove {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(this.width, this.height, this.x, this.y);
+		return new Rectangle(this.x, this.y, this.width, this.height);
 	}
 
 	public Rectangle getBoundsRange() {
-		return new Rectangle(this.width + (this.getRangeValue() * 2), this.height + (this.getRangeValue() * 2), this.x, this.y);
+		return new Rectangle(this.x - (this.width / 2), this.y - (this.height / 2), this.width + (this.getRangeValue() * 2), this.height + (this.getRangeValue() * 2));
 	}
 
 	public Point getCenterPoint() {
@@ -133,6 +133,16 @@ public abstract class Mob extends Entity implements CanMove {
 		return this.y;
 	}
 
+	public boolean isTowerCollision(final ArrayList<Tower> towers) {
+		boolean detection = false;
+		for (Tower tower : towers) {
+			if (this.getBoundsRange().intersects(tower.getBounds())) {
+				detection = true;
+			}
+		}
+		return detection;
+	}
+
 	@Override
 	public void move(int dx, int dy) {
 		this.lastX = this.x;
@@ -193,7 +203,6 @@ public abstract class Mob extends Entity implements CanMove {
 		for (Tower tower : towers) {
 			if (tower.getBounds().intersects(this.getBoundsRange())) {
 				result.add(tower);
-				System.out.println("collision détectée");
 				empty = false;
 			}
 		}

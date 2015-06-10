@@ -73,40 +73,35 @@ public class Window extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 
-	private void initMenuBar() {
-		Window.disableMenuItem();
-		Window.pause.addActionListener(new ActionListener() {
+	private void initExitItem() {
+		Window.exit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				PanelMenu.stopwatch.pause();
+				System.exit(0);
 			}
 		});
-		this.game.add(Window.pause);
+		this.window.add(Window.exit);
+	}
 
-		Window.resume.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				PanelMenu.stopwatch.resume();
-				GlobalVariables.timer.start();
-			}
-		});
-		this.game.add(Window.resume);
+	private void initMenuBar() {
+
+		Window.disableMenuItem();
+		this.initPauseItem();
+		this.initResumeItem();
 
 		this.game.addSeparator();
 
-		Window.save.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				PanelMenu.stopwatch.pause();
-				GlobalVariables.timer.stop();
-				NicknameAsker nicknameAsker = new NicknameAsker();
-			}
-		});
-
-		this.game.add(Window.save);
+		this.initSaveItem();
 
 		this.menuBar.add(this.game); // ********************
 
+		this.initMenuItem();
+		this.initExitItem();
+
+		this.menuBar.add(this.window); // ******************
+	}
+
+	private void initMenuItem() {
 		Window.menu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -115,15 +110,6 @@ public class Window extends JFrame implements ActionListener {
 			}
 		});
 		this.window.add(Window.menu);
-		Window.exit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				System.exit(0);
-			}
-		});
-		this.window.add(Window.exit);
-
-		this.menuBar.add(this.window); // ******************
 	}
 
 	private void initPanels() {
@@ -143,5 +129,43 @@ public class Window extends JFrame implements ActionListener {
 		main.add(this.panels[3], "panelLeaderBoard");
 
 		this.add(main, BorderLayout.CENTER);
+	}
+
+	private void initPauseItem() {
+		Window.pause.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				PanelMenu.stopwatch.pause();
+				GlobalVariables.timer.stop();
+			}
+		});
+		this.game.add(Window.pause);
+	}
+
+	private void initResumeItem() {
+		Window.resume.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PanelMenu.stopwatch.resume();
+				GlobalVariables.timer.start();
+			}
+		});
+		this.game.add(Window.resume);
+	}
+
+	private void initSaveItem() {
+		Window.save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				PanelMenu.stopwatch.pause();
+				GlobalVariables.timer.stop();
+
+				if (GlobalVariables.nickname == null) {
+					NicknameAsker nicknameAsker = new NicknameAsker();
+				}
+			}
+		});
+
+		this.game.add(Window.save);
 	}
 }
