@@ -21,13 +21,9 @@ public class PanelGame extends JPanel implements ActionListener {
 	private Timer timer;
 
 	public PanelGame() {
-		this.addMouseListener(new MouseHandler());
-		this.addMouseMotionListener(new MouseHandler());
-		this.setBackground(Color.CYAN);
 		this.setLayout(null);
 		this.statusBar = new StatusBar();
 		this.add(this.statusBar);
-
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -35,7 +31,6 @@ public class PanelGame extends JPanel implements ActionListener {
 				MouseHandler.fireMouseClicked(e);
 			}
 		});
-
 		this.refreshPanel();
 	}
 
@@ -59,7 +54,6 @@ public class PanelGame extends JPanel implements ActionListener {
 
 	@Override
 	public void paintComponent(Graphics g) {
-
 		Map.getSelectedMap().draw(g);
 		if (GlobalVariables.timer.isRunning() == false) {
 			this.drawPause(g);
