@@ -38,7 +38,7 @@ public abstract class Mob extends Entity implements CanMove {
 		if (isTowerCollision((ArrayList<Tower>) towers)) {
 			if (getCooldownCounter() >= getCooldown()) {
 				getNearestTower(towerCollision((ArrayList<Tower>) towers))
-				.dropHealth(towers, getDamageValue());
+						.dropHealth(towers, getDamageValue());
 				setCooldownCounter(0);
 			}
 		}

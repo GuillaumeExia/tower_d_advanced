@@ -19,6 +19,8 @@ import com.towerdefense.towerdefense.objects.Ground;
 public class Map {
 	private static Map selectedMap;
 
+	private static int wave = 1;
+
 	public static Map getSelectedMap() {
 		return selectedMap;
 	}
@@ -34,9 +36,8 @@ public class Map {
 	private ArrayList<Ground> grounds;
 	private ArrayList<Tower> towers;
 	private Tower workstation;
-	private ArrayList<Mob> mobs;
 
-	private int wave = 1;
+	private ArrayList<Mob> mobs;
 
 	private int waveTime = 0;
 
@@ -80,7 +81,6 @@ public class Map {
 		drawTowers(g);
 		testWaveEnding();
 		TowerShop.getTowerShop().draw(g);
-		g.drawString("Wave : " + wave, 125, 15);
 	}
 
 	public void drawMobs(Graphics g) {
@@ -191,7 +191,7 @@ public class Map {
 		}
 		waveTime = 0;
 		Mob.previousMobSpawnTime = 0;
-		wave++;
+		setWave(getWave() + 1);
 		spawnMobs();
 	}
 
@@ -213,7 +213,7 @@ public class Map {
 		int mobAmount = 0;
 		int amountAtStart = 3;
 		double multiplier = 1.3;
-		mobAmount = (int) (amountAtStart * Math.pow(multiplier, wave));
+		mobAmount = (int) (amountAtStart * Math.pow(multiplier, getWave()));
 		for (int i = 0; i < mobAmount; i++) {
 			spawnMob(-1);
 		}
@@ -223,6 +223,14 @@ public class Map {
 		if (mobs.size() == 0) {
 			nextWave();
 		}
+	}
+
+	public static int getWave() {
+		return wave;
+	}
+
+	public static void setWave(int wave) {
+		Map.wave = wave;
 	}
 
 	/*
