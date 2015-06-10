@@ -15,6 +15,8 @@ import com.towerdefense.towerdefense.entities.towers.Tower;
 
 public abstract class Mob extends Entity implements CanMove {
 
+	private static final int TYPE_MULTIPLIER = 2;
+
 	public static int previousMobSpawnTime = 0;
 	private int movementSpeed;
 	private int reward;
@@ -35,10 +37,15 @@ public abstract class Mob extends Entity implements CanMove {
 
 	@Override
 	public void attack(ArrayList<?> towers) {
+		int finalDamageValue = getDamageValue();
+		Tower damagedTower = null;
 		if (isTowerCollision((ArrayList<Tower>) towers)) {
 			if (getCooldownCounter() >= getCooldown()) {
-				getNearestTower(towerCollision((ArrayList<Tower>) towers))
-						.dropHealth(towers, getDamageValue());
+				damagedTower = getNearestTower(towerCollision((ArrayList<Tower>) towers));
+				if (damagedTower.getType().equals(getType())) {
+					finalDamageValue *= TYPE_MULTIPLIER;
+				}
+				damagedTower.dropHealth(towers, finalDamageValue);
 				setCooldownCounter(0);
 			}
 		}

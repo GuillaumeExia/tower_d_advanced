@@ -12,7 +12,7 @@ public class GlobalVariables {
 	public static String nickname;
 	private static BufferedImage sprite = null;
 	public static int life = 1000;
-	public static int money = 550;
+	public static int money = 5000;
 	public static Ground spawnpoint;
 	public static Timer timer;
 

@@ -183,7 +183,7 @@ public class Map {
 						// Ajouter un option pane
 					}
 				} catch (Exception e) {
-
+					e.printStackTrace();
 				}
 			}
 		});
