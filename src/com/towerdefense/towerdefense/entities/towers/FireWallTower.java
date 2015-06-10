@@ -17,15 +17,16 @@ public class FireWallTower extends Tower {
 
 	public FireWallTower(int x, int y) {
 		super(x, y);
-		this.setWidth(WIDTH);
-		this.setHeight(HEIGHT);
-		this.setRangeValue(RANGE);
-		this.setType(EntityType.Viral);
-		this.setDamageValue(DAMAGE);
-		this.setCooldown(COOLDOWN);
-		this.setHealth(MAXHEALTH);
-		this.setCost(COST);
+		setWidth(WIDTH);
+		setHeight(HEIGHT);
+		setRangeValue(RANGE);
+		setType(EntityType.Viral);
+		setDamageValue(DAMAGE);
+		setCooldown(COOLDOWN);
+		setHealth(MAXHEALTH);
+		setCost(COST);
 
-		this.setImage(GlobalVariables.getSprite().getSubimage(362, 0, WIDTH, HEIGHT));
+		setImage(GlobalVariables.getSprite().getSubimage(362, 0, WIDTH, HEIGHT));
 	}
+
 }

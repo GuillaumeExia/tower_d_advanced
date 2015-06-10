@@ -1,6 +1,7 @@
 package com.towerdefense.towerdefense.entities;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public abstract class Entity implements CanDieAttack {
@@ -13,6 +14,14 @@ public abstract class Entity implements CanDieAttack {
 	private Image image;
 	private int cooldownCounter;
 
+	protected int x;
+
+	protected int y;
+
+	protected int width;
+
+	protected int height;
+
 	@Override
 	public void dropHealth(ArrayList<?> list, int amount) {
 		if ((amount < health) && (amount > 0)) {
@@ -21,6 +30,10 @@ public abstract class Entity implements CanDieAttack {
 			die(list);
 		}
 
+	}
+
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, width, height);
 	}
 
 	public int getCooldown() {
@@ -56,6 +69,14 @@ public abstract class Entity implements CanDieAttack {
 		return type;
 	}
 
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
 	}
@@ -87,5 +108,13 @@ public abstract class Entity implements CanDieAttack {
 
 	public void setType(EntityType type) {
 		this.type = type;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 }

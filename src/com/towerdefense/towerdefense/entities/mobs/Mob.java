@@ -34,11 +34,11 @@ public abstract class Mob extends Entity implements CanMove {
 	}
 
 	@Override
-	public void attack(ArrayList<Tower> towers) {
-		if (isTowerCollision(towers)) {
+	public void attack(ArrayList<?> towers) {
+		if (isTowerCollision((ArrayList<Tower>) towers)) {
 			if (getCooldownCounter() >= getCooldown()) {
-				getNearestTower(towerCollision(towers)).dropHealth(towers,
-						getDamageValue());
+				getNearestTower(towerCollision((ArrayList<Tower>) towers))
+						.dropHealth(towers, getDamageValue());
 				setCooldownCounter(0);
 			}
 		}
@@ -61,6 +61,7 @@ public abstract class Mob extends Entity implements CanMove {
 		g.setColor(Color.black);
 	}
 
+	@Override
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, width, height);
 	}
@@ -132,10 +133,12 @@ public abstract class Mob extends Entity implements CanMove {
 		return width;
 	}
 
+	@Override
 	public int getX() {
 		return x;
 	}
 
+	@Override
 	public int getY() {
 		return y;
 	}
@@ -196,10 +199,12 @@ public abstract class Mob extends Entity implements CanMove {
 		this.width = width;
 	}
 
+	@Override
 	public void setX(int x) {
 		this.x = x;
 	}
 
+	@Override
 	public void setY(int y) {
 		this.y = y;
 	}

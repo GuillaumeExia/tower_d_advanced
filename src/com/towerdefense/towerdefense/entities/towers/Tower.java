@@ -29,7 +29,7 @@ public abstract class Tower extends Entity {
 	}
 
 	@Override
-	public void attack(ArrayList<Tower> towers) {
+	public void attack(ArrayList<?> mobs) {
 
 	}
 
@@ -40,40 +40,44 @@ public abstract class Tower extends Entity {
 
 	public void draw(Graphics g) {
 		double ratio = 25 / MAXHEALTH;
-		g.drawImage(this.image, this.x, this.y, null);
+		g.drawImage(image, x, y, null);
 		g.setColor(Color.black);
-		g.fillRect(this.x, this.y + 26, 27, 5);
+		g.fillRect(x, y + 26, 27, 5);
 		g.setColor(Color.green);
-		g.fillRect(this.x + 1, this.y + 26, (int) (this.getHealth() * 0.05), 3);
+		g.fillRect(x + 1, y + 26, (int) (getHealth() * 0.05), 3);
 		g.setColor(Color.black);
 	}
 
 	public Rectangle getActionZone() {
-		return this.actionZone;
+		return actionZone;
 	}
 
+	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(this.x, this.y, this.width, this.height);
+		return new Rectangle(x, y, width, height);
 	}
 
 	public Point getCenterPoint() {
-		return new Point((this.width / 2) + this.x, (this.height / 2) + this.y);
+		return new Point((width / 2) + x, (height / 2) + y);
 	}
 
 	public int getCost() {
-		return this.cost;
+		return cost;
 	}
 
+	@Override
 	public int getX() {
-		return this.x;
+		return x;
 	}
 
+	@Override
 	public int getY() {
-		return this.y;
+		return y;
 	}
 
 	public void setActionZone(int[] zone) {
-		this.actionZone = new Rectangle(this.getCenterPoint().x - (zone[0] / 2), this.getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
+		actionZone = new Rectangle(getCenterPoint().x - (zone[0] / 2),
+				getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
 	}
 
 	public void setCost(int cost) {
@@ -93,10 +97,12 @@ public abstract class Tower extends Entity {
 		this.width = width;
 	}
 
+	@Override
 	public void setX(int x) {
 		this.x = x;
 	}
 
+	@Override
 	public void setY(int y) {
 		this.y = y;
 	}
