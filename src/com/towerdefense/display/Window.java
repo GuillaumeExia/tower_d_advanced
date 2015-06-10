@@ -2,7 +2,9 @@ package com.towerdefense.display;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -61,6 +63,12 @@ public class Window extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+	}
+
+	public void draw(Graphics g) {
+		g.setColor(new Color(0, 0, 0, 50));
+		g.fillRect(50, 50, 27, 5);
+		g.fillRect(75, 50, 27, 5);
 	}
 
 	private void init() {

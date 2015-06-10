@@ -43,6 +43,12 @@ public class PanelGame extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	}
 
+	public void drawPause(Graphics g) {
+		g.setColor(new Color(0, 0, 0, 75));
+		g.fillRect(325, 150, 50, 200);
+		g.fillRect(425, 150, 50, 200);
+	}
+
 	public StatusBar getStatusBar() {
 		return this.statusBar;
 	}
@@ -53,7 +59,12 @@ public class PanelGame extends JPanel implements ActionListener {
 
 	@Override
 	public void paintComponent(Graphics g) {
+
 		Map.getSelectedMap().draw(g);
+		if (GlobalVariables.timer.isRunning() == false) {
+			this.drawPause(g);
+		}
+
 	}
 
 	public void refreshPanel() {
