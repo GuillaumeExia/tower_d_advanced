@@ -20,7 +20,7 @@ public class StatusBar extends JPanel implements ActionListener {
 	public StatusBar() {
 		this.setBounds(0, 0, 808, 50);
 		// this.setBackground(Color.red);
-		setBackground(Color.CYAN);
+		this.setBackground(Color.CYAN);
 	}
 
 	@Override
@@ -30,27 +30,25 @@ public class StatusBar extends JPanel implements ActionListener {
 	}
 
 	public void drawLife(Graphics g) {
-		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 16, 17, 16),
-				5, 3, null);
+		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 16, 17, 16), 5, 3, null);
 		g.drawString("" + GlobalVariables.life, 25, 15);
 	}
 
 	public void drawMoney(Graphics g) {
-		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 0, 17, 16),
-				70, 3, null);
+		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 0, 17, 16), 70, 3, null);
 		g.drawString("" + GlobalVariables.money, 90, 15);
 	}
 
 	public void drawTime(Graphics g) {
-		refreshTime();
+		this.refreshTime();
 		g.setFont(new Font("Digiface", Font.PLAIN, 20));
-		g.drawString("" + PanelMenu.stopwatch.getTimeIs(), 730, 19);
+		g.drawString("" + PanelMenu.stopwatch.getTimeIs(), 370, 19);
 	}
 
 	public void drawWave(Graphics g) {
-		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 0, 17, 16),
-				660, 3, null);
-		g.drawString("" + Map.getWave(), 685, 19);
+		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 0, 17, 16), 755, 3, null);
+		g.setFont(new Font("Arial", Font.PLAIN, 14));
+		g.drawString("" + Map.getWave(), 775, 16);
 	}
 
 	@Override
@@ -58,14 +56,14 @@ public class StatusBar extends JPanel implements ActionListener {
 		g.setColor(new Color(255, 255, 255, 100));
 		g.fillRect(0, 0, 808, 25);
 		g.setColor(new Color(0, 0, 0));
-		drawLife(g);
-		drawMoney(g);
-		drawTime(g);
-		drawWave(g);
+		this.drawLife(g);
+		this.drawMoney(g);
+		this.drawTime(g);
+		this.drawWave(g);
 	}
 
 	public void refreshTime() {
-		stopwatch = new Timer(30, new ActionListener() {
+		this.stopwatch = new Timer(30, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PanelMenu.stopwatch.getTimeIs();
