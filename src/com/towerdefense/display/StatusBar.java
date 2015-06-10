@@ -49,8 +49,8 @@ public class StatusBar extends JPanel implements ActionListener {
 
 	public void drawWave(Graphics g) {
 		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 0, 17, 16),
-				70, 3, null);
-		g.drawString("" + Map.getWave(), 150, 15);
+				660, 3, null);
+		g.drawString("" + Map.getWave(), 685, 19);
 	}
 
 	@Override
