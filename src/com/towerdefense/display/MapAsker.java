@@ -36,7 +36,7 @@ public class MapAsker extends JDialog implements ActionListener {
 		this.setLayout(new FlowLayout());
 
 		this.chooseMap = new JLabel();
-		this.chooseMap.setText("Choose a map");
+		this.chooseMap.setText("Choose a map");//
 		this.add(this.chooseMap);
 
 		this.mapList = new JComboBox();

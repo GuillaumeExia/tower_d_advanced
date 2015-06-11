@@ -33,7 +33,7 @@ public abstract class DBProcedure {
         
     public static String getScore() {
 	    return "{? = call getScore[(?)]}";
-	}
+	}//
 	
 	public static String loadPlayerSaveWithIDSave() {
 	    return "{? = call loadPlayerSaveWithIDSave[(?)]}";

@@ -62,7 +62,7 @@ public class NicknameAsker extends JDialog implements ActionListener {
 				this.optionPaneVerif = new JOptionPane();
 				this.optionPaneVerif.showMessageDialog(this, "Please enter a nickname", "Error", JOptionPane.ERROR_MESSAGE);
 				Window.changePanel("panelGame");
-				this.setVisible(false);
+				this.setVisible(false);//
 			}
 			else {
 				GlobalVariables.nickname = nickname.getText();
