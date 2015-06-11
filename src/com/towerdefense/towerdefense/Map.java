@@ -39,16 +39,16 @@ public class Map {
 	}
 
 	private int width;
+
 	private int height;
+
 	private String name;
 	private int id;
 	private ArrayList<Ground> grounds;
-
 	private ArrayList<Tower> towers;
 	private Tower workstation;
 
 	private ArrayList<Mob> mobs;
-
 	private ArrayList<Mob> mobToRemove = new ArrayList<Mob>();
 
 	private ArrayList<Mob> mobToShoot = new ArrayList<Mob>();
@@ -82,16 +82,15 @@ public class Map {
 		if (m.getBounds().intersects(this.workstation.getActionZone())) {
 			this.mobToRemove.add(m);
 			GlobalVariables.life -= this.mobs.get(m.getIdentifier()).getDamageValue();
-			
-			if(GlobalVariables.life == 0){
-				
-				//afficher game over
+
+			if (GlobalVariables.life == 0) {
+
+				// afficher game over
 				System.out.println("Game over");
-				
-				//remplir la table score
-				//System.out.println(GlobalVariables)
-				
-				
+
+				// remplir la table score
+				// System.out.println(GlobalVariables)
+
 			}
 		}
 		return false;
@@ -117,7 +116,7 @@ public class Map {
 
 					g.drawLine((tower.getNearestMob(tower.mobCollision(this.mobs)).getX() + ((tower.getNearestMob(tower.mobCollision(this.mobs)).getWidth() / 2))),
 							((tower.getNearestMob(tower.mobCollision(this.mobs)).getY() + (((tower.getNearestMob(tower.mobCollision(this.mobs)).getHeight() / 2))))), tower.getX()
-							+ (tower.getWidth() / 2), tower.getY() + (tower.getHeight() / 2));
+									+ (tower.getWidth() / 2), tower.getY() + (tower.getHeight() / 2));
 				}
 				this.mobToShoot.remove(mob);
 			}
@@ -189,6 +188,10 @@ public class Map {
 		return rand.nextInt(2500) + 500;
 	}
 
+	public ArrayList<Tower> getTowers() {
+		return this.towers;
+	}
+
 	public int getWidth() {
 		return this.width;
 	}
@@ -244,6 +247,10 @@ public class Map {
 		Mob.previousMobSpawnTime = 0;
 		setWave(getWave() + 1);
 		this.spawnMobs();
+	}
+
+	public void setTowers(ArrayList<Tower> towers) {
+		this.towers = towers;
 	}
 
 	public boolean spawnMob(final int choice) {

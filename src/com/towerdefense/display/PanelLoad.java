@@ -32,14 +32,14 @@ public class PanelLoad extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionString = e.getActionCommand();
-		if (actionString.equals("OK")) {
+		if (actionString.equals("Ok")) {
 			for (Save save : this.allSaves) {
 				if (this.saveList.getSelectedItem().equals(save.getId_save())) {
 					Save.setSelectedSave(save);
+					System.out.println("ID Map :" + save.getId_map() + "/ID Player :" + save.getId_player() + "Wave : " + save.getWave() + "Time :" + save.getTime() + "Money : " + save.getMoney()
+							+ "Life : " + save.getLife());
 				}
 			}
-			System.out.println("" + Save.getSelectedSave().getId_map() + Save.getSelectedSave().getPseudo());
-
 		}
 
 	}
@@ -48,7 +48,9 @@ public class PanelLoad extends JPanel implements ActionListener {
 		Window.disableMenuItem();
 		this.setLayout(new BorderLayout());
 		this.add(new JScrollPane(this.load), BorderLayout.CENTER);
+		this.btnLoad.setActionCommand("Ok");
 		this.add(this.btnLoad, BorderLayout.SOUTH);
+		this.btnLoad.addActionListener(this);
 
 	}
 
@@ -63,6 +65,7 @@ public class PanelLoad extends JPanel implements ActionListener {
 			this.saveList.addItem(save.getId_save());
 		}
 		this.add(this.saveList);
+
 	}
 
 	@Override

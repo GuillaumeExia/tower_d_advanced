@@ -15,7 +15,7 @@ public class DataBase {
 
 	public DataBase() {
 		// super();
-		database = new DBLink();
+		this.database = new DBLink();
 	}
 
 	public Map loadMap(int id) {
@@ -27,68 +27,64 @@ public class DataBase {
 	}
 
 	public void save(String nickname, Map map) {
-		database.open();
+		this.database.open();
 		ResultSet idPlayerResult;
 		int idPlayer = 0;
 		int idSave = 0;
 
-		if (database.getIDPlayer(nickname) == null) {
-			database.savePlayer(nickname);
+		if (this.database.getIDPlayer(nickname) == null) {
+			this.database.savePlayer(nickname);
 		}
 		try {
-			idPlayerResult = database.getIDPlayer(nickname);
+			idPlayerResult = this.database.getIDPlayer(nickname);
 			idPlayerResult.next();
 			idPlayer = idPlayerResult.getInt(1);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		database.setSave(Map.getWave(), PanelMenu.stopwatch.getTimeIsInt(),
-				GlobalVariables.life, GlobalVariables.money, map.getId(),
-				idPlayer);
-		idSave = database.getSaveID();
-		saveTowers(map.getTowers(), idSave);
-		database.close();
+		this.database.setSave(Map.getWave(), PanelMenu.stopwatch.getTimeIsInt(), GlobalVariables.life, GlobalVariables.money, map.getId(), idPlayer);
+		idSave = this.database.getSaveID();
+		this.saveTowers(map.getTowers(), idSave);
+		this.database.close();
 	}
 
 	public void saveTowers(ArrayList<Tower> towers, int idSave) {
 		for (Tower tower : towers) {
-			database.saveTower(tower.getIdentifier(), tower.getUpgrade(),
-					tower.getHealth(), tower.getX(), tower.getY(), idSave);
+			this.database.saveTower(tower.getIdentifier(), tower.getUpgrade(), tower.getHealth(), tower.getX(), tower.getY(), idSave);
 		}
 	}
 
 	public ArrayList<Map> selectAllMaps() {
-		database.open();
+		this.database.open();
 		ArrayList<Map> mapList = new ArrayList<Map>();
-		ResultSet content = database.selectAllMapsProc();
+		ResultSet content = this.database.selectAllMapsProc();
 		try {
 			while (content.next()) {
-				mapList.add(new Map(content.getString("NAME"), content
-						.getInt("WIDTH"), content.getInt("HEIGHT"), content
-						.getInt("ID_MAP")));
+				mapList.add(new Map(content.getString("NAME"), content.getInt("WIDTH"), content.getInt("HEIGHT"), content.getInt("ID_MAP")));
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		database.close();
+		this.database.close();
 		return mapList;
 	}
 
 	public ArrayList<Save> selectAllSaves() {
-		database.open();
+		this.database.open();
 		ArrayList<Save> saveList = new ArrayList<Save>();
-		ResultSet content = database.selectAllSavesProc();
+		ResultSet content = this.database.selectAllSavesProc();
 		try {
 			while (content.next()) {
-				saveList.add(new Save(content.getString("PSEUDO"), content
-						.getInt("WAVE"), content.getInt("TIMEE"), content
-						.getInt("MONEY"), content.getInt("ID_MAP"), content
-						.getInt("ID_SAVE"), content.getInt("ID_PLAYER")));
+				saveList.add(new Save(content.getString("PSEUDO"), content.getInt("WAVE"), content.getInt("TIMEE"), content.getInt("MONEY"), content.getInt("ID_MAP"), content.getInt("ID_SAVE"),
+						content.getInt("ID_PLAYER"), content.getInt("LIFE")));
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		database.close();
+		this.database.close();
 		return saveList;
 	}
 }
