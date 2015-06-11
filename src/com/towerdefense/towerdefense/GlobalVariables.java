@@ -11,6 +11,7 @@ import com.towerdefense.towerdefense.objects.Ground;
 public class GlobalVariables {
 	public static String nickname;
 	private static BufferedImage sprite = null;
+	private static BufferedImage sprites = null;
 	public static int life = 1000;
 	public static int money = 5000;
 	public static Ground spawnpoint;
@@ -25,5 +26,16 @@ public class GlobalVariables {
 			}
 		}
 		return sprite;
+	}
+
+	public static BufferedImage getSprites() {
+		if (sprites == null) {
+			try {
+				sprites = ImageIO.read(GlobalVariables.class
+						.getResource("/res/images/sprites.png"));
+			} catch (IOException e) {
+			}
+		}
+		return sprites;
 	}
 }

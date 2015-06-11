@@ -9,7 +9,7 @@ import com.towerdefense.events.MouseHandler;
 import com.towerdefense.towerdefense.GlobalVariables;
 
 public class TowerZone extends Ground {
-	public final static int GROUND_TYPE = 5;
+	public final static int GROUND_TYPE = 4;
 	public final static Rectangle SPRITE_RECTANGLE = new Rectangle(96, 0, 32,
 			32);
 	public final static boolean WALKABLE = false;

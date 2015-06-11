@@ -16,6 +16,10 @@ import com.towerdefense.towerdefense.entities.mobs.Mob;
 public abstract class Tower extends Entity {
 
 	public final static int MAXHEALTH = 500;
+	public static final int TOWER_SPRITE_HEIGHT = 64;
+	public static final double DAMAGE_UPGRADE_RATIO = 1.3;
+	public static final double COOLDOWN_UPGRADE_RATIO = 0.8;
+	public static final double RANGE_UPGRADE_RATIO = 1.1;
 
 	private int width;
 
@@ -28,6 +32,8 @@ public abstract class Tower extends Entity {
 	private int x;
 	private int y;
 	private int cost;
+	private int upgradeLimit;
+	private int upgrade = 0;
 
 	public Tower(int x, int y) {
 		this.x = x;
@@ -38,6 +44,7 @@ public abstract class Tower extends Entity {
 	public void attack(ArrayList<?> mobs) {
 		if (isMobCollision((ArrayList<Mob>) mobs)) {
 			if (getCooldownCounter() >= getCooldown()) {
+				upgrade();
 				getNearestMob(mobCollision((ArrayList<Mob>) mobs)).dropHealth(
 						mobs, getDamageValue());
 				setCooldownCounter(0);
@@ -78,6 +85,10 @@ public abstract class Tower extends Entity {
 		return cost;
 	}
 
+	public int getHeight() {
+		return height;
+	}
+
 	public Mob getNearestMob(final ArrayList<Mob> mobs) {
 		int ghostX = 0, ghostY = 0, minimum = -1;
 		HashMap<Integer, Mob> distance = new HashMap<Integer, Mob>();
@@ -98,6 +109,18 @@ public abstract class Tower extends Entity {
 			}
 		}
 		return distance.get(minimum);
+	}
+
+	public int getUpgrade() {
+		return upgrade;
+	}
+
+	public int getUpgradeLimit() {
+		return upgradeLimit;
+	}
+
+	public int getWidth() {
+		return width;
 	}
 
 	@Override
@@ -162,6 +185,14 @@ public abstract class Tower extends Entity {
 		this.image = image;
 	}
 
+	public void setUpgrade(int upgrade) {
+		this.upgrade = upgrade;
+	}
+
+	public void setUpgradeLimit(int upgradeLimit) {
+		this.upgradeLimit = upgradeLimit;
+	}
+
 	public void setWidth(int width) {
 		this.width = width;
 	}
@@ -174,6 +205,20 @@ public abstract class Tower extends Entity {
 	@Override
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public void upgrade() {
+		if (getUpgrade() < getUpgradeLimit()) {
+			setDamageValue((int) (getDamageValue() * DAMAGE_UPGRADE_RATIO));
+			setCooldown((int) (getCooldown() * COOLDOWN_UPGRADE_RATIO));
+			setRangeValue((int) (getRangeValue() * RANGE_UPGRADE_RATIO));
+			setImage(GlobalVariables.getSprites().getSubimage(
+					32 * (getIdentifier() - 1),
+					Tower.TOWER_SPRITE_HEIGHT + (32 * (getUpgrade() + 1)),
+					getWidth(), getHeight()));
+			setUpgrade(getUpgrade() + 1);
+		}
+
 	}
 
 }

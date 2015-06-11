@@ -16,6 +16,7 @@ import com.towerdefense.towerdefense.entities.towers.Tower;
 public abstract class Mob extends Entity implements CanMove {
 
 	private static final int TYPE_MULTIPLIER = 2;
+	public static final int MOB_SPRITE_HEIGHT = 32;
 
 	public static int previousMobSpawnTime = 0;
 	private int movementSpeed;
