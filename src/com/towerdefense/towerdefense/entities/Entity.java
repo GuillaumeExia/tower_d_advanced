@@ -13,6 +13,8 @@ public abstract class Entity implements CanDieAttack {
 	private int cooldown;
 	private Image image;
 	private int cooldownCounter;
+	
+	private boolean alive = true;
 
 	protected int x;
 
@@ -21,10 +23,19 @@ public abstract class Entity implements CanDieAttack {
 	protected int width;
 
 	protected int height;
+	
+	public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
 
 	@Override
 	public void die(ArrayList<?> list) {
 		list.remove(this);
+		this.alive = false;
 	}
 
 	@Override

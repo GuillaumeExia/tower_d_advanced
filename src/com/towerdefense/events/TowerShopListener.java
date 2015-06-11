@@ -1,5 +1,7 @@
 package com.towerdefense.events;
 
+import com.towerdefense.towerdefense.objects.TowerZone;
+
 public interface TowerShopListener {
-	public void onTowerAdd(int idTower, int x, int y);
+	public void onTowerAdd(int idTower, TowerZone towerZone);
 }

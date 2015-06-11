@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class MouseHandler implements MouseListener, MouseMotionListener {
     public static ArrayList<MouseHandler> eventObserver = new ArrayList();
@@ -12,10 +13,12 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
         eventObserver.add(m);
     }
 
-    public static void fireMouseClicked(MouseEvent e){
-        for( MouseHandler m : eventObserver){
-            m.mouseClicked(e);
-        }
+	public static void fireMouseClicked(MouseEvent e){
+        try {
+            for (MouseHandler m : eventObserver) {
+                m.mouseClicked(e);
+            }
+        }catch(ConcurrentModificationException m){}
     }
 
     @Override

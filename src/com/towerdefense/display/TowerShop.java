@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.towerdefense.events.MouseHandler;
 import com.towerdefense.events.TowerShopListener;
 import com.towerdefense.towerdefense.GlobalVariables;
+import com.towerdefense.towerdefense.entities.towers.Tower;
 import com.towerdefense.towerdefense.objects.Ground;
 import com.towerdefense.towerdefense.objects.TowerZone;
 
@@ -65,10 +66,18 @@ public class TowerShop {
 				for (int i = 0; i < items.size(); i++) {
 					if (items.get(i).contains(e.getPoint())) {
 						if ((mode == TOWER)) {
-							Ground towerZone = (TowerZone) objectCaller; // Revoir
-							TowerShop.this.fireTowerAdd(i + 1,
-									towerZone.getX(), towerZone.getY());
+							TowerZone towerZone = (TowerZone) objectCaller; // Revoir
+							TowerShop.this.fireTowerAdd(i + 1, towerZone);
+							
 						}
+                        else if((mode == UPGRADE) && i == 0){
+                            Tower tower = (Tower) objectCaller;
+                            tower.getUpgrade();
+                        }
+                        else if((mode == UPGRADE) && i == 1){
+                            Tower tower = (Tower) objectCaller;
+                            //REMOVE TOWER
+                        }
 						items.clear();
 					}
 				}
@@ -128,9 +137,9 @@ public class TowerShop {
 		}
 	}
 
-	public void fireTowerAdd(int idTower, int x, int y) {
+	public void fireTowerAdd(int idTower, TowerZone towerZone) {
 		for (TowerShopListener shopListener : towerShopListeners) {
-			shopListener.onTowerAdd(idTower, x, y);
+			shopListener.onTowerAdd(idTower, towerZone);
 		}
 	}
 

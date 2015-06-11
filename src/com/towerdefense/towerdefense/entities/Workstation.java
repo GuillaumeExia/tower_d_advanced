@@ -2,7 +2,7 @@ package com.towerdefense.towerdefense.entities;
 
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
-
+import java.awt.*;
 import com.towerdefense.display.TowerShop;
 import com.towerdefense.events.MouseHandler;
 import com.towerdefense.towerdefense.GlobalVariables;
@@ -41,6 +41,13 @@ public class Workstation extends Tower implements CanBeRepaired {
 			}
 		});
 	}
+	
+	@Override
+    public void draw(Graphics g){
+       g.drawImage(GlobalVariables.getSprite().getSubimage(SPRITE_RECTANGLE.x, SPRITE_RECTANGLE.y, SPRITE_RECTANGLE.width, SPRITE_RECTANGLE.height), getX(), getY(), null);
+    }
+	
+	
 
 	/*
 	 * private int healthPoints;

@@ -15,6 +15,7 @@ import com.towerdefense.towerdefense.entities.mobs.MobFactory;
 import com.towerdefense.towerdefense.entities.towers.Tower;
 import com.towerdefense.towerdefense.entities.towers.TowerFactory;
 import com.towerdefense.towerdefense.objects.Ground;
+import com.towerdefense.towerdefense.objects.TowerZone;
 
 public class Map {
 	private static Map selectedMap;
@@ -190,9 +191,9 @@ public class Map {
 		TowerShop towerShop = new TowerShop();
 		towerShop.addTowerShopListener(new TowerShopListener() {
 			@Override
-			public void onTowerAdd(int idTower, int x, int y) {
+			public void onTowerAdd(int idTower, TowerZone towerZone) {
 				try {
-					Map.this.towers.add(TowerFactory.createTower(idTower, x, y));
+					Map.this.towers.add(TowerFactory.createTower(idTower, towerZone.getX(), towerZone.getY()));
 					if (!Map.this.towers.get(Map.this.towers.size() - 1).payForTower()) {
 						Map.this.towers.remove(Map.this.towers.size() - 1);
 						System.out.println("Plus de sous maggle");
@@ -203,6 +204,7 @@ public class Map {
 					e.printStackTrace();
 				}
 			}
+
 		});
 	}
 
