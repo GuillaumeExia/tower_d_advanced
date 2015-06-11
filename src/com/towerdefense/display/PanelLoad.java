@@ -40,12 +40,13 @@ public class PanelLoad extends JPanel implements ActionListener {
 
 					System.out.println("ID Map :" + save.getIdMap() + "/ID Player :" + save.getIdPlayer() + "Wave : " + save.getWave() + "Time :" + save.getTime() + "Money : " + save.getMoney()
 							+ "Life : " + save.getLife() + "Pseudo : " + save.getPseudo());
+					PanelMenu.stopwatch.start();
 				}
 
 			}
 			Map map = new Map(Save.getSelectedSave());
+			Window.enableMenuItem();
 			Window.changePanel("panelGame");
-			PanelMenu.stopwatch.start();
 			this.setVisible(false);
 		}
 

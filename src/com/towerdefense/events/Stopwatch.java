@@ -41,7 +41,7 @@ public class Stopwatch {
 			return timeToString((System.currentTimeMillis() - this.startTime - this.totalPauseTime) / 1000);
 		}
 		else {
-			return timeToString(this.duration);
+			return timeToString(((System.currentTimeMillis() - this.startTime - this.totalPauseTime) / 1000) + this.duration);
 		}
 	}
 
