@@ -31,7 +31,9 @@ public class ForkBomb extends Mob {
 		setReward(REWARD);
 		setProtection(PROTECTION);
 
-		setImage(GlobalVariables.getSprite().getSubimage(244, 0, WIDTH, HEIGHT));
+		setImage(GlobalVariables.getSprites()
+				.getSubimage(32 * (MOB_IDENTIFIER - 1), Mob.MOB_SPRITE_HEIGHT,
+						WIDTH, HEIGHT));
 	}
 
 	public void suicide() {

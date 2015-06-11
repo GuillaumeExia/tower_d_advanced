@@ -1,15 +1,18 @@
 package com.towerdefense.towerdefense.entities;
 
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
-import java.awt.*;
+
 import com.towerdefense.display.TowerShop;
 import com.towerdefense.events.MouseHandler;
 import com.towerdefense.towerdefense.GlobalVariables;
 import com.towerdefense.towerdefense.entities.towers.Tower;
 
 public class Workstation extends Tower implements CanBeRepaired {
-	public static Rectangle SPRITE_RECTANGLE = new Rectangle(64, 0, 32, 32);
+	public static final int SPRITE_Y_LEVEL = 7 * 32;
+	public static Rectangle SPRITE_RECTANGLE = new Rectangle(0, SPRITE_Y_LEVEL,
+			64, 64);
 	public static int[] ACTION_ZONE = { 34, 34 };
 	public static int WIDTH = 32;
 	public static int HEIGHT = 32;
@@ -22,7 +25,7 @@ public class Workstation extends Tower implements CanBeRepaired {
 	public Workstation(int x, int y) {
 		super(x, y);
 		workstation = this;
-		setImage(GlobalVariables.getSprite().getSubimage(SPRITE_RECTANGLE.x,
+		setImage(GlobalVariables.getSprites().getSubimage(SPRITE_RECTANGLE.x,
 				SPRITE_RECTANGLE.y, SPRITE_RECTANGLE.width * 2,
 				SPRITE_RECTANGLE.height));
 		setWidth(WIDTH);
@@ -41,17 +44,18 @@ public class Workstation extends Tower implements CanBeRepaired {
 			}
 		});
 	}
-	
+
 	@Override
-    public void draw(Graphics g){
-       g.drawImage(GlobalVariables.getSprite().getSubimage(SPRITE_RECTANGLE.x, SPRITE_RECTANGLE.y, SPRITE_RECTANGLE.width, SPRITE_RECTANGLE.height), getX(), getY(), null);
-    }
-	
-	
+	public void draw(Graphics g) {
+		g.drawImage(
+				GlobalVariables.getSprites().getSubimage(SPRITE_RECTANGLE.x,
+						SPRITE_RECTANGLE.y, SPRITE_RECTANGLE.width,
+						SPRITE_RECTANGLE.height), getX(), getY(), null);
+	}
 
 	/*
 	 * private int healthPoints;
-	 * 
+	 *
 	 * public int getHealthPoints() { return healthPoints; }
 	 */
 

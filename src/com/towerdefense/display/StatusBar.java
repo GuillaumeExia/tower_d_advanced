@@ -15,12 +15,13 @@ import com.towerdefense.towerdefense.Map;
 public class StatusBar extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	private static final int SPRITE_Y_LEVEL = 16 * 31;
 	private Timer stopwatch;
 
 	public StatusBar() {
 		this.setBounds(0, 0, 808, 50);
 		// this.setBackground(Color.red);
-		this.setBackground(Color.CYAN);
+		setBackground(Color.CYAN);
 	}
 
 	@Override
@@ -30,23 +31,29 @@ public class StatusBar extends JPanel implements ActionListener {
 	}
 
 	public void drawLife(Graphics g) {
-		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 16, 17, 16), 5, 3, null);
+		g.drawImage(
+				GlobalVariables.getSprites().getSubimage(16, SPRITE_Y_LEVEL,
+						16, 16), 5, 3, null);
 		g.drawString("" + GlobalVariables.life, 25, 15);
 	}
 
 	public void drawMoney(Graphics g) {
-		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 0, 17, 16), 70, 3, null);
+		g.drawImage(
+				GlobalVariables.getSprites().getSubimage(0, SPRITE_Y_LEVEL, 16,
+						16), 70, 3, null);
 		g.drawString("" + GlobalVariables.money, 90, 15);
 	}
 
 	public void drawTime(Graphics g) {
-		this.refreshTime();
+		refreshTime();
 		g.setFont(new Font("Digiface", Font.PLAIN, 20));
 		g.drawString("" + PanelMenu.stopwatch.getTimeIs(), 370, 19);
 	}
 
 	public void drawWave(Graphics g) {
-		g.drawImage(GlobalVariables.getSprite().getSubimage(128, 0, 17, 16), 755, 3, null);
+		g.drawImage(
+				GlobalVariables.getSprites().getSubimage(32, SPRITE_Y_LEVEL,
+						16, 16), 755, 3, null);
 		g.setFont(new Font("Arial", Font.PLAIN, 14));
 		g.drawString("" + Map.getWave(), 775, 16);
 	}
@@ -56,14 +63,14 @@ public class StatusBar extends JPanel implements ActionListener {
 		g.setColor(new Color(255, 255, 255, 100));
 		g.fillRect(0, 0, 808, 25);
 		g.setColor(new Color(0, 0, 0));
-		this.drawLife(g);
-		this.drawMoney(g);
-		this.drawTime(g);
-		this.drawWave(g);
+		drawLife(g);
+		drawMoney(g);
+		drawTime(g);
+		drawWave(g);
 	}
 
 	public void refreshTime() {
-		this.stopwatch = new Timer(30, new ActionListener() {
+		stopwatch = new Timer(30, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PanelMenu.stopwatch.getTimeIs();

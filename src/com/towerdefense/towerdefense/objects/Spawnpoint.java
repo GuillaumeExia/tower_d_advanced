@@ -8,7 +8,8 @@ public class Spawnpoint extends Ground {
 	public final static int GROUND_TYPE = 3;
 	// public final static Rectangle SPRITE_RECTANGLE = new Rectangle(179, 0,
 	// 32, 32);
-	public final static Rectangle SPRITE_RECTANGLE = new Rectangle(0, 0, 32, 32);
+	public final static Rectangle SPRITE_RECTANGLE = new Rectangle(
+			32 * (GROUND_TYPE - 1), Ground.GROUND_SPRITE_HEIGHT, 32, 32);
 	public final static boolean WALKABLE = true;
 
 	public Spawnpoint(int x, int y) {
@@ -16,7 +17,7 @@ public class Spawnpoint extends Ground {
 		setWalkable(WALKABLE);
 		GlobalVariables.spawnpoint = this;
 
-		setImage(GlobalVariables.getSprite().getSubimage(SPRITE_RECTANGLE.x,
+		setImage(GlobalVariables.getSprites().getSubimage(SPRITE_RECTANGLE.x,
 				SPRITE_RECTANGLE.y, SPRITE_RECTANGLE.width,
 				SPRITE_RECTANGLE.height));
 	}

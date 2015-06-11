@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 public abstract class Ground {
+	public static final int GROUND_SPRITE_HEIGHT = 0;
 	private static int WIDTH = 32;
 	private static int HEIGHT = 32;
 	private Image image;
@@ -24,7 +25,7 @@ public abstract class Ground {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(this.image, this.x, this.y, null);
+		g.drawImage(image, x, y, null);
 
 		/*
 		 * if (this.debug) { g.setColor(this.debugColor); g.fillRect(this.x,
@@ -33,31 +34,31 @@ public abstract class Ground {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+		return new Rectangle(x, y, WIDTH, HEIGHT);
 	}
 
 	public Point getCenterPoint() {
-		return new Point((WIDTH / 2) + this.x, (HEIGHT / 2) + this.y);
+		return new Point((WIDTH / 2) + x, (HEIGHT / 2) + y);
 	}
 
 	public Image getImage() {
-		return this.image;
+		return image;
 	}
 
 	public int getType() {
-		return this.type;
+		return type;
 	}
 
 	public int getX() {
-		return this.x;
+		return x;
 	}
 
 	public int getY() {
-		return this.y;
+		return y;
 	}
 
 	public boolean isWalkable() {
-		return this.walkable;
+		return walkable;
 	}
 
 	public void setImage(Image image) {

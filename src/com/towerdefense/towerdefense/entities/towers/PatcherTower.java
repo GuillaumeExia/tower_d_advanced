@@ -29,6 +29,8 @@ public class PatcherTower extends Tower {
 		setUpgradeLimit(UPGRADE_LIMIT);
 		setIdentifier(TOWER_IDENTIFIER);
 
-		setImage(GlobalVariables.getSprite().getSubimage(390, 0, WIDTH, HEIGHT));
+		setImage(GlobalVariables.getSprites().getSubimage(
+				32 * (TOWER_IDENTIFIER - 1), Tower.TOWER_SPRITE_HEIGHT, WIDTH,
+				HEIGHT));
 	}
 }
