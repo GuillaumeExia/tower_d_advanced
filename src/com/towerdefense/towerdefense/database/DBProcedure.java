@@ -6,7 +6,7 @@ public abstract class DBProcedure {
 	}
 
 	public static String getMap() {
-		return "{call saveTerrain(?)}";
+		return "{call getMap(?)}";
 	}
 
 	public static String getSave() {

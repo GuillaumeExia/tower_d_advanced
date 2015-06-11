@@ -37,10 +37,12 @@ public class Stopwatch {
 	// private long duration = 0;
 
 	public String getTimeIs() {
-		// this.duration = (((System.currentTimeMillis() - (this.startTime)) -
-		// ((this.endPause - this.startPause))) / 1000);
-		// return timeToString(this.duration);
-		return timeToString((System.currentTimeMillis() - this.startTime - this.totalPauseTime) / 1000);
+		if (this.duration == 0) {
+			return timeToString((System.currentTimeMillis() - this.startTime - this.totalPauseTime) / 1000);
+		}
+		else {
+			return timeToString(this.duration);
+		}
 	}
 
 	public int getTimeIsInt() {

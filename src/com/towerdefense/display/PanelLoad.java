@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.towerdefense.towerdefense.Map;
 import com.towerdefense.towerdefense.Save;
 import com.towerdefense.towerdefense.database.DataBase;
 
@@ -36,10 +37,16 @@ public class PanelLoad extends JPanel implements ActionListener {
 			for (Save save : this.allSaves) {
 				if (this.saveList.getSelectedItem().equals(save.getStringSave())) {
 					Save.setSelectedSave(save);
+
 					System.out.println("ID Map :" + save.getIdMap() + "/ID Player :" + save.getIdPlayer() + "Wave : " + save.getWave() + "Time :" + save.getTime() + "Money : " + save.getMoney()
 							+ "Life : " + save.getLife() + "Pseudo : " + save.getPseudo());
 				}
+
 			}
+			Map map = new Map(Save.getSelectedSave());
+			Window.changePanel("panelGame");
+			PanelMenu.stopwatch.start();
+			this.setVisible(false);
 		}
 
 	}
