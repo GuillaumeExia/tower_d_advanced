@@ -10,7 +10,7 @@ public abstract class DBProcedure {
 	}
 
 	public static String getSaveID() {
-		return "{? = call getSaveID}";
+		return "{call getSaveID(?)}";
 	}
 
 	public static String getScore() {
@@ -49,16 +49,12 @@ public abstract class DBProcedure {
 		return "{? = call mapSelection(?)}";
 	}
 
-	public static String saveMap() {
-		return "{call saveMap(?, ?, ?)}";
-	}
-
 	public static String savePlayer() {
 		return "{call savePlayer(?)}";
 	}
 
 	public static String saveTower() {
-		return "{call saveMap(?, ?, ?, ?, ?, ?)}";
+		return "{call saveTower(?, ?, ?, ?, ?, ?)}";
 	}
 
 	public static String selectAllMaps() {

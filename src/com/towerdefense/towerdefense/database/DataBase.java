@@ -29,7 +29,6 @@ public class DataBase {
 	public void save(String nickname, Map map) {
 		database.open();
 		ResultSet idPlayerResult;
-		ResultSet idSaveResult;
 		int idPlayer = 0;
 		int idSave = 0;
 
@@ -46,13 +45,7 @@ public class DataBase {
 		database.setSave(Map.getWave(), PanelMenu.stopwatch.getTimeIsInt(),
 				GlobalVariables.life, GlobalVariables.money, map.getId(),
 				idPlayer);
-		try {
-			idSaveResult = database.getSaveID();
-			idSaveResult.next();
-			idSave = idSaveResult.getInt(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		idSave = database.getSaveID();
 		saveTowers(map.getTowers(), idSave);
 		database.close();
 	}

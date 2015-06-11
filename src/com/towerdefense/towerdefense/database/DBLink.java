@@ -103,14 +103,15 @@ public class DBLink {
 		return result;
 	}
 
-	public ResultSet getSaveID() {
+	public int getSaveID() {
 		CallableStatement procedure;
-		ResultSet result = null;
+		int result = 0;
 		try {
 			procedure = connection.prepareCall(DBProcedure.getSaveID(),
 					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure.registerOutParameter("p_id", java.sql.Types.INTEGER);
 			procedure.execute();
-			result = procedure.getResultSet();
+			result = procedure.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -289,24 +290,6 @@ public class DBLink {
 		}
 		System.out.println("Connection successfull");
 		return true;
-	}
-
-	public void saveMap() {
-		CallableStatement procedure;
-		ResultSet result = null;
-		try {
-			procedure = connection.prepareCall(DBProcedure.saveMap(),
-					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			procedure.setString(1, "First parameter of the procedure");
-			procedure.setString(2, "Second parameter of the procedure");
-			procedure.setString(3, "Third parameter of the procedure");
-			procedure.execute();
-			result = procedure.getResultSet();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		// TODO Add valid arguments
-
 	}
 
 	public void savePlayer(String nickname) {
