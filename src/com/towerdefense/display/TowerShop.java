@@ -10,7 +10,6 @@ import com.towerdefense.events.MouseHandler;
 import com.towerdefense.events.TowerShopListener;
 import com.towerdefense.towerdefense.GlobalVariables;
 import com.towerdefense.towerdefense.entities.towers.Tower;
-import com.towerdefense.towerdefense.objects.Ground;
 import com.towerdefense.towerdefense.objects.TowerZone;
 
 public class TowerShop {
@@ -68,16 +67,14 @@ public class TowerShop {
 						if ((mode == TOWER)) {
 							TowerZone towerZone = (TowerZone) objectCaller; // Revoir
 							TowerShop.this.fireTowerAdd(i + 1, towerZone);
-							
+
+						} else if ((mode == UPGRADE) && (i == 0)) {
+							Tower tower = (Tower) objectCaller;
+							tower.upgrade();
+						} else if ((mode == UPGRADE) && (i == 1)) {
+							Tower tower = (Tower) objectCaller;
+							// REMOVE TOWER
 						}
-                        else if((mode == UPGRADE) && i == 0){
-                            Tower tower = (Tower) objectCaller;
-                            tower.getUpgrade();
-                        }
-                        else if((mode == UPGRADE) && i == 1){
-                            Tower tower = (Tower) objectCaller;
-                            //REMOVE TOWER
-                        }
 						items.clear();
 					}
 				}
@@ -104,7 +101,7 @@ public class TowerShop {
 					items.add(new Rectangle(xc
 							- (towerImages[j].getWidth() / 2), yc
 							- (towerImages[j].getHeight() / 2), towerImages[j]
-							.getWidth(), towerImages[j].getHeight()));
+									.getWidth(), towerImages[j].getHeight()));
 					g.drawImage(towerImages[j], xc
 							- (towerImages[j].getWidth() / 2), yc
 							- (towerImages[j].getHeight() / 2), null);
@@ -118,7 +115,7 @@ public class TowerShop {
 							.sin((Math.PI * i) / 180)));
 					items.add(new Rectangle(
 							xc - (towerTools[j].getWidth() / 2), yc
-									- (towerTools[j].getHeight() / 2),
+							- (towerTools[j].getHeight() / 2),
 							towerTools[j].getWidth(), towerTools[j].getHeight()));
 					g.drawImage(towerTools[j], xc
 							- (towerTools[j].getWidth() / 2), yc
@@ -128,10 +125,10 @@ public class TowerShop {
 				g.drawImage(workstationTools[0],
 						x - (workstationTools[0].getWidth() / 2),
 						(y + (WIDTH / 2))
-								- (workstationTools[0].getHeight() / 2), null);
+						- (workstationTools[0].getHeight() / 2), null);
 				items.add(new Rectangle(x - (towerTools[0].getWidth() / 2),
 						(y + (WIDTH / 2))
-								- (workstationTools[0].getHeight() / 2),
+						- (workstationTools[0].getHeight() / 2),
 						towerTools[0].getWidth(), towerTools[0].getHeight()));
 			}
 		}

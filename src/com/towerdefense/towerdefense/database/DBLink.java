@@ -8,9 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.towerdefense.towerdefense.GlobalVariables;
-import com.towerdefense.towerdefense.Map;
-import com.towerdefense.towerdefense.Save;
 import com.towerdefense.towerdefense.entities.Workstation;
 import com.towerdefense.towerdefense.objects.Grass;
 import com.towerdefense.towerdefense.objects.Ground;
@@ -34,17 +31,16 @@ public class DBLink {
 
 	public void close() {
 		try {
-			if (this.statement != null) {
-				this.statement.close();
+			if (statement != null) {
+				statement.close();
 			}
-			if (this.connection != null) {
-				this.connection.close();
+			if (connection != null) {
+				connection.close();
 			}
-			if (this.resultSet != null) {
-				this.resultSet.close();
+			if (resultSet != null) {
+				resultSet.close();
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -53,62 +49,85 @@ public class DBLink {
 	public java.sql.ResultSet executeQuery(String query) {
 
 		try {
-			return this.statement.executeQuery(query);
-		}
-		catch (SQLException e) {
+			return statement.executeQuery(query);
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
 	public Connection getConnection() {
-		return this.connection;
+		return connection;
 	}
 
-	public ResultSet getIDPlayer() {
+	public ResultSet getIDPlayer(String nickname) {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.getIDPlayer(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(DBProcedure.getIDPlayer(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
-			procedure.setString(1, GlobalVariables.nickname);
+			procedure.setString(1, nickname);
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
-		return result;
+		try {
+			if (result.first()) {
+				result.beforeFirst();
+				return result;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public ResultSet getSave() {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.getSave(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(DBProcedure.getSave(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
 		return result;
 	}
 
+	public ResultSet getSaveID() {
+		CallableStatement procedure;
+		ResultSet result = null;
+		try {
+			procedure = connection.prepareCall(DBProcedure.getSaveID(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure.execute();
+			result = procedure.getResultSet();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+
 	public ResultSet getScore() {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.getScore(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(DBProcedure.getScore(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
@@ -119,15 +138,14 @@ public class DBLink {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.getTerrain(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(DBProcedure.getTerrain(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// TODO Add valid arguments
 		return result;
 	}
 
@@ -135,13 +153,14 @@ public class DBLink {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.loadPlayerSaveWithIDSave(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(
+					DBProcedure.loadPlayerSaveWithIDSave(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
@@ -152,13 +171,13 @@ public class DBLink {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.loadPlayerWithID(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(DBProcedure.loadPlayerWithID(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
@@ -169,13 +188,13 @@ public class DBLink {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.loadTerrainWithID(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(DBProcedure.loadTerrainWithID(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
@@ -186,12 +205,13 @@ public class DBLink {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.loadTowerSaveWithIDSave(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(
+					DBProcedure.loadTowerSaveWithIDSave(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
@@ -202,12 +222,12 @@ public class DBLink {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.loadTowerWithID(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(DBProcedure.loadTowerWithID(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
@@ -215,10 +235,11 @@ public class DBLink {
 	}
 
 	public ArrayList<Ground> mapSelection(int id) {
-		this.open();
+		open();
 		ArrayList<Ground> groundList = new ArrayList();
 		try {
-			CallableStatement cs = this.connection.prepareCall(DBProcedure.loadTerrain());
+			CallableStatement cs = connection.prepareCall(DBProcedure
+					.loadTerrain());
 			cs.setInt(1, id);
 			ResultSet rs = cs.executeQuery();
 			while (rs.next()) {
@@ -227,44 +248,41 @@ public class DBLink {
 				int yPixel = rs.getInt("Y") * 32;
 
 				switch (rs.getInt("TYPE")) {
-					case 1:
-						groundList.add(new Grass(xPixel, yPixel));
-						break;
-					case 2:
-						groundList.add(new Path(xPixel, yPixel));
-						break;
-					case 3:
-						groundList.add(new Spawnpoint(xPixel, yPixel));
-						break;
-					case 4:
-						new Workstation(xPixel, yPixel);
-						break;
-					case 5:
-						groundList.add(new TowerZone(xPixel, yPixel));
-						break;
+				case 1:
+					groundList.add(new Grass(xPixel, yPixel));
+					break;
+				case 2:
+					groundList.add(new Path(xPixel, yPixel));
+					break;
+				case 3:
+					groundList.add(new Spawnpoint(xPixel, yPixel));
+					break;
+				case 4:
+					new Workstation(xPixel, yPixel);
+					break;
+				case 5:
+					groundList.add(new TowerZone(xPixel, yPixel));
+					break;
 				}
 
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.close();
+		close();
 		return groundList;
 	}
 
 	public boolean open() {
-		if (this.connection == null) {
+		if (connection == null) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
-				this.connection = DriverManager.getConnection(this.url, this.user, this.password);
-				this.statement = this.connection.createStatement();
-			}
-			catch (ClassNotFoundException e) {
+				connection = DriverManager.getConnection(url, user, password);
+				statement = connection.createStatement();
+			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				return false;
-			}
-			catch (SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				return false;
 			}
@@ -277,14 +295,14 @@ public class DBLink {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.saveMap(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(DBProcedure.saveMap(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.setString(2, "Second parameter of the procedure");
 			procedure.setString(3, "Third parameter of the procedure");
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
@@ -295,79 +313,70 @@ public class DBLink {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.savePlayer(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure = connection.prepareCall(DBProcedure.savePlayer(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			procedure.setString(1, nickname);
 			procedure.execute();
 			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
 
 	}
 
-	public void saveTower() {
+	public void saveTower(int type, int upgrade, int health, int x, int y,
+			int idSave) {
 		CallableStatement procedure;
 		ResultSet result = null;
 
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.saveTower(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			procedure.setString(1, "");
-			procedure.setString(2, "Second parameter of the procedure");
-			procedure.setString(3, "Third parameter of the procedure");
-			procedure.setString(4, "4 parameter of the procedure");
-			procedure.setString(5, "5 parameter of the procedure");
-			procedure.setString(6, "6 parameter of the procedure");
+			procedure = connection.prepareCall(DBProcedure.saveTower(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure.setInt(1, type);
+			procedure.setInt(2, upgrade);
+			procedure.setInt(3, health);
+			procedure.setInt(4, x);
+			procedure.setInt(5, y);
+			procedure.setInt(6, idSave);
 			procedure.execute();
-			result = procedure.getResultSet();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
 
 	}
 
-	public ArrayList<Map> selectAllMapsProc() {
-		this.open();
-		ArrayList<Map> mapList = new ArrayList();
+	public ResultSet selectAllMapsProc() {
+		ResultSet result = null;
 		try {
-			CallableStatement cs = this.connection.prepareCall(DBProcedure.selectAllMaps());
-			ResultSet rs = cs.executeQuery();
-			while (rs.next()) {
-				mapList.add(new Map(rs.getString("NAME"), rs.getInt("WIDTH"), rs.getInt("HEIGHT"), rs.getInt("ID_MAP")));
-			}
-		}
-		catch (SQLException e) {
+			CallableStatement cs = connection.prepareCall(DBProcedure
+					.selectAllMaps());
+			result = cs.executeQuery();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.close();
-		return mapList;
+		return result;
 	}
 
-	public ArrayList<Save> selectAllSavesProc() {
-		this.open();
-		ArrayList<Save> saveList = new ArrayList();
+	public ResultSet selectAllSavesProc() {
+		ResultSet result = null;
 		try {
-			CallableStatement cs = this.connection.prepareCall(DBProcedure.selectAllSaves());
-			ResultSet rs = cs.executeQuery();
-			while (rs.next()) {
-				saveList.add(new Save(rs.getString("PSEUDO"), rs.getInt("WAVE"), rs.getInt("TIMEE"), rs.getInt("MONEY"), rs.getInt("ID_MAP"), rs.getInt("ID_SAVE"), rs.getInt("ID_PLAYER")));
-			}
-		}
-		catch (SQLException e) {
+			CallableStatement cs = connection.prepareCall(DBProcedure
+					.selectAllSaves());
+			result = cs.executeQuery();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.close();
-		return saveList;
+		return result;
 	}
 
-	public void setSave(int wave, int time, int life, int money, int id_map, int id_player) {
+	public void setSave(int wave, int time, int life, int money, int id_map,
+			int id_player) {
 		CallableStatement procedure;
 
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.setSave());
+			procedure = connection.prepareCall(DBProcedure.setSave());
 			procedure.setInt(1, wave);
 			procedure.setInt(2, time);
 			procedure.setInt(3, life);
@@ -375,8 +384,7 @@ public class DBLink {
 			procedure.setInt(5, id_map);
 			procedure.setInt(6, id_player);
 			procedure.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments
@@ -385,12 +393,11 @@ public class DBLink {
 	public void setScore() {
 		CallableStatement procedure;
 		try {
-			procedure = this.connection.prepareCall(DBProcedure.setScore());
+			procedure = connection.prepareCall(DBProcedure.setScore());
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.setString(2, "Second parameter of the procedure");
 			procedure.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// TODO Add valid arguments

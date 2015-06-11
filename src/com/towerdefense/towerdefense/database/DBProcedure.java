@@ -9,6 +9,10 @@ public abstract class DBProcedure {
 		return "{? = call loadSaveWithID(?)}";
 	}
 
+	public static String getSaveID() {
+		return "{? = call getSaveID}";
+	}
+
 	public static String getScore() {
 		return "{? = call getScore(?)}";
 	}

@@ -11,17 +11,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.towerdefense.towerdefense.GlobalVariables;
+import com.towerdefense.towerdefense.Map;
 import com.towerdefense.towerdefense.database.DataBase;
 
 public class NicknameAsker extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private static JTextField nickname;
-	private DataBase database = new DataBase();
 
 	public static JTextField getNickname() {
 		return nickname;
 	}
+
+	private DataBase database = new DataBase();
 
 	private JLabel enterNickname;
 
@@ -31,51 +33,49 @@ public class NicknameAsker extends JDialog implements ActionListener {
 
 	public NicknameAsker() {
 		this.setSize(300, 100);
-		this.setTitle("Nickname");
-		this.setAlwaysOnTop(true);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
-		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-		this.setLayout(new FlowLayout());
+		setTitle("Nickname");
+		setAlwaysOnTop(true);
+		setLocationRelativeTo(null);
+		setVisible(true);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		setLayout(new FlowLayout());
 
-		this.enterNickname = new JLabel();
-		this.enterNickname.setText("To save your game please enter your nickname");
-		this.add(this.enterNickname);
+		enterNickname = new JLabel();
+		enterNickname.setText("To save your game please enter your nickname");
+		this.add(enterNickname);
 
 		nickname = new JTextField();
 		nickname.setColumns(10);
 		this.add(nickname);
 
-		this.validButton.setActionCommand("Ok");
-		this.add(this.validButton);
-		this.validButton.addActionListener(this);
+		validButton.setActionCommand("Ok");
+		this.add(validButton);
+		validButton.addActionListener(this);
 	}
 
 	@SuppressWarnings("static-access")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionString = e.getActionCommand();
-		
+
 		int test;
 		if (actionString.equals("Ok")) {
 			if (NicknameAsker.getNickname().getText().equals("")) {
-				this.optionPaneVerif = new JOptionPane();
-				this.optionPaneVerif.showMessageDialog(this, "Please enter a nickname", "Error", JOptionPane.ERROR_MESSAGE);
+				optionPaneVerif = new JOptionPane();
+				optionPaneVerif.showMessageDialog(this,
+						"Please enter a nickname", "Error",
+						JOptionPane.ERROR_MESSAGE);
 				Window.changePanel("panelGame");
-				this.setVisible(false);//
-			}
-			else {
+				setVisible(false);//
+			} else {
 				GlobalVariables.nickname = nickname.getText();
 				Window.changePanel("panelMenu");
 				Window.disableMenuItem();
 				System.out.println("Je simule la sauvegarde ici !");
-				// faire ici la procedure de sauvegarde de la partie 
-				database.save("truc");
-			
-				
-				
-				
-				this.setVisible(false);
+				// faire ici la procedure de sauvegarde de la partie
+				database.save(nickname.getText(), Map.getSelectedMap());
+
+				setVisible(false);
 			}
 		}
 	}
