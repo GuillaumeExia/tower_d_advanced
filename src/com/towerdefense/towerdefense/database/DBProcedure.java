@@ -5,6 +5,10 @@ public abstract class DBProcedure {
 		return "{call getIDPlayer(?)}";
 	}
 
+	public static String getMap() {
+		return "{call saveTerrain(?)}";
+	}
+
 	public static String getSave() {
 		return "{? = call loadSaveWithID(?)}";
 	}
@@ -76,5 +80,4 @@ public abstract class DBProcedure {
 	public static String setTerrain() {
 		return "{call saveTerrain(?, ?, ?, ?)}";
 	}
-
 }

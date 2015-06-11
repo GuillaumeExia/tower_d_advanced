@@ -86,6 +86,21 @@ public class DBLink {
 		return null;
 	}
 
+	public ResultSet getMap(int id) {
+		CallableStatement procedure;
+		ResultSet result = null;
+		try {
+			procedure = connection.prepareCall(DBProcedure.getMap(),
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			procedure.setInt(1, id);
+			procedure.execute();
+			result = procedure.getResultSet();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	public ResultSet getSave() {
 		CallableStatement procedure;
 		ResultSet result = null;

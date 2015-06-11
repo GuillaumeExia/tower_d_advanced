@@ -6,9 +6,10 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.towerdefense.display.PanelMenu;
 import com.towerdefense.display.TowerShop;
 import com.towerdefense.events.TowerShopListener;
-import com.towerdefense.towerdefense.database.DBLink;
+import com.towerdefense.towerdefense.database.DataBase;
 import com.towerdefense.towerdefense.entities.Workstation;
 import com.towerdefense.towerdefense.entities.mobs.Mob;
 import com.towerdefense.towerdefense.entities.mobs.MobFactory;
@@ -56,11 +57,16 @@ public class Map {
 	private int waveTime = 0;
 
 	public Map(Save save) {
+		DataBase database = new DataBase();
 		wave = save.getWave();
+		PanelMenu.stopwatch.setTimeIs(save.getTime());
 		GlobalVariables.money = save.getMoney();
 		id = save.getIdMap();
-		height = height;
-		id = id;
+		height = database.getMap(save.getIdMap()).height;
+		width = database.getMap(save.getIdMap()).width;
+		Map.setSelectedMap(this);
+		init();
+		PanelMenu.stopwatch.start();
 	}
 
 	public Map(String name, int width, int height, int id) {
@@ -127,12 +133,12 @@ public class Map {
 					g.drawLine(
 							(tower.getNearestMob(tower.mobCollision(mobs))
 									.getX() + ((tower.getNearestMob(
-									tower.mobCollision(mobs)).getWidth() / 2))),
-							((tower.getNearestMob(tower.mobCollision(mobs))
-									.getY() + (((tower.getNearestMob(
-									tower.mobCollision(mobs)).getHeight() / 2))))),
-							tower.getX() + (tower.getWidth() / 2), tower.getY()
-									+ (tower.getHeight() / 2));
+											tower.mobCollision(mobs)).getWidth() / 2))),
+											((tower.getNearestMob(tower.mobCollision(mobs))
+													.getY() + (((tower.getNearestMob(
+															tower.mobCollision(mobs)).getHeight() / 2))))),
+															tower.getX() + (tower.getWidth() / 2), tower.getY()
+															+ (tower.getHeight() / 2));
 				}
 				mobToShoot.remove(mob);
 			}
@@ -177,8 +183,8 @@ public class Map {
 
 	public void fetchTerrain() {
 		if (grounds == null) {
-			DBLink dbLink = new DBLink();
-			grounds = dbLink.mapSelection(id);
+			DataBase database = new DataBase();
+			grounds = database.loadTerrain(id);
 		}
 	}
 
