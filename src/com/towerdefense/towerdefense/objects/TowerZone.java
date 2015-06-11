@@ -43,6 +43,5 @@ public class TowerZone extends Ground {
 	public void draw(Graphics g) {
 		super.draw(g);
 	}
-	//
 
 }

@@ -61,5 +61,6 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
 		// Frame.statusBarLabel.setText("Bouton relâché!");
 
 	}
+	//
 
 }

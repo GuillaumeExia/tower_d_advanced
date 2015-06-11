@@ -171,5 +171,4 @@ public class TowerShop {
 		this.mode = mode;
 		display = true;
 	}
-	//
 }
