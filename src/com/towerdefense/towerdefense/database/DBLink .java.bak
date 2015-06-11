@@ -114,7 +114,7 @@ public class DBLink {
 	public void setSave() {
 		CallableStatement procedure;
 		try {
-			procedure = connection.prepareCall(DBProcedure.setSave());
+			procedure = connection.prepareCall(DBProcedure.setSave();
 			procedure.setString(1, "First parameter of the procedure");
 			procedure.execute();
 		} catch (SQLException e) {

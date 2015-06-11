@@ -11,11 +11,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.towerdefense.towerdefense.GlobalVariables;
+import com.towerdefense.towerdefense.database.DataBase;
 
 public class NicknameAsker extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private static JTextField nickname;
+	private DataBase database = new DataBase();
 
 	public static JTextField getNickname() {
 		return nickname;
@@ -53,6 +55,8 @@ public class NicknameAsker extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionString = e.getActionCommand();
+		
+		int test;
 		if (actionString.equals("Ok")) {
 			if (NicknameAsker.getNickname().getText().equals("")) {
 				this.optionPaneVerif = new JOptionPane();
@@ -65,6 +69,12 @@ public class NicknameAsker extends JDialog implements ActionListener {
 				Window.changePanel("panelMenu");
 				Window.disableMenuItem();
 				System.out.println("Je simule la sauvegarde ici !");
+				// faire ici la procedure de sauvegarde de la partie 
+				database.save("truc");
+			
+				
+				
+				
 				this.setVisible(false);
 			}
 		}
