@@ -28,28 +28,28 @@ public class MapAsker extends JDialog implements ActionListener {
 
 	public MapAsker() {
 		this.setSize(100, 130);
-		setTitle("Map choice");
-		setAlwaysOnTop(true);
-		setLocationRelativeTo(null);
-		setVisible(true);
-		setDefaultCloseOperation(HIDE_ON_CLOSE);
-		setLayout(new FlowLayout());
+		this.setTitle("Map choice");
+		this.setAlwaysOnTop(true);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.setLayout(new FlowLayout());
 
-		chooseMap = new JLabel();
-		chooseMap.setText("Choose a map");
-		this.add(chooseMap);
+		this.chooseMap = new JLabel();
+		this.chooseMap.setText("Choose a map");
+		this.add(this.chooseMap);
 
-		mapList = new JComboBox();
+		this.mapList = new JComboBox();
 		DataBase database = new DataBase();
-		allMaps = database.selectAllMaps();
-		for (Map map : allMaps) {
-			mapList.addItem(map.getName());
+		this.allMaps = database.selectAllMaps();
+		for (Map map : this.allMaps) {
+			this.mapList.addItem(map.getName());
 		}
-		this.add(mapList);
+		this.add(this.mapList);
 
-		validButton.setActionCommand("Ok");
-		this.add(validButton);
-		validButton.addActionListener(this);
+		this.validButton.setActionCommand("Ok");
+		this.add(this.validButton);
+		this.validButton.addActionListener(this);
 	}
 
 	@Override
@@ -57,15 +57,15 @@ public class MapAsker extends JDialog implements ActionListener {
 		String actionString = e.getActionCommand();
 		if (actionString.equals("Ok")) {
 
-			for (Map map : allMaps) {
-				if (mapList.getSelectedItem().equals(map.getName())) {
+			for (Map map : this.allMaps) {
+				if (this.mapList.getSelectedItem().equals(map.getName())) {
 					Map.setSelectedMap(map);
 					map.init();
 					PanelMenu.stopwatch.start();
 				}
 			}
 			Window.changePanel("panelGame");
-			setVisible(false);
+			this.setVisible(false);
 		}
 	}
 }
