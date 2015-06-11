@@ -15,32 +15,32 @@ public class Save {
 	private int wave;
 	private int time;
 	private int money;
-	private int id_map;
-	private int id_save;
-	private int id_player;
+	private int idMap;
+	private int idSave;
+	private int idPlayer;
 	private int life;
 
-	public Save(String pseudo, int wave, int time, int money, int id_map, int id_save, int id_player, int life) {
+	public Save(String pseudo, int wave, int time, int money, int idMap, int idSave, int idPlayer, int life) {
 		this.pseudo = pseudo;
 		this.wave = wave;
 		this.time = time;
 		this.money = money;
-		this.id_map = id_map;
-		this.id_save = id_save;
-		this.id_player = id_player;//
+		this.idMap = idMap;
+		this.idSave = idSave;
+		this.idPlayer = idPlayer;//
 		this.life = life;
 	}
 
-	public int getId_map() {
-		return this.id_map;
+	public int getIdMap() {
+		return this.idMap;
 	}
 
-	public int getId_player() {
-		return this.id_player;
+	public int getIdPlayer() {
+		return this.idPlayer;
 	}
 
-	public int getId_save() {
-		return this.id_save;
+	public int getIdSave() {
+		return this.idSave;
 	}
 
 	public int getLife() {
@@ -55,6 +55,12 @@ public class Save {
 		return this.pseudo;
 	}
 
+	public String getStringSave() {
+		String stringSave = "Map :" + this.getIdMap() + " | Pseudo : " + this.getPseudo() + " | Wave :" + this.getWave() + " | Life :" + this.getLife() + " | Money :" + this.getMoney() + " | Time :"
+				+ this.getTime();
+		return stringSave;
+	}
+
 	public int getTime() {
 		return this.time;
 	}
@@ -63,16 +69,16 @@ public class Save {
 		return this.wave;
 	}
 
-	public void setId_map(int id_map) {
-		this.id_map = id_map;
+	public void setIdMap(int idMap) {
+		this.idMap = idMap;
 	}
 
-	public void setId_player(int id_player) {
-		this.id_player = id_player;
+	public void setIdPlayer(int idPlayer) {
+		this.idPlayer = idPlayer;
 	}
 
-	public void setId_save(int id_save) {
-		this.id_save = id_save;
+	public void setIdSave(int idSave) {
+		this.idSave = idSave;
 	}
 
 	public void setLife(int life) {

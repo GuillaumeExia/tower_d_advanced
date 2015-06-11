@@ -1,6 +1,7 @@
 package com.towerdefense.display;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import com.towerdefense.towerdefense.Save;
 import com.towerdefense.towerdefense.database.DataBase;
@@ -22,7 +22,7 @@ public class PanelLoad extends JPanel implements ActionListener {
 	JButton btnLoad = new JButton("Load");
 	JPanel load = new JPanel();
 	ArrayList<Save> allSaves = new ArrayList<Save>();
-	JComboBox<Integer> saveList = new JComboBox();
+	JComboBox<String> saveList = new JComboBox();
 
 	public PanelLoad() {
 		this.init();
@@ -34,10 +34,10 @@ public class PanelLoad extends JPanel implements ActionListener {
 		String actionString = e.getActionCommand();
 		if (actionString.equals("Ok")) {
 			for (Save save : this.allSaves) {
-				if (this.saveList.getSelectedItem().equals(save.getId_save())) {
+				if (this.saveList.getSelectedItem().equals(save.getStringSave())) {
 					Save.setSelectedSave(save);
-					System.out.println("ID Map :" + save.getId_map() + "/ID Player :" + save.getId_player() + "Wave : " + save.getWave() + "Time :" + save.getTime() + "Money : " + save.getMoney()
-							+ "Life : " + save.getLife());
+					System.out.println("ID Map :" + save.getIdMap() + "/ID Player :" + save.getIdPlayer() + "Wave : " + save.getWave() + "Time :" + save.getTime() + "Money : " + save.getMoney()
+							+ "Life : " + save.getLife() + "Pseudo : " + save.getPseudo());
 				}
 			}
 		}
@@ -46,8 +46,8 @@ public class PanelLoad extends JPanel implements ActionListener {
 
 	public void init() {
 		Window.disableMenuItem();
-		this.setLayout(new BorderLayout());
-		this.add(new JScrollPane(this.load), BorderLayout.CENTER);
+		this.setLayout(new FlowLayout());
+		this.add(this.load);
 		this.btnLoad.setActionCommand("Ok");
 		this.add(this.btnLoad, BorderLayout.SOUTH);
 		this.btnLoad.addActionListener(this);
@@ -55,14 +55,12 @@ public class PanelLoad extends JPanel implements ActionListener {
 	}
 
 	public void initLoadPanel() {
-		this.test = new JLabel("Je suis le panel load");
-		this.load.add(this.test);
 		this.saveList.setSize(500, 200);
 		this.load.add(this.saveList);
 		DataBase dataBase = new DataBase();
 		this.allSaves = dataBase.selectAllSaves();
 		for (Save save : this.allSaves) {
-			this.saveList.addItem(save.getId_save());
+			this.saveList.addItem(save.getStringSave());
 		}
 		this.add(this.saveList);
 

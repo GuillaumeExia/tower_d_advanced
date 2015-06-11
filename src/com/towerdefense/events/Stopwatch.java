@@ -1,6 +1,7 @@
 package com.towerdefense.events;
 
 public class Stopwatch {
+
 	public static String timeToString(long durationSec) {
 
 		int m = (int) ((durationSec % 3600) / 60);
@@ -24,6 +25,8 @@ public class Stopwatch {
 
 	}
 
+	int duration;
+
 	private long startTime = 0;
 	// private long endTime = 0;
 	private long startPause;
@@ -41,7 +44,10 @@ public class Stopwatch {
 	}
 
 	public int getTimeIsInt() {
-		return (int) ((System.currentTimeMillis() - this.startTime - this.totalPauseTime) / 1000);
+		if (this.duration == 0) {
+			this.duration = (int) ((System.currentTimeMillis() - this.startTime - this.totalPauseTime) / 1000);
+		}
+		return this.duration;
 	}
 
 	public void pause() {
@@ -51,6 +57,10 @@ public class Stopwatch {
 	public void resume() {
 		this.totalPauseTime += (System.currentTimeMillis() - this.startPause);
 		// this.endPause = System.currentTimeMillis();
+	}
+
+	public void setTimeIs(int time) {
+		this.duration = time;
 	}
 
 	public void start() {
