@@ -133,4 +133,5 @@ public abstract class Entity implements CanDieAttack {
 	public void setY(int y) {
 		this.y = y;
 	}
+	//
 }

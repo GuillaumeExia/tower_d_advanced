@@ -66,5 +66,6 @@ public class Workstation extends Tower implements CanBeRepaired {
 	 * public void setHealthPoints(int healthPoints) { this.healthPoints =
 	 * healthPoints; }
 	 */
+	//
 
 }
