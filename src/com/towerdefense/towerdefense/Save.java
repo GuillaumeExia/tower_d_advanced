@@ -26,7 +26,7 @@ public class Save {
 		this.money = money;
 		this.id_map = id_map;
 		this.id_save = id_save;
-		this.id_player = id_player;
+		this.id_player = id_player;//
 	}
 	
 }

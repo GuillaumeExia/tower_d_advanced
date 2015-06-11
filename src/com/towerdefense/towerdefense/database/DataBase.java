@@ -47,6 +47,6 @@ public class DataBase {
     	System.out.println(Map.getWave());
 		//dbLink.saveTower();
 		//return;
-    	database.close();//
+    	database.close();
 	}
 }
