@@ -64,7 +64,7 @@ public abstract class Mob extends Entity implements CanMove {
 		g.setColor(Color.black);
 		g.fillRect(x, y + 27, 27, 5);
 		g.setColor(Color.green);
-		g.fillRect(x + 1, y + 27, (int) (getHealth() * 0.05), 3);
+		g.fillRect(x + 1, y + 28, (int) (getHealth() * 0.05), 3);
 		g.setColor(Color.black);
 	}
 

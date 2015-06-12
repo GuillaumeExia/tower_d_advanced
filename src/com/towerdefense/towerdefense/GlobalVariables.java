@@ -27,8 +27,7 @@ public class GlobalVariables {
 	public static BufferedImage getSprites() {
 		if (sprites == null) {
 			try {
-				sprites = ImageIO.read(GlobalVariables.class
-						.getResource("/res/images/sprites.png"));
+				sprites = ImageIO.read(GlobalVariables.class.getResource("/res/images/sprites.png"));
 			} catch (IOException e) {
 			}
 		}

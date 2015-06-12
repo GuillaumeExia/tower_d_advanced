@@ -223,7 +223,10 @@ public class Map {
 			@Override
 			public void onTowerAdd(int idTower, TowerZone towerZone) {
 				try {
-					Map.this.towers.add(TowerFactory.createTower(idTower, towerZone.getX(), towerZone.getY()));
+					Tower t = TowerFactory.createTower(idTower, towerZone.getX(), towerZone.getY());
+                    t.setLinkedTowerZone(towerZone);
+                    Map.this.towers.add(t);
+                    towerZone.setBusy(true);
 					if (!Map.this.towers.get(Map.this.towers.size() - 1).payForTower()) {
 						Map.this.towers.remove(Map.this.towers.size() - 1);
 						System.out.println("Plus de sous maggle");
@@ -300,6 +303,12 @@ public class Map {
 			this.nextWave();
 		}
 	}
+	
+    public void removeTower(Tower tower){
+        tower.getLinkedTowerZone().setBusy(false);
+        tower.setAlive(false);
+        towers.remove(tower);
+    }
 
 	/*
 	 * public boolean spawnTower(final int choice) { if ((choice <=

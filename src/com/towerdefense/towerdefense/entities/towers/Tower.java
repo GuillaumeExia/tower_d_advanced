@@ -5,13 +5,17 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.towerdefense.display.TowerShop;
+import com.towerdefense.events.MouseHandler;
 import com.towerdefense.towerdefense.GlobalVariables;
 import com.towerdefense.towerdefense.entities.Entity;
 import com.towerdefense.towerdefense.entities.mobs.Mob;
+import com.towerdefense.towerdefense.objects.TowerZone;
 
 public abstract class Tower extends Entity {
 
@@ -26,6 +30,10 @@ public abstract class Tower extends Entity {
 	private int height;
 
 	private Rectangle actionZone;
+	
+	private TowerZone linkedTowerZone;
+	
+	private boolean alive = true;
 
 	private Image image;
 
@@ -38,7 +46,28 @@ public abstract class Tower extends Entity {
 	public Tower(int x, int y) {
 		this.x = x;
 		this.y = y;
+		
+		MouseHandler.addEventObserver(new MouseHandler() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (getBounds().contains(e.getPoint()) && alive) {
+					TowerShop.getTowerShop().setXY(getCenterPoint().x, getCenterPoint().y);
+					TowerShop.getTowerShop().show(TowerShop.UPGRADE, Tower.this);
+				}
+			}
+		});
 	}
+	
+
+    @Override
+    public boolean isAlive() {
+        return alive;
+    }
+
+    @Override
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
 
 	@Override
 	public void attack(ArrayList<?> mobs) {
@@ -58,7 +87,7 @@ public abstract class Tower extends Entity {
 		g.setColor(Color.black);
 		g.fillRect(x, y + 26, 27, 5);
 		g.setColor(Color.green);
-		g.fillRect(x + 1, y + 26, (int) (getHealth() * 0.05), 3);
+		g.fillRect(x + 1, y + 27, (int) (getHealth() * 0.05), 3);
 		g.setColor(Color.black);
 	}
 
@@ -87,6 +116,13 @@ public abstract class Tower extends Entity {
 	public int getHeight() {
 		return height;
 	}
+	
+	@Override
+    public void die(ArrayList<?> list) {
+        super.die(list);
+        linkedTowerZone.setBusy(false);
+        this.alive = false;
+    }
 
 	public Mob getNearestMob(final ArrayList<Mob> mobs) {
 		int ghostX = 0, ghostY = 0, minimum = -1;
@@ -205,6 +241,14 @@ public abstract class Tower extends Entity {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public TowerZone getLinkedTowerZone() {
+        return linkedTowerZone;
+    }
+
+    public void setLinkedTowerZone(TowerZone linkedTowerZone) {
+        this.linkedTowerZone = linkedTowerZone;
+    }
 
 	public void upgrade() {
 		if (getUpgrade() < getUpgradeLimit()) {

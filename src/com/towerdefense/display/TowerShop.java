@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import com.towerdefense.events.MouseHandler;
 import com.towerdefense.events.TowerShopListener;
 import com.towerdefense.towerdefense.GlobalVariables;
+import com.towerdefense.towerdefense.Map;
+import com.towerdefense.towerdefense.entities.Workstation;
 import com.towerdefense.towerdefense.entities.towers.Tower;
 import com.towerdefense.towerdefense.objects.TowerZone;
 
@@ -81,8 +83,11 @@ public class TowerShop {
 							tower.upgrade();
 						} else if ((mode == UPGRADE) && (i == 1)) {
 							Tower tower = (Tower) objectCaller;
-							// REMOVE TOWER
-						}
+                            Map.getSelectedMap().removeTower(tower);
+						} else if((mode == REPAIR) && (i == 0)) {
+                            Workstation workstation = (Workstation) objectCaller;
+                            workstation.repair();
+                        }
 						items.clear();
 					}
 				}

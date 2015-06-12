@@ -28,9 +28,7 @@ public class TowerZone extends Ground {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (TowerZone.this.getBounds().contains(e.getPoint())) {
-					TowerShop.getTowerShop().setXY(
-							TowerZone.this.getCenterPoint().x,
-							TowerZone.this.getCenterPoint().y);
+					TowerShop.getTowerShop().setXY(TowerZone.this.getCenterPoint().x,TowerZone.this.getCenterPoint().y);
 					TowerShop.getTowerShop().show(TowerShop.TOWER, self);
 				}
 			}
