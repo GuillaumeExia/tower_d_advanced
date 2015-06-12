@@ -81,9 +81,9 @@ public abstract class Tower extends Entity {
 		g.drawImage(this.image, this.x, this.y, null);
 		g.setColor(Color.black);
 		g.fillRect(this.x, this.y + 26, 27, 5);
-		g.setColor(Color.green);
+		g.setColor(new Color(126, 212, 249));
 		g.fillRect(this.x + 1, this.y + 27, (int) (this.getHealth() * 0.05), 3);
-		g.setColor(Color.black);
+
 	}
 
 	public Rectangle getActionZone() {
