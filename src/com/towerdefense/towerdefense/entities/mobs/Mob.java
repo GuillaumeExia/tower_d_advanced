@@ -38,64 +38,63 @@ public abstract class Mob extends Entity implements CanMove {
 
 	@Override
 	public void attack(ArrayList<?> towers) {
-		int finalDamageValue = getDamageValue();
+		int finalDamageValue = this.getDamageValue();
 		Tower damagedTower = null;
-		if (isTowerCollision((ArrayList<Tower>) towers)) {
-			if (getCooldownCounter() >= getCooldown()) {
-				damagedTower = getNearestTower(towerCollision((ArrayList<Tower>) towers));
-				if (damagedTower.getType().equals(getType())) {
+		if (this.isTowerCollision((ArrayList<Tower>) towers)) {
+			if (this.getCooldownCounter() >= this.getCooldown()) {
+				damagedTower = this.getNearestTower(this.towerCollision((ArrayList<Tower>) towers));
+				if (damagedTower.getType().equals(this.getType())) {
 					finalDamageValue *= TYPE_MULTIPLIER;
 				}
 				damagedTower.dropHealth(towers, finalDamageValue);
-				setCooldownCounter(0);
+				this.setCooldownCounter(0);
 			}
 		}
-		setCooldownCounter(getCooldownCounter() + 1);
+		this.setCooldownCounter(this.getCooldownCounter() + 1);
 	}
 
 	@Override
 	public void die(ArrayList<?> list) {
-		GlobalVariables.money += reward;
+		GlobalVariables.money += this.reward;
 		list.remove(this);
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(getImage(), x, y, null);
+		g.drawImage(this.getImage(), this.x, this.y, null);
 		g.setColor(Color.black);
-		g.fillRect(x, y + 27, 27, 5);
-		g.setColor(Color.green);
-		g.fillRect(x + 1, y + 28, (int) (getHealth() * 0.05), 3);
+		g.fillRect(this.x, this.y + 27, 27, 5);
+		g.setColor(new Color(220, 28, 182));
+		g.fillRect(this.x + 1, this.y + 28, (int) (this.getHealth() * 0.05), 3);
 		g.setColor(Color.black);
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(this.x, this.y, this.width, this.height);
 	}
 
 	public Rectangle getBoundsRange() {
-		return new Rectangle(x - (width / 2), y - (height / 2), width
-				+ (getRangeValue() * 2), height + (getRangeValue() * 2));
+		return new Rectangle(this.x - (this.width / 2), this.y - (this.height / 2), this.width + (this.getRangeValue() * 2), this.height + (this.getRangeValue() * 2));
 	}
 
 	public Point getCenterPoint() {
-		return new Point((width / 2) + x, (height / 2) + y);
+		return new Point((this.width / 2) + this.x, (this.height / 2) + this.y);
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public int getLastX() {
-		return lastX;
+		return this.lastX;
 	}
 
 	public int getLastY() {
-		return lastY;
+		return this.lastY;
 	}
 
 	public int getMovementSpeed() {
-		return movementSpeed;
+		return this.movementSpeed;
 	}
 
 	public Tower getNearestTower(final ArrayList<Tower> towers) {
@@ -121,39 +120,39 @@ public abstract class Mob extends Entity implements CanMove {
 	}
 
 	public double getProtection() {
-		return protection;
+		return this.protection;
 	}
 
 	public int getReward() {
-		return reward;
+		return this.reward;
 	}
 
 	public int getSpawnTime() {
-		return spawnTime;
+		return this.spawnTime;
 	}
 
 	public int getUltimDamage() {
-		return ultimDamage;
+		return this.ultimDamage;
 	}
 
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	@Override
 	public int getX() {
-		return x;
+		return this.x;
 	}
 
 	@Override
 	public int getY() {
-		return y;
+		return this.y;
 	}
 
 	public boolean isTowerCollision(final ArrayList<Tower> towers) {
 		boolean detection = false;
 		for (Tower tower : towers) {
-			if (getBoundsRange().intersects(tower.getBounds())) {
+			if (this.getBoundsRange().intersects(tower.getBounds())) {
 				detection = true;
 			}
 		}
@@ -162,11 +161,11 @@ public abstract class Mob extends Entity implements CanMove {
 
 	@Override
 	public void move(int dx, int dy) {
-		lastX = x;
-		lastY = y;
+		this.lastX = this.x;
+		this.lastY = this.y;
 
-		x += movementSpeed * dx;
-		y += movementSpeed * dy;
+		this.x += this.movementSpeed * dx;
+		this.y += this.movementSpeed * dy;
 	}
 
 	public void setHeight(int height) {
@@ -220,14 +219,15 @@ public abstract class Mob extends Entity implements CanMove {
 		boolean empty = true;
 		ArrayList<Tower> result = new ArrayList<Tower>();
 		for (Tower tower : towers) {
-			if (tower.getBounds().intersects(getBoundsRange())) {
+			if (tower.getBounds().intersects(this.getBoundsRange())) {
 				result.add(tower);
 				empty = false;
 			}
 		}
 		if (!empty) {
 			return result;
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
