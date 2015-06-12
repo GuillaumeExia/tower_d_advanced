@@ -37,9 +37,8 @@ public class Workstation extends Tower implements CanBeRepaired {
 			public void mouseClicked(MouseEvent e) {
 				if (getBounds().contains(e.getPoint())) {
 					System.out.println(getBounds() + " " + e.getPoint());
-					TowerShop.getTowerShop().setXY(getCenterPoint().x,
-							getCenterPoint().y);
-					TowerShop.getTowerShop().show(TowerShop.REPAIR, this);
+					TowerShop.getTowerShop().setXY(getCenterPoint().x,getCenterPoint().y);
+					TowerShop.getTowerShop().show(TowerShop.REPAIR, Workstation.this);
 				}
 			}
 		});
