@@ -24,10 +24,19 @@ public class GlobalVariables {
 	 * return sprite; }
 	 */
 
+	public static void dropMoney(int loss) {
+		money += loss;
+	}
+
+	public static void earnMoney(int gain) {
+		money += gain;
+	}
+
 	public static BufferedImage getSprites() {
 		if (sprites == null) {
 			try {
-				sprites = ImageIO.read(GlobalVariables.class.getResource("/res/images/sprites.png"));
+				sprites = ImageIO.read(GlobalVariables.class
+						.getResource("/res/images/sprites.png"));
 			} catch (IOException e) {
 			}
 		}

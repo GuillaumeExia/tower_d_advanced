@@ -18,6 +18,18 @@ public class FireWallTower extends Tower {
 
 	public FireWallTower(int x, int y) {
 		super(x, y);
+		init();
+	}
+
+	public FireWallTower(int x, int y, int health, int upgrade) {
+		super(x, y);
+		init();
+		setUpgrade(upgrade - 1);
+		upgrade();
+		setHealth(health);
+	}
+
+	public void init() {
 		setWidth(WIDTH);
 		setHeight(HEIGHT);
 		setRangeValue(RANGE);
@@ -28,7 +40,6 @@ public class FireWallTower extends Tower {
 		setCost(COST);
 		setUpgradeLimit(UPGRADE_LIMIT);
 		setIdentifier(TOWER_IDENTIFIER);
-
 		setImage(GlobalVariables.getSprites().getSubimage(
 				32 * (TOWER_IDENTIFIER - 1), Tower.TOWER_SPRITE_HEIGHT, WIDTH,
 				HEIGHT));

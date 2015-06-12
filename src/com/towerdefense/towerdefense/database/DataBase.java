@@ -9,6 +9,7 @@ import com.towerdefense.towerdefense.GlobalVariables;
 import com.towerdefense.towerdefense.Map;
 import com.towerdefense.towerdefense.Save;
 import com.towerdefense.towerdefense.entities.towers.Tower;
+import com.towerdefense.towerdefense.entities.towers.TowerFactory;
 import com.towerdefense.towerdefense.objects.Ground;
 
 public class DataBase {
@@ -45,6 +46,21 @@ public class DataBase {
 		return database.mapSelection(id);
 	}
 
+	public ArrayList<Tower> loadTowerSaveWithIDSave(int id) {
+		ArrayList<Tower> towers = new ArrayList<Tower>();
+		ResultSet content = database.loadTowerSaveWithIDSave(id);
+		try {
+			while (content.next()) {
+				towers.add(TowerFactory.createTower(content.getInt("TYPE"),
+						content.getInt("X"), content.getInt("Y"),
+						content.getInt("HEALTH"), content.getInt("LEVEL")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return towers;
+	}
+
 	public void save(String nickname, Map map) {
 		database.open();
 		ResultSet idPlayerResult;
@@ -66,6 +82,26 @@ public class DataBase {
 				idPlayer);
 		idSave = database.getSaveID();
 		saveTowers(map.getTowers(), idSave);
+		database.close();
+	}
+
+	public void saveScores(String nickname, Map map) {
+		database.open();
+		ResultSet idPlayerResult;
+		int idPlayer = 0;
+
+		if (database.getIDPlayer(nickname) == null) {
+			database.savePlayer(nickname);
+		}
+		try {
+			idPlayerResult = database.getIDPlayer(nickname);
+			idPlayerResult.next();
+			idPlayer = idPlayerResult.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		database.setScore(PanelMenu.stopwatch.getTimeIsInt(), idPlayer,
+				map.getId());
 		database.close();
 	}
 
@@ -103,7 +139,8 @@ public class DataBase {
 						.getInt("WAVE"), content.getInt("TIMEE"), content
 						.getInt("MONEY"), content.getInt("ID_MAP"), content
 						.getInt("ID_SAVE"), content.getInt("ID_PLAYER"),
-						content.getInt("LIFE")));
+						content.getInt("LIFE"), loadTowerSaveWithIDSave(content
+								.getInt("ID_SAVE"))));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -111,25 +148,4 @@ public class DataBase {
 		database.close();
 		return saveList;
 	}
-	
-	public void saveScores(String nickname, Map map){
-		this.database.open();
-		ResultSet idPlayerResult;
-		int idPlayer = 0;
-		
-		if (this.database.getIDPlayer(nickname) == null) {
-			this.database.savePlayer(nickname);
-		}
-		try{
-			idPlayerResult = this.database.getIDPlayer(nickname);
-			idPlayerResult.next();
-			idPlayer = idPlayerResult.getInt(1);
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		this.database.setScore(PanelMenu.stopwatch.getTimeIsInt(),idPlayer, map.getId());
-		this.database.close();
-	}
-	
 }

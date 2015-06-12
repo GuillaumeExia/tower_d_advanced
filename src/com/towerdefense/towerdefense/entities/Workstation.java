@@ -60,7 +60,7 @@ public class Workstation extends Tower implements CanBeRepaired {
 
 	/*
 	 * private int healthPoints;
-	 *
+	 * 
 	 * public int getHealthPoints() { return healthPoints; }
 	 */
 
@@ -69,7 +69,9 @@ public class Workstation extends Tower implements CanBeRepaired {
 	 */
 	@Override
 	public void repair() {
-		if (GlobalVariables.life <= 950) {
+		int price = 5000;
+		if ((GlobalVariables.life <= 950) && (GlobalVariables.money >= price)) {
+			GlobalVariables.dropMoney(price);
 			GlobalVariables.life += repair;
 		}
 

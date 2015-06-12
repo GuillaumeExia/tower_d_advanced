@@ -1,5 +1,6 @@
 package com.towerdefense.display;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -83,11 +84,11 @@ public class TowerShop {
 							tower.upgrade();
 						} else if ((mode == UPGRADE) && (i == 1)) {
 							Tower tower = (Tower) objectCaller;
-                            Map.getSelectedMap().removeTower(tower);
-						} else if((mode == REPAIR) && (i == 0)) {
-                            Workstation workstation = (Workstation) objectCaller;
-                            workstation.repair();
-                        }
+							Map.getSelectedMap().removeTower(tower);
+						} else if ((mode == REPAIR) && (i == 0)) {
+							Workstation workstation = (Workstation) objectCaller;
+							workstation.repair();
+						}
 						items.clear();
 					}
 				}
@@ -102,6 +103,7 @@ public class TowerShop {
 	public void draw(Graphics g) {
 		if (display) {
 			items.clear();
+			g.setColor(new Color(126, 212, 249));
 			g.drawOval(x, y, WIDTH, HEIGHT);
 
 			if (mode == TOWER) {

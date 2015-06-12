@@ -217,20 +217,19 @@ public class DBLink {
 		return result;
 	}
 
-	public ResultSet loadTowerSaveWithIDSave() {
+	public ResultSet loadTowerSaveWithIDSave(int id) {
 		CallableStatement procedure;
 		ResultSet result = null;
 		try {
 			procedure = connection.prepareCall(
 					DBProcedure.loadTowerSaveWithIDSave(),
 					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			procedure.setString(1, "First parameter of the procedure");
+			procedure.setInt(1, id);
 			procedure.execute();
 			result = procedure.getResultSet();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// TODO Add valid arguments
 		return result;
 	}
 

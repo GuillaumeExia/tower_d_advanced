@@ -50,9 +50,12 @@ public abstract class Tower extends Entity {
 		MouseHandler.addEventObserver(new MouseHandler() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (Tower.this.getBounds().contains(e.getPoint()) && Tower.this.alive) {
-					TowerShop.getTowerShop().setXY(Tower.this.getCenterPoint().x, Tower.this.getCenterPoint().y);
-					TowerShop.getTowerShop().show(TowerShop.UPGRADE, Tower.this);
+				if (Tower.this.getBounds().contains(e.getPoint()) && alive) {
+					TowerShop.getTowerShop().setXY(
+							Tower.this.getCenterPoint().x,
+							Tower.this.getCenterPoint().y);
+					TowerShop.getTowerShop()
+							.show(TowerShop.UPGRADE, Tower.this);
 				}
 			}
 		});
@@ -60,59 +63,61 @@ public abstract class Tower extends Entity {
 
 	@Override
 	public void attack(ArrayList<?> mobs) {
-		if (this.isMobCollision((ArrayList<Mob>) mobs)) {
-			if (this.getCooldownCounter() >= this.getCooldown()) {
-				this.getNearestMob(this.mobCollision((ArrayList<Mob>) mobs)).dropHealth(mobs, this.getDamageValue());
-				this.setCooldownCounter(0);
+		if (isMobCollision((ArrayList<Mob>) mobs)) {
+			if (getCooldownCounter() >= getCooldown()) {
+				getNearestMob(mobCollision((ArrayList<Mob>) mobs)).dropHealth(
+						mobs, getDamageValue());
+				setCooldownCounter(0);
 			}
 		}
-		this.setCooldownCounter(this.getCooldownCounter() + 1);
+		setCooldownCounter(getCooldownCounter() + 1);
 	}
 
 	@Override
 	public void die(ArrayList<?> list) {
 		super.die(list);
-		this.linkedTowerZone.setBusy(false);
-		this.alive = false;
+		linkedTowerZone.setBusy(false);
+		alive = false;
 	}
 
 	public void draw(Graphics g) {
 		double ratio = 25 / MAXHEALTH;
-		g.drawImage(this.image, this.x, this.y, null);
+		g.drawImage(image, x, y, null);
 		g.setColor(Color.black);
-		g.fillRect(this.x, this.y + 26, 27, 5);
+		g.fillRect(x, y + 26, 27, 5);
 		g.setColor(new Color(126, 212, 249));
-		g.fillRect(this.x + 1, this.y + 27, (int) (this.getHealth() * 0.05), 3);
+		g.fillRect(x + 1, y + 27, (int) (getHealth() * 0.05), 3);
 
 	}
 
 	public Rectangle getActionZone() {
-		return this.actionZone;
+		return actionZone;
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(this.x, this.y, this.width, this.height);
+		return new Rectangle(x, y, width, height);
 	}
 
 	public Rectangle getBoundsRange() {
-		return new Rectangle(this.x - (this.width / 2), this.y - (this.height / 2), this.width + (this.getRangeValue() * 2), this.height + (this.getRangeValue() * 2));
+		return new Rectangle(x - (width / 2), y - (height / 2), width
+				+ (getRangeValue() * 2), height + (getRangeValue() * 2));
 	}
 
 	public Point getCenterPoint() {
-		return new Point((this.width / 2) + this.x, (this.height / 2) + this.y);
+		return new Point((width / 2) + x, (height / 2) + y);
 	}
 
 	public int getCost() {
-		return this.cost;
+		return cost;
 	}
 
 	public int getHeight() {
-		return this.height;
+		return height;
 	}
 
 	public TowerZone getLinkedTowerZone() {
-		return this.linkedTowerZone;
+		return linkedTowerZone;
 	}
 
 	public Mob getNearestMob(final ArrayList<Mob> mobs) {
@@ -138,36 +143,36 @@ public abstract class Tower extends Entity {
 	}
 
 	public int getUpgrade() {
-		return this.upgrade;
+		return upgrade;
 	}
 
 	public int getUpgradeLimit() {
-		return this.upgradeLimit;
+		return upgradeLimit;
 	}
 
 	public int getWidth() {
-		return this.width;
+		return width;
 	}
 
 	@Override
 	public int getX() {
-		return this.x;
+		return x;
 	}
 
 	@Override
 	public int getY() {
-		return this.y;
+		return y;
 	}
 
 	@Override
 	public boolean isAlive() {
-		return this.alive;
+		return alive;
 	}
 
 	public boolean isMobCollision(final ArrayList<Mob> mobs) {
 		boolean detection = false;
 		for (Mob mob : mobs) {
-			if (this.getBoundsRange().intersects(mob.getBounds())) {
+			if (getBoundsRange().intersects(mob.getBounds())) {
 				detection = true;
 			}
 		}
@@ -178,29 +183,29 @@ public abstract class Tower extends Entity {
 		boolean empty = true;
 		ArrayList<Mob> result = new ArrayList<Mob>();
 		for (Mob mob : mobs) {
-			if (mob.getBounds().intersects(this.getBoundsRange())) {
+			if (mob.getBounds().intersects(getBoundsRange())) {
 				result.add(mob);
 				empty = false;
 			}
 		}
 		if (!empty) {
 			return result;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
 
 	public boolean payForTower() {
-		if (GlobalVariables.money >= this.cost) {
-			GlobalVariables.money -= this.cost;
+		if (GlobalVariables.money >= cost) {
+			GlobalVariables.money -= cost;
 			return true;
 		}
 		return false;
 	}
 
 	public void setActionZone(int[] zone) {
-		this.actionZone = new Rectangle(this.getCenterPoint().x - (zone[0] / 2), this.getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
+		actionZone = new Rectangle(getCenterPoint().x - (zone[0] / 2),
+				getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
 	}
 
 	@Override
@@ -248,12 +253,16 @@ public abstract class Tower extends Entity {
 	}
 
 	public void upgrade() {
-		if (this.getUpgrade() < this.getUpgradeLimit()) {
-			this.setDamageValue((int) (this.getDamageValue() * DAMAGE_UPGRADE_RATIO));
-			this.setCooldown((int) (this.getCooldown() * COOLDOWN_UPGRADE_RATIO));
-			this.setRangeValue((int) (this.getRangeValue() * RANGE_UPGRADE_RATIO));
-			this.setImage(GlobalVariables.getSprites().getSubimage(32 * (this.getIdentifier() - 1), Tower.TOWER_SPRITE_HEIGHT + (32 * (this.getUpgrade() + 1)), this.getWidth(), this.getHeight()));
-			this.setUpgrade(this.getUpgrade() + 1);
+		int price = upgrade * 500;
+		if (getUpgrade() < getUpgradeLimit()) {
+			setDamageValue((int) (getDamageValue() * DAMAGE_UPGRADE_RATIO));
+			setCooldown((int) (getCooldown() * COOLDOWN_UPGRADE_RATIO));
+			setRangeValue((int) (getRangeValue() * RANGE_UPGRADE_RATIO));
+			setImage(GlobalVariables.getSprites().getSubimage(
+					32 * (getIdentifier() - 1),
+					Tower.TOWER_SPRITE_HEIGHT + (32 * (getUpgrade() + 1)),
+					getWidth(), getHeight()));
+			setUpgrade(getUpgrade() + 1);
 		}
 
 	}

@@ -42,7 +42,7 @@ public abstract class DBProcedure {
 	}
 
 	public static String loadTowerSaveWithIDSave() {
-		return "{? = call loadTowerSaveWithIDSave(?)}";
+		return "{call loadTowerSaveWithIDSave(?)}";
 	}
 
 	public static String loadTowerWithID() {
@@ -73,11 +73,11 @@ public abstract class DBProcedure {
 		return "{call setSave(?, ?, ?, ?, ?, ?)}";
 	}
 
-	public static String setTerrain() {
-		return "{call saveTerrain(?, ?, ?, ?)}";
-	}
-	
 	public static String setScore() {
 		return "{call setScore(?, ?, ?)}";
+	}
+
+	public static String setTerrain() {
+		return "{call saveTerrain(?, ?, ?, ?)}";
 	}
 }

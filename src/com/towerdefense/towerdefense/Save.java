@@ -1,5 +1,9 @@
 package com.towerdefense.towerdefense;
 
+import java.util.ArrayList;
+
+import com.towerdefense.towerdefense.entities.towers.Tower;
+
 public class Save {
 	private static Save selectedSave;
 
@@ -19,54 +23,62 @@ public class Save {
 	private int idSave;
 	private int idPlayer;
 	private int life;
+	private ArrayList<Tower> towers = new ArrayList<Tower>();
 
-	public Save(String pseudo, int wave, int time, int money, int idMap, int idSave, int idPlayer, int life) {
+	public Save(String pseudo, int wave, int time, int money, int idMap,
+			int idSave, int idPlayer, int life, ArrayList<Tower> towers) {
 		this.pseudo = pseudo;
 		this.wave = wave;
 		this.time = time;
 		this.money = money;
 		this.idMap = idMap;
 		this.idSave = idSave;
-		this.idPlayer = idPlayer;//
+		this.idPlayer = idPlayer;
 		this.life = life;
+		this.towers = towers;
 	}
 
 	public int getIdMap() {
-		return this.idMap;
+		return idMap;
 	}
 
 	public int getIdPlayer() {
-		return this.idPlayer;
+		return idPlayer;
 	}
 
 	public int getIdSave() {
-		return this.idSave;
+		return idSave;
 	}
 
 	public int getLife() {
-		return this.life;
+		return life;
 	}
 
 	public int getMoney() {
-		return this.money;
+		return money;
 	}
 
 	public String getPseudo() {
-		return this.pseudo;
+		return pseudo;
 	}
 
 	public String getStringSave() {
-		String stringSave = "Map :" + this.getIdMap() + " | Pseudo : " + this.getPseudo() + " | Wave :" + this.getWave() + " | Life :" + this.getLife() + " | Money :" + this.getMoney() + " | Time :"
-				+ this.getTime();
+		String stringSave = "Map :" + getIdMap() + " | Pseudo : " + getPseudo()
+				+ " | Wave :" + getWave() + " | Life :" + getLife()
+				+ " | Money :" + getMoney() + " | Time :" + getTime();
 		return stringSave;
 	}
 
 	public int getTime() {
-		return this.time;
+		return time;
+	}
+
+	public ArrayList<Tower> getTowers() {
+		return towers;
 	}
 
 	public int getWave() {
-		return this.wave;
+		return wave;
 	}
 
 	public void setIdMap(int idMap) {
@@ -95,6 +107,10 @@ public class Save {
 
 	public void setTime(int time) {
 		this.time = time;
+	}
+
+	public void setTowers(ArrayList<Tower> towers) {
+		this.towers = towers;
 	}
 
 	public void setWave(int wave) {
