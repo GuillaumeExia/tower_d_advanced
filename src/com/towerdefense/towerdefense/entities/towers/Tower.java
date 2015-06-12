@@ -30,15 +30,15 @@ public abstract class Tower extends Entity {
 	private int height;
 
 	private Rectangle actionZone;
-	
+
 	private TowerZone linkedTowerZone;
-	
+
 	private boolean alive = true;
 
 	private Image image;
 
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	private int cost;
 	private int upgradeLimit;
 	private int upgrade = 0;
@@ -46,83 +46,74 @@ public abstract class Tower extends Entity {
 	public Tower(int x, int y) {
 		this.x = x;
 		this.y = y;
-		
+
 		MouseHandler.addEventObserver(new MouseHandler() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (getBounds().contains(e.getPoint()) && alive) {
-					TowerShop.getTowerShop().setXY(getCenterPoint().x, getCenterPoint().y);
+				if (Tower.this.getBounds().contains(e.getPoint()) && Tower.this.alive) {
+					TowerShop.getTowerShop().setXY(Tower.this.getCenterPoint().x, Tower.this.getCenterPoint().y);
 					TowerShop.getTowerShop().show(TowerShop.UPGRADE, Tower.this);
 				}
 			}
 		});
 	}
-	
-
-    @Override
-    public boolean isAlive() {
-        return alive;
-    }
-
-    @Override
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
 
 	@Override
 	public void attack(ArrayList<?> mobs) {
-		if (isMobCollision((ArrayList<Mob>) mobs)) {
-			if (getCooldownCounter() >= getCooldown()) {
-				getNearestMob(mobCollision((ArrayList<Mob>) mobs)).dropHealth(
-						mobs, getDamageValue());
-				setCooldownCounter(0);
+		if (this.isMobCollision((ArrayList<Mob>) mobs)) {
+			if (this.getCooldownCounter() >= this.getCooldown()) {
+				this.getNearestMob(this.mobCollision((ArrayList<Mob>) mobs)).dropHealth(mobs, this.getDamageValue());
+				this.setCooldownCounter(0);
 			}
 		}
-		setCooldownCounter(getCooldownCounter() + 1);
+		this.setCooldownCounter(this.getCooldownCounter() + 1);
+	}
+
+	@Override
+	public void die(ArrayList<?> list) {
+		super.die(list);
+		this.linkedTowerZone.setBusy(false);
+		this.alive = false;
 	}
 
 	public void draw(Graphics g) {
 		double ratio = 25 / MAXHEALTH;
-		g.drawImage(image, x, y, null);
+		g.drawImage(this.image, this.x, this.y, null);
 		g.setColor(Color.black);
-		g.fillRect(x, y + 26, 27, 5);
+		g.fillRect(this.x, this.y + 26, 27, 5);
 		g.setColor(Color.green);
-		g.fillRect(x + 1, y + 27, (int) (getHealth() * 0.05), 3);
+		g.fillRect(this.x + 1, this.y + 27, (int) (this.getHealth() * 0.05), 3);
 		g.setColor(Color.black);
 	}
 
 	public Rectangle getActionZone() {
-		return actionZone;
+		return this.actionZone;
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(this.x, this.y, this.width, this.height);
 	}
 
 	public Rectangle getBoundsRange() {
-		return new Rectangle(x - (width / 2), y - (height / 2), width
-				+ (getRangeValue() * 2), height + (getRangeValue() * 2));
+		return new Rectangle(this.x - (this.width / 2), this.y - (this.height / 2), this.width + (this.getRangeValue() * 2), this.height + (this.getRangeValue() * 2));
 	}
 
 	public Point getCenterPoint() {
-		return new Point((width / 2) + x, (height / 2) + y);
+		return new Point((this.width / 2) + this.x, (this.height / 2) + this.y);
 	}
 
 	public int getCost() {
-		return cost;
+		return this.cost;
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
-	
-	@Override
-    public void die(ArrayList<?> list) {
-        super.die(list);
-        linkedTowerZone.setBusy(false);
-        this.alive = false;
-    }
+
+	public TowerZone getLinkedTowerZone() {
+		return this.linkedTowerZone;
+	}
 
 	public Mob getNearestMob(final ArrayList<Mob> mobs) {
 		int ghostX = 0, ghostY = 0, minimum = -1;
@@ -147,31 +138,36 @@ public abstract class Tower extends Entity {
 	}
 
 	public int getUpgrade() {
-		return upgrade;
+		return this.upgrade;
 	}
 
 	public int getUpgradeLimit() {
-		return upgradeLimit;
+		return this.upgradeLimit;
 	}
 
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	@Override
 	public int getX() {
-		return x;
+		return this.x;
 	}
 
 	@Override
 	public int getY() {
-		return y;
+		return this.y;
+	}
+
+	@Override
+	public boolean isAlive() {
+		return this.alive;
 	}
 
 	public boolean isMobCollision(final ArrayList<Mob> mobs) {
 		boolean detection = false;
 		for (Mob mob : mobs) {
-			if (getBoundsRange().intersects(mob.getBounds())) {
+			if (this.getBoundsRange().intersects(mob.getBounds())) {
 				detection = true;
 			}
 		}
@@ -182,29 +178,34 @@ public abstract class Tower extends Entity {
 		boolean empty = true;
 		ArrayList<Mob> result = new ArrayList<Mob>();
 		for (Mob mob : mobs) {
-			if (mob.getBounds().intersects(getBoundsRange())) {
+			if (mob.getBounds().intersects(this.getBoundsRange())) {
 				result.add(mob);
 				empty = false;
 			}
 		}
 		if (!empty) {
 			return result;
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
 
 	public boolean payForTower() {
-		if (GlobalVariables.money >= cost) {
-			GlobalVariables.money -= cost;
+		if (GlobalVariables.money >= this.cost) {
+			GlobalVariables.money -= this.cost;
 			return true;
 		}
 		return false;
 	}
 
 	public void setActionZone(int[] zone) {
-		actionZone = new Rectangle(getCenterPoint().x - (zone[0] / 2),
-				getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
+		this.actionZone = new Rectangle(this.getCenterPoint().x - (zone[0] / 2), this.getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
+	}
+
+	@Override
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 
 	public void setCost(int cost) {
@@ -218,6 +219,10 @@ public abstract class Tower extends Entity {
 	@Override
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public void setLinkedTowerZone(TowerZone linkedTowerZone) {
+		this.linkedTowerZone = linkedTowerZone;
 	}
 
 	public void setUpgrade(int upgrade) {
@@ -241,25 +246,14 @@ public abstract class Tower extends Entity {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	public TowerZone getLinkedTowerZone() {
-        return linkedTowerZone;
-    }
-
-    public void setLinkedTowerZone(TowerZone linkedTowerZone) {
-        this.linkedTowerZone = linkedTowerZone;
-    }
 
 	public void upgrade() {
-		if (getUpgrade() < getUpgradeLimit()) {
-			setDamageValue((int) (getDamageValue() * DAMAGE_UPGRADE_RATIO));
-			setCooldown((int) (getCooldown() * COOLDOWN_UPGRADE_RATIO));
-			setRangeValue((int) (getRangeValue() * RANGE_UPGRADE_RATIO));
-			setImage(GlobalVariables.getSprites().getSubimage(
-					32 * (getIdentifier() - 1),
-					Tower.TOWER_SPRITE_HEIGHT + (32 * (getUpgrade() + 1)),
-					getWidth(), getHeight()));
-			setUpgrade(getUpgrade() + 1);
+		if (this.getUpgrade() < this.getUpgradeLimit()) {
+			this.setDamageValue((int) (this.getDamageValue() * DAMAGE_UPGRADE_RATIO));
+			this.setCooldown((int) (this.getCooldown() * COOLDOWN_UPGRADE_RATIO));
+			this.setRangeValue((int) (this.getRangeValue() * RANGE_UPGRADE_RATIO));
+			this.setImage(GlobalVariables.getSprites().getSubimage(32 * (this.getIdentifier() - 1), Tower.TOWER_SPRITE_HEIGHT + (32 * (this.getUpgrade() + 1)), this.getWidth(), this.getHeight()));
+			this.setUpgrade(this.getUpgrade() + 1);
 		}
 
 	}
