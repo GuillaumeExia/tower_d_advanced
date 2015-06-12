@@ -111,4 +111,25 @@ public class DataBase {
 		database.close();
 		return saveList;
 	}
+	
+	public void saveScores(String nickname, Map map){
+		this.database.open();
+		ResultSet idPlayerResult;
+		int idPlayer = 0;
+		
+		if (this.database.getIDPlayer(nickname) == null) {
+			this.database.savePlayer(nickname);
+		}
+		try{
+			idPlayerResult = this.database.getIDPlayer(nickname);
+			idPlayerResult.next();
+			idPlayer = idPlayerResult.getInt(1);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		this.database.setScore(PanelMenu.stopwatch.getTimeIsInt(),idPlayer, map.getId());
+		this.database.close();
+	}
+	
 }

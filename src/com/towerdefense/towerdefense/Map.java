@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.towerdefense.display.GameOver;
 import com.towerdefense.display.PanelMenu;
 import com.towerdefense.display.TowerShop;
 import com.towerdefense.events.TowerShopListener;
@@ -103,9 +104,8 @@ public class Map {
 
 				// afficher game over
 				System.out.println("Game over");
-
-				// remplir la table score
-				// System.out.println(GlobalVariables)
+				GameOver gameover = new GameOver();
+			
 
 			}
 		}

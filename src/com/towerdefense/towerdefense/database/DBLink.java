@@ -388,12 +388,13 @@ public class DBLink {
 		// TODO Add valid arguments
 	}
 
-	public void setScore() {
+	public void setScore(int timee, int idPlayer, int idMap) {
 		CallableStatement procedure;
 		try {
 			procedure = connection.prepareCall(DBProcedure.setScore());
-			procedure.setString(1, "First parameter of the procedure");
-			procedure.setString(2, "Second parameter of the procedure");
+			procedure.setInt(1, timee);
+			procedure.setInt(2, idPlayer);
+			procedure.setInt(3, idMap);
 			procedure.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

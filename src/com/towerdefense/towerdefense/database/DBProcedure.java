@@ -73,11 +73,11 @@ public abstract class DBProcedure {
 		return "{call setSave(?, ?, ?, ?, ?, ?)}";
 	}
 
-	public static String setScore() {
-		return "{call setScore(?, ?)}";
-	}
-
 	public static String setTerrain() {
 		return "{call saveTerrain(?, ?, ?, ?)}";
+	}
+	
+	public static String setScore() {
+		return "{call setScore(?, ?, ?)}";
 	}
 }
