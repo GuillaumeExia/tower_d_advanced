@@ -11,7 +11,8 @@ import com.towerdefense.towerdefense.entities.towers.Tower;
 
 public class Workstation extends Tower implements CanBeRepaired {
 	public static final int SPRITE_Y_LEVEL = 7 * 32;
-	public static Rectangle SPRITE_RECTANGLE = new Rectangle(0, SPRITE_Y_LEVEL, 64, 64);
+	public static Rectangle SPRITE_RECTANGLE = new Rectangle(0, SPRITE_Y_LEVEL,
+			96, 96);
 	public static int[] ACTION_ZONE = { 34, 34 };
 	public static int WIDTH = 32;
 	public static int HEIGHT = 32;
@@ -26,18 +27,24 @@ public class Workstation extends Tower implements CanBeRepaired {
 	public Workstation(int x, int y) {
 		super(x, y);
 		workstation = this;
-		this.setImage(GlobalVariables.getSprites().getSubimage(SPRITE_RECTANGLE.x, SPRITE_RECTANGLE.y, SPRITE_RECTANGLE.width * 2, SPRITE_RECTANGLE.height));
-		this.setWidth(WIDTH);
-		this.setHeight(HEIGHT);
-		this.setActionZone(ACTION_ZONE);
+		setImage(GlobalVariables.getSprites().getSubimage(SPRITE_RECTANGLE.x,
+				SPRITE_RECTANGLE.y, SPRITE_RECTANGLE.width * 2,
+				SPRITE_RECTANGLE.height));
+		setWidth(WIDTH);
+		setHeight(HEIGHT);
+		setActionZone(ACTION_ZONE);
 
 		MouseHandler.addEventObserver(new MouseHandler() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (Workstation.this.getBounds().contains(e.getPoint())) {
-					System.out.println(Workstation.this.getBounds() + " " + e.getPoint());
-					TowerShop.getTowerShop().setXY(Workstation.this.getCenterPoint().x, Workstation.this.getCenterPoint().y);
-					TowerShop.getTowerShop().show(TowerShop.REPAIR, Workstation.this);
+					System.out.println(Workstation.this.getBounds() + " "
+							+ e.getPoint());
+					TowerShop.getTowerShop().setXY(
+							Workstation.this.getCenterPoint().x,
+							Workstation.this.getCenterPoint().y);
+					TowerShop.getTowerShop().show(TowerShop.REPAIR,
+							Workstation.this);
 				}
 			}
 		});
@@ -45,12 +52,15 @@ public class Workstation extends Tower implements CanBeRepaired {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(GlobalVariables.getSprites().getSubimage(SPRITE_RECTANGLE.x, SPRITE_RECTANGLE.y, SPRITE_RECTANGLE.width, SPRITE_RECTANGLE.height), this.getX(), this.getY(), null);
+		g.drawImage(
+				GlobalVariables.getSprites().getSubimage(SPRITE_RECTANGLE.x,
+						SPRITE_RECTANGLE.y, SPRITE_RECTANGLE.width,
+						SPRITE_RECTANGLE.height), getX(), getY(), null);
 	}
 
 	/*
 	 * private int healthPoints;
-	 * 
+	 *
 	 * public int getHealthPoints() { return healthPoints; }
 	 */
 
@@ -60,7 +70,7 @@ public class Workstation extends Tower implements CanBeRepaired {
 	@Override
 	public void repair() {
 		if (GlobalVariables.life <= 950) {
-			GlobalVariables.life += this.repair;
+			GlobalVariables.life += repair;
 		}
 
 	}
