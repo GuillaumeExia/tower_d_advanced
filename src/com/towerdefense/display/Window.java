@@ -7,7 +7,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -67,6 +70,7 @@ public class Window extends JFrame implements ActionListener {
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu game = new JMenu("Game");
 	private JMenu window = new JMenu("Window");
+	BufferedImage img = null;
 
 	public Window() {
 		this.initPanels();
@@ -90,6 +94,13 @@ public class Window extends JFrame implements ActionListener {
 		this.setTitle(Window.title);
 		this.setSize(Window.sizeDimension);
 		this.setResizable(false);
+		try {
+			this.img = ImageIO.read(this.getClass().getResource("/res/images/icon.png"));
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.setIconImage(this.img);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(main);
