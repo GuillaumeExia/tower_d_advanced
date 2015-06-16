@@ -26,10 +26,9 @@ public class GameOver extends JDialog implements ActionListener{
 	
 	private JButton validButton = new JButton("Save score");
 	private JButton unvalidButton = new JButton("Return menu");
+	
 	public GameOver() {
-		
-		
-		
+		Window.changePanel("panelMenu");
 		this.setSize(300, 150);
 		this.setTitle("GameOver");
 		this.setAlwaysOnTop(true);

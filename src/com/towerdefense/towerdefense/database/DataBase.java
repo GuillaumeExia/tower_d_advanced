@@ -16,7 +16,6 @@ public class DataBase {
 	private DBLink database;
 
 	public DataBase() {
-		// super();
 		database = new DBLink();
 	}
 
@@ -51,7 +50,7 @@ public class DataBase {
 		ResultSet content = database.loadTowerSaveWithIDSave(id);
 		try {
 			while (content.next()) {
-				towers.add(TowerFactory.createTower(content.getInt("TYPE"),
+                towers.add(TowerFactory.createTower(content.getInt("TYPE"),
 						content.getInt("X"), content.getInt("Y"),
 						content.getInt("HEALTH"), content.getInt("LEVEL")));
 			}
@@ -67,19 +66,16 @@ public class DataBase {
 		int idPlayer = 0;
 		int idSave = 0;
 
-		if (database.getIDPlayer(nickname) == null) {
+		if (database.getIDPlayer(nickname) == 0) {
 			database.savePlayer(nickname);
 		}
 		try {
-			idPlayerResult = database.getIDPlayer(nickname);
-			idPlayerResult.next();
-			idPlayer = idPlayerResult.getInt(1);
-		} catch (SQLException e) {
+			idPlayer = database.getIDPlayer(nickname);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		database.setSave(Map.getWave(), PanelMenu.stopwatch.getTimeIsInt(),
-				GlobalVariables.life, GlobalVariables.money, map.getId(),
-				idPlayer);
+				GlobalVariables.life, GlobalVariables.money, map.getId(), idPlayer);
 		idSave = database.getSaveID();
 		saveTowers(map.getTowers(), idSave);
 		database.close();
@@ -90,25 +86,21 @@ public class DataBase {
 		ResultSet idPlayerResult;
 		int idPlayer = 0;
 
-		if (database.getIDPlayer(nickname) == null) {
+		if (database.getIDPlayer(nickname) == 0) {
 			database.savePlayer(nickname);
 		}
 		try {
-			idPlayerResult = database.getIDPlayer(nickname);
-			idPlayerResult.next();
-			idPlayer = idPlayerResult.getInt(1);
-		} catch (SQLException e) {
+			idPlayer = database.getIDPlayer(nickname);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		database.setScore(PanelMenu.stopwatch.getTimeIsInt(), idPlayer,
-				map.getId());
+		database.setScore(PanelMenu.stopwatch.getTimeIsInt(), idPlayer, map.getId(), map.getWave());
 		database.close();
 	}
 
 	public void saveTowers(ArrayList<Tower> towers, int idSave) {
 		for (Tower tower : towers) {
-			database.saveTower(tower.getIdentifier(), tower.getUpgrade(),
-					tower.getHealth(), tower.getX(), tower.getY(), idSave);
+			database.saveTower(tower.getIdentifier(), tower.getUpgrade(), tower.getHealth(), tower.getX(), tower.getY(), idSave);
 		}
 	}
 
@@ -135,12 +127,10 @@ public class DataBase {
 		ResultSet content = database.selectAllSavesProc();
 		try {
 			while (content.next()) {
-				saveList.add(new Save(content.getString("PSEUDO"), content
-						.getInt("WAVE"), content.getInt("TIMEE"), content
+				saveList.add(new Save(content.getString("PSEUDO"), content.getInt("WAVE"), content.getInt("TIMEE"), content
 						.getInt("MONEY"), content.getInt("ID_MAP"), content
 						.getInt("ID_SAVE"), content.getInt("ID_PLAYER"),
-						content.getInt("LIFE"), loadTowerSaveWithIDSave(content
-								.getInt("ID_SAVE"))));
+						content.getInt("LIFE"), loadTowerSaveWithIDSave(content.getInt("ID_SAVE"))));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

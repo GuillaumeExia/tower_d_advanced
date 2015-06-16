@@ -30,6 +30,7 @@ public abstract class Mob extends Entity implements CanMove {
 	private int height;
 	private int lastX = 0;
 	private int lastY = 0;
+	public static int killedMobs = 0;
 
 	public Mob(int x, int y) {
 		this.x = x;
@@ -57,6 +58,7 @@ public abstract class Mob extends Entity implements CanMove {
 	public void die(ArrayList<?> list) {
 		GlobalVariables.money += this.reward;
 		list.remove(this);
+		killedMobs++;
 	}
 
 	public void draw(Graphics g) {

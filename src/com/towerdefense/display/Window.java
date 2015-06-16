@@ -94,12 +94,12 @@ public class Window extends JFrame implements ActionListener {
 		this.setTitle(Window.title);
 		this.setSize(Window.sizeDimension);
 		this.setResizable(false);
-		try {
+		/*try {
 			this.img = ImageIO.read(this.getClass().getResource("/res/images/icon.png"));
 		}
 		catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		this.setIconImage(this.img);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
