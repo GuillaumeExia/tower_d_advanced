@@ -19,7 +19,6 @@ import com.towerdefense.towerdefense.objects.TowerZone;
 
 public abstract class Tower extends Entity {
 
-	public final static int MAXHEALTH = 500;
 	public static final int TOWER_SPRITE_HEIGHT = 64;
 	public static final double DAMAGE_UPGRADE_RATIO = 1.3;
 	public static final double COOLDOWN_UPGRADE_RATIO = 0.8;
@@ -28,6 +27,8 @@ public abstract class Tower extends Entity {
 	private int width;
 
 	private int height;
+
+	private int maxHealth;
 
 	private Rectangle actionZone;
 
@@ -81,13 +82,13 @@ public abstract class Tower extends Entity {
 	}
 
 	public void draw(Graphics g) {
-		double ratio = 25 / MAXHEALTH;
+		double ratio = 25 / maxHealth;
 		g.drawImage(image, x, y, null);
 		g.setColor(Color.black);
-		g.fillRect(x, y + 26, 27, 5);
+		g.fillRect(x + 2, y + 26, 27, 5);
 		g.setColor(new Color(126, 212, 249));
-		g.fillRect(x + 1, y + 27, (int) (getHealth() * 0.05), 3);
-
+		g.fillRect(x + 3, y + 27,
+				(int) (((float) getHealth() / (float) maxHealth) * 25), 3);
 	}
 
 	public Rectangle getActionZone() {
@@ -118,6 +119,10 @@ public abstract class Tower extends Entity {
 
 	public TowerZone getLinkedTowerZone() {
 		return linkedTowerZone;
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
 	}
 
 	public Mob getNearestMob(final ArrayList<Mob> mobs) {
@@ -230,6 +235,10 @@ public abstract class Tower extends Entity {
 		this.linkedTowerZone = linkedTowerZone;
 	}
 
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+	}
+
 	public void setUpgrade(int upgrade) {
 		this.upgrade = upgrade;
 	}
@@ -252,9 +261,14 @@ public abstract class Tower extends Entity {
 		this.y = y;
 	}
 
+	public void totalRepair() {
+		setHealth(maxHealth);
+	}
+
 	public void upgrade() {
-		int price = upgrade * 500;
-		if (getUpgrade() < getUpgradeLimit()) {
+		int upgradePrice = (upgrade + 1) * cost;
+		if ((getUpgrade() < getUpgradeLimit())
+				&& (upgradePrice <= GlobalVariables.money)) {
 			setDamageValue((int) (getDamageValue() * DAMAGE_UPGRADE_RATIO));
 			setCooldown((int) (getCooldown() * COOLDOWN_UPGRADE_RATIO));
 			setRangeValue((int) (getRangeValue() * RANGE_UPGRADE_RATIO));
@@ -262,9 +276,10 @@ public abstract class Tower extends Entity {
 					32 * (getIdentifier() - 1),
 					Tower.TOWER_SPRITE_HEIGHT + (32 * (getUpgrade() + 1)),
 					getWidth(), getHeight()));
-			setUpgrade(getUpgrade() + 1);
+			GlobalVariables.dropMoney(upgradePrice);
+			totalRepair();
+			upgrade++;
 		}
-
 	}
 
 }

@@ -24,8 +24,7 @@ public class WaterCoolerTower extends Tower {
 	public WaterCoolerTower(int x, int y, int health, int upgrade) {
 		super(x, y);
 		init();
-		setUpgrade(upgrade - 1);
-		upgrade();
+		setUpgrade(upgrade);
 		setHealth(health);
 	}
 
@@ -37,6 +36,7 @@ public class WaterCoolerTower extends Tower {
 		setDamageValue(DAMAGE);
 		setCooldown(COOLDOWN);
 		setHealth(MAXHEALTH);
+		setMaxHealth(MAXHEALTH);
 		setCost(COST);
 		setUpgradeLimit(UPGRADE_LIMIT);
 		setIdentifier(TOWER_IDENTIFIER);

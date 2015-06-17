@@ -2,6 +2,7 @@ package com.towerdefense.towerdefense;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
@@ -24,7 +25,7 @@ public class GlobalVariables {
 	 */
 
 	public static void dropMoney(int loss) {
-		money += loss;
+		money -= loss;
 	}
 
 	public static void earnMoney(int gain) {
@@ -34,7 +35,8 @@ public class GlobalVariables {
 	public static BufferedImage getSprites() {
 		if (sprites == null) {
 			try {
-				sprites = ImageIO.read(GlobalVariables.class.getResource("/res/images/sprites.png"));
+				sprites = ImageIO.read(GlobalVariables.class
+						.getResource("/res/images/sprites.png"));
 			} catch (IOException e) {
 			}
 		}

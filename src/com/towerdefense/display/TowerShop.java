@@ -47,18 +47,18 @@ public class TowerShop {
 	private BufferedImage[] towerImages = {
 			GlobalVariables.getSprites().getSubimage(0 * 32,
 					TOWER_SPRITE_Y_LEVEL, 32, 32),
-					GlobalVariables.getSprites().getSubimage(1 * 32,
-							TOWER_SPRITE_Y_LEVEL, 32, 32),
-							GlobalVariables.getSprites().getSubimage(2 * 32,
-									TOWER_SPRITE_Y_LEVEL, 32, 32),
-									GlobalVariables.getSprites().getSubimage(3 * 32,
-											TOWER_SPRITE_Y_LEVEL, 32, 32) };
+			GlobalVariables.getSprites().getSubimage(1 * 32,
+					TOWER_SPRITE_Y_LEVEL, 32, 32),
+			GlobalVariables.getSprites().getSubimage(2 * 32,
+					TOWER_SPRITE_Y_LEVEL, 32, 32),
+			GlobalVariables.getSprites().getSubimage(3 * 32,
+					TOWER_SPRITE_Y_LEVEL, 32, 32) };
 
 	private BufferedImage[] towerTools = {
 			GlobalVariables.getSprites().getSubimage(1 * 32,
 					TOOLS_SPRITE_Y_LEVEL, 32, 32),
-			GlobalVariables.getSprites().getSubimage(2 * 32,
-					TOOLS_SPRITE_Y_LEVEL, 32, 32) };
+					GlobalVariables.getSprites().getSubimage(2 * 32,
+							TOOLS_SPRITE_Y_LEVEL, 32, 32) };
 
 	private BufferedImage[] workstationTools = { GlobalVariables.getSprites()
 			.getSubimage(0 * 32, TOOLS_SPRITE_Y_LEVEL, 32, 32) };
@@ -79,12 +79,14 @@ public class TowerShop {
 							TowerZone towerZone = (TowerZone) objectCaller; // Revoir
 							TowerShop.this.fireTowerAdd(i + 1, towerZone);
 
-						} else if ((mode == UPGRADE) && (i == 0)) {
-							Tower tower = (Tower) objectCaller;
-							tower.upgrade();
-						} else if ((mode == UPGRADE) && (i == 1)) {
-							Tower tower = (Tower) objectCaller;
-							Map.getSelectedMap().removeTower(tower);
+						} else if (mode == UPGRADE) {
+							if (i == 0) {
+								Tower tower = (Tower) objectCaller;
+								tower.upgrade();
+							} else if (i == 1) {
+								Tower tower = (Tower) objectCaller;
+								Map.getSelectedMap().removeTower(tower);
+							}
 						} else if ((mode == REPAIR) && (i == 0)) {
 							Workstation workstation = (Workstation) objectCaller;
 							workstation.repair();
@@ -116,7 +118,7 @@ public class TowerShop {
 					items.add(new Rectangle(xc
 							- (towerImages[j].getWidth() / 2), yc
 							- (towerImages[j].getHeight() / 2), towerImages[j]
-							.getWidth(), towerImages[j].getHeight()));
+									.getWidth(), towerImages[j].getHeight()));
 					g.drawImage(towerImages[j], xc
 							- (towerImages[j].getWidth() / 2), yc
 							- (towerImages[j].getHeight() / 2), null);
@@ -130,7 +132,7 @@ public class TowerShop {
 							.sin((Math.PI * i) / 180)));
 					items.add(new Rectangle(
 							xc - (towerTools[j].getWidth() / 2), yc
-									- (towerTools[j].getHeight() / 2),
+							- (towerTools[j].getHeight() / 2),
 							towerTools[j].getWidth(), towerTools[j].getHeight()));
 					g.drawImage(towerTools[j], xc
 							- (towerTools[j].getWidth() / 2), yc
@@ -140,10 +142,10 @@ public class TowerShop {
 				g.drawImage(workstationTools[0],
 						x - (workstationTools[0].getWidth() / 2),
 						(y + (WIDTH / 2))
-								- (workstationTools[0].getHeight() / 2), null);
+						- (workstationTools[0].getHeight() / 2), null);
 				items.add(new Rectangle(x - (towerTools[0].getWidth() / 2),
 						(y + (WIDTH / 2))
-								- (workstationTools[0].getHeight() / 2),
+						- (workstationTools[0].getHeight() / 2),
 						towerTools[0].getWidth(), towerTools[0].getHeight()));
 			}
 		}
