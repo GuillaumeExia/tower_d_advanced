@@ -127,10 +127,18 @@ public class DataBase {
 		ResultSet content = database.selectAllSavesProc();
 		try {
 			while (content.next()) {
-				saveList.add(new Save(content.getString("PSEUDO"), content.getInt("WAVE"), content.getInt("TIMEE"), content
-						.getInt("MONEY"), content.getInt("ID_MAP"), content
-						.getInt("ID_SAVE"), content.getInt("ID_PLAYER"),
-						content.getInt("LIFE"), loadTowerSaveWithIDSave(content.getInt("ID_SAVE"))));
+				saveList.add(new Save(
+						content.getString("NAME"),
+						content.getString("PSEUDO"), 
+						content.getInt("WAVE"), 
+						content.getInt("TIMEE"), 
+						content.getInt("MONEY"), 
+						content.getInt("ID_MAP"), 
+						content.getInt("ID_SAVE"), 
+						content.getInt("ID_PLAYER"),
+						content.getInt("LIFE"), 
+						loadTowerSaveWithIDSave(content.getInt("ID_SAVE")))
+				);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

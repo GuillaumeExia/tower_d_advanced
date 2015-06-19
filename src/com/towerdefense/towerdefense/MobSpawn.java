@@ -9,7 +9,6 @@ public class MobSpawn {
 
     public Mob getRandomMob() {
         Random random = new Random();
-        return MobFactory.createMob(random
-                .nextInt(MobFactory.MOB_TYPE_AMOUNT + 1));
+        return MobFactory.createMob(random.nextInt(MobFactory.MOB_TYPE_AMOUNT + 1));
     }
 }

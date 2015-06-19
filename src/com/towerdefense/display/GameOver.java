@@ -25,7 +25,7 @@ public class GameOver extends JDialog implements ActionListener{
 	public JOptionPane optionPaneVerif;
 	
 	private JButton validButton = new JButton("Save score");
-	private JButton unvalidButton = new JButton("Return menu");
+	private JButton unvalidButton = new JButton("Cancel");
 	
 	public GameOver() {
 		Window.changePanel("panelMenu");
@@ -49,27 +49,22 @@ public class GameOver extends JDialog implements ActionListener{
 		this.add(this.validButton);
 		this.validButton.addActionListener(this);
 		
-		this.unvalidButton.setActionCommand("Return menu");
+		this.unvalidButton.setActionCommand("Cancel");
 		this.add(this.unvalidButton);
 		this.unvalidButton.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		String actionString = e.getActionCommand();
-		//NicknameAsker nicknameasker = new NicknameAsker();
 		
 		if (actionString.equals("Save score")){
 			if (nickname.getText().equals("")) {
 				optionPaneVerif = new JOptionPane();
-				optionPaneVerif.showMessageDialog(this,
-						"Please enter a nickname", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				optionPaneVerif.showMessageDialog(this, "Please enter a nickname", "Error", JOptionPane.ERROR_MESSAGE);
 				Window.changePanel("panelGame");
 				setVisible(false);
 			} else {
-			//enregistrer le score dans la table score
 			GlobalVariables.nickname = nickname.getText();
 			Window.changePanel("panelMenu");
 			Window.disableMenuItem();
@@ -77,11 +72,8 @@ public class GameOver extends JDialog implements ActionListener{
 			setVisible(false);
 			}
 		}
-		if(actionString.equals("Return menu")){
-			
-			//revenir au menu principal du jeu
-			Window.changePanel("panelMenu");
-			this.setVisible(false);
+		if(actionString.equals("Cancel")){
+			this.dispose();
 		}
 		
 	}

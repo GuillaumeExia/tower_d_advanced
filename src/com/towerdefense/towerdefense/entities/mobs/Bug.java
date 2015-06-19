@@ -30,9 +30,7 @@ public class Bug extends Mob {
 		setReward(REWARD);
 		setProtection(PROTECTION);
 
-		setImage(GlobalVariables.getSprites()
-				.getSubimage(32 * (MOB_IDENTIFIER - 1), Mob.MOB_SPRITE_HEIGHT,
-						WIDTH, HEIGHT));
+		setImage(GlobalVariables.getSprites().getSubimage(32 * (MOB_IDENTIFIER - 1), Mob.MOB_SPRITE_HEIGHT, WIDTH, HEIGHT));
 	}
 
 }

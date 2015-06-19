@@ -24,7 +24,8 @@ public class VPNTower extends Tower {
 	public VPNTower(int x, int y, int health, int upgrade) {
 		super(x, y);
 		init();
-		setUpgrade(upgrade);
+		setUpgrade(upgrade - 1);
+		upgrade();
 		setHealth(health);
 	}
 
@@ -40,8 +41,6 @@ public class VPNTower extends Tower {
 		setCost(COST);
 		setUpgradeLimit(UPGRADE_LIMIT);
 		setIdentifier(TOWER_IDENTIFIER);
-		setImage(GlobalVariables.getSprites().getSubimage(
-				32 * (TOWER_IDENTIFIER - 1), Tower.TOWER_SPRITE_HEIGHT, WIDTH,
-				HEIGHT));
+		setImage(GlobalVariables.getSprites().getSubimage(32 * (TOWER_IDENTIFIER - 1), Tower.TOWER_SPRITE_HEIGHT, WIDTH, HEIGHT));
 	}
 }

@@ -12,8 +12,6 @@ import com.towerdefense.events.Stopwatch;
 import com.towerdefense.towerdefense.database.DBLink;
 
 public class PanelLeaderBoard extends JPanel implements ActionListener {
-	private static final long serialVersionUID = 1L;
-	public static Point mouse = new Point(0, 0);
 
 	public PanelLeaderBoard() {
 		this.addMouseListener(new MouseHandler());
@@ -36,26 +34,26 @@ public class PanelLeaderBoard extends JPanel implements ActionListener {
 	public void drawTitle(Graphics2D g){
         g.setColor(new Color(221, 153, 29));
         g.setFont(new Font("Calibri", Font.BOLD, 25));
-        g.drawString("Leaderboard", 120, 30);
+        g.drawString("Leaderboard", 120, 40);
     }
 
     public void drawTableHeader(Graphics2D g){
         g.setColor(new Color(221, 153, 29));
-        g.fillRoundRect(120, 40, 550, 40, 10, 10);
+        g.fillRoundRect(120, 60, 550, 40, 10, 10);
         g.setColor(Color.black);
-        g.fillRoundRect(122, 42, 546, 36, 10, 10);
+        g.fillRoundRect(122, 62, 546, 36, 10, 10);
 
         g.setColor(Color.white);
         g.setFont(new Font("Calibri", Font.BOLD, 18));
-        g.drawString("Rank", 160, 67);
+        g.drawString("Rank", 160, 86);
 
-        g.drawString("Player name", 245, 67);
+        g.drawString("Player name", 245, 86);
 
-        g.drawString("Time", 385, 67);
+        g.drawString("Time", 385, 86);
 
-        g.drawString("Wave", 465, 67);
+        g.drawString("Wave", 465, 86);
 
-        g.drawString("Killed mobs", 545, 67);
+        g.drawString("Killed mobs", 545, 86);
     }
 
     public void drawTableContent(Graphics2D g){
@@ -66,7 +64,7 @@ public class PanelLeaderBoard extends JPanel implements ActionListener {
 
         try {
             for (int i = 0; score.next() && i < 10; i++){
-                int y = i*46 + 90;
+                int y = i*44 + 110;
 
                 g.setColor(new Color(36, 36, 36));
                 g.fillRoundRect(122, y, 550, 36, 10, 10);

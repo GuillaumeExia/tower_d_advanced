@@ -17,13 +17,6 @@ public class GlobalVariables {
 	public static Ground spawnpoint;
 	public static Timer timer;
 
-	/*
-	 * public static BufferedImage getSprite() { if (sprite == null) { try {
-	 * sprite = ImageIO.read(GlobalVariables.class
-	 * .getResource("/res/images/sprite.png")); } catch (IOException e) { } }
-	 * return sprite; }
-	 */
-
 	public static void dropMoney(int loss) {
 		money -= loss;
 	}

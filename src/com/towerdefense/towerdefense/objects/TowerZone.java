@@ -10,8 +10,7 @@ import com.towerdefense.towerdefense.GlobalVariables;
 
 public class TowerZone extends Ground {
 	public final static int GROUND_TYPE = 4;
-	public final static Rectangle SPRITE_RECTANGLE = new Rectangle(
-			32 * (GROUND_TYPE - 1), Ground.GROUND_SPRITE_HEIGHT, 32, 32);
+	public final static Rectangle SPRITE_RECTANGLE = new Rectangle(32 * (GROUND_TYPE - 1), Ground.GROUND_SPRITE_HEIGHT, 32, 32);
 	public final static boolean WALKABLE = false;
 	public boolean busy = false;
 	public TowerZone self;
@@ -27,7 +26,7 @@ public class TowerZone extends Ground {
 		MouseHandler.addEventObserver(new MouseHandler() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (TowerZone.this.getBounds().contains(e.getPoint())) {
+				if (TowerZone.this.getBounds().contains(e.getPoint()) && !busy) {
 					TowerShop.getTowerShop().setXY(TowerZone.this.getCenterPoint().x,TowerZone.this.getCenterPoint().y);
 					TowerShop.getTowerShop().show(TowerShop.TOWER, self);
 				}

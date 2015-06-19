@@ -25,19 +25,12 @@ public abstract class Tower extends Entity {
 	public static final double RANGE_UPGRADE_RATIO = 1.1;
 
 	private int width;
-
 	private int height;
-
 	private int maxHealth;
-
 	private Rectangle actionZone;
-
 	private TowerZone linkedTowerZone;
-
 	private boolean alive = true;
-
 	private Image image;
-
 	protected int x;
 	protected int y;
 	private int cost;
@@ -54,9 +47,9 @@ public abstract class Tower extends Entity {
 				if (Tower.this.getBounds().contains(e.getPoint()) && alive) {
 					TowerShop.getTowerShop().setXY(
 							Tower.this.getCenterPoint().x,
-							Tower.this.getCenterPoint().y);
-					TowerShop.getTowerShop()
-							.show(TowerShop.UPGRADE, Tower.this);
+							Tower.this.getCenterPoint().y
+                    );
+					TowerShop.getTowerShop().show(TowerShop.UPGRADE, Tower.this);
 				}
 			}
 		});
@@ -66,8 +59,7 @@ public abstract class Tower extends Entity {
 	public void attack(ArrayList<?> mobs) {
 		if (isMobCollision((ArrayList<Mob>) mobs)) {
 			if (getCooldownCounter() >= getCooldown()) {
-				getNearestMob(mobCollision((ArrayList<Mob>) mobs)).dropHealth(
-						mobs, getDamageValue());
+				getNearestMob(mobCollision((ArrayList<Mob>) mobs)).dropHealth(mobs, getDamageValue());
 				setCooldownCounter(0);
 			}
 		}
@@ -77,7 +69,9 @@ public abstract class Tower extends Entity {
 	@Override
 	public void die(ArrayList<?> list) {
 		super.die(list);
-		linkedTowerZone.setBusy(false);
+		if(linkedTowerZone != null) {
+			linkedTowerZone.setBusy(false);
+		}
 		alive = false;
 	}
 
@@ -85,10 +79,9 @@ public abstract class Tower extends Entity {
 		double ratio = 25 / maxHealth;
 		g.drawImage(image, x, y, null);
 		g.setColor(Color.black);
-		g.fillRect(x + 2, y + 26, 27, 5);
+		g.fillRect(x, y + 26, 27, 5);
 		g.setColor(new Color(126, 212, 249));
-		g.fillRect(x + 3, y + 27,
-				(int) (((float) getHealth() / (float) maxHealth) * 25), 3);
+		g.fillRect(x + 3, y + 27, (int) (((float) getHealth() / (float) maxHealth) * 25), 3);
 	}
 
 	public Rectangle getActionZone() {
@@ -209,8 +202,7 @@ public abstract class Tower extends Entity {
 	}
 
 	public void setActionZone(int[] zone) {
-		actionZone = new Rectangle(getCenterPoint().x - (zone[0] / 2),
-				getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
+		actionZone = new Rectangle(getCenterPoint().x - (zone[0] / 2), getCenterPoint().y - (zone[1] / 2), zone[0], zone[1]);
 	}
 
 	@Override
@@ -267,15 +259,15 @@ public abstract class Tower extends Entity {
 
 	public void upgrade() {
 		int upgradePrice = (upgrade + 1) * cost;
-		if ((getUpgrade() < getUpgradeLimit())
-				&& (upgradePrice <= GlobalVariables.money)) {
+		if ((getUpgrade() < getUpgradeLimit()) && (upgradePrice <= GlobalVariables.money)) {
 			setDamageValue((int) (getDamageValue() * DAMAGE_UPGRADE_RATIO));
 			setCooldown((int) (getCooldown() * COOLDOWN_UPGRADE_RATIO));
 			setRangeValue((int) (getRangeValue() * RANGE_UPGRADE_RATIO));
 			setImage(GlobalVariables.getSprites().getSubimage(
 					32 * (getIdentifier() - 1),
 					Tower.TOWER_SPRITE_HEIGHT + (32 * (getUpgrade() + 1)),
-					getWidth(), getHeight()));
+					getWidth(), getHeight())
+			);
 			GlobalVariables.dropMoney(upgradePrice);
 			totalRepair();
 			upgrade++;

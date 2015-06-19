@@ -8,21 +8,19 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import com.towerdefense.display.load.PanelLoad;
 import com.towerdefense.towerdefense.GlobalVariables;
 
 public class Window extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private static String title = "Tower Defense";
-	private static Dimension sizeDimension = new Dimension(804, 608);
+	private static Dimension sizeDimension = new Dimension(804, 650);
 	private static CardLayout cardManager;
 
 	public static JPanel main;

@@ -5,7 +5,7 @@ public abstract class DBProcedure {
 
     public static String selectAllMaps() { return "SELECT * FROM map;"; }
 
-    public static String selectAllSaves() { return "SELECT * FROM players NATURAL JOIN saves;"; }
+    public static String selectAllSaves() { return "SELECT * FROM players NATURAL JOIN saves NATURAL JOIN map;"; }
 
 	public static String getIDPlayer(String nickname) { return "SELECT ID_PLAYER FROM players WHERE PSEUDO = \"" + nickname + "\";"; }
 

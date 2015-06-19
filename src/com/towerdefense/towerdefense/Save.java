@@ -15,6 +15,7 @@ public class Save {
 		Save.selectedSave = selectedSave;
 	}
 
+	private String mapName;
 	private String pseudo;
 	private int wave;
 	private int time;
@@ -25,8 +26,8 @@ public class Save {
 	private int life;
 	private ArrayList<Tower> towers = new ArrayList<Tower>();
 
-	public Save(String pseudo, int wave, int time, int money, int idMap,
-			int idSave, int idPlayer, int life, ArrayList<Tower> towers) {
+	public Save(String mapName, String pseudo, int wave, int time, int money, int idMap, int idSave, int idPlayer, int life, ArrayList<Tower> towers) {
+		this.mapName = mapName;
 		this.pseudo = pseudo;
 		this.wave = wave;
 		this.time = time;
@@ -38,6 +39,10 @@ public class Save {
 		this.towers = towers;
 	}
 
+	public String getMapName() {
+		return mapName;
+	}
+	
 	public int getIdMap() {
 		return idMap;
 	}

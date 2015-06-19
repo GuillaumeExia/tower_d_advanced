@@ -71,6 +71,7 @@ public class Map {
 		Map.setSelectedMap(this);
 		init();
 		towers = save.getTowers();
+		restoreBusy();
 	}
 
 	public Map(String name, int width, int height, int id) {
@@ -82,8 +83,7 @@ public class Map {
 
 	public boolean detectCollision(Mob mob, int newPosX, int newPosY) {
 		for (Ground currentGround : grounds) {
-			Rectangle newPosMob = new Rectangle(newPosX, newPosY,
-					mob.getWidth(), mob.getHeight());
+			Rectangle newPosMob = new Rectangle(newPosX, newPosY, mob.getWidth(), mob.getHeight());
 			Rectangle ground = currentGround.getBounds();
 			if (ground.intersects(newPosMob)) {
 				// currentGround.debugColor = Color.green;
@@ -100,15 +100,10 @@ public class Map {
 	public boolean detectWorkstationCollision(Mob m) {
 		if (m.getBounds().intersects(workstation.getActionZone())) {
 			mobToRemove.add(m);
-			GlobalVariables.life -= mobs.get(m.getIdentifier())
-					.getDamageValue();
+			GlobalVariables.life -= mobs.get(m.getIdentifier()).getDamageValue();
 
 			if (GlobalVariables.life == 0) {
-
-				// afficher game over
-				System.out.println("Game over");
-				GameOver gameover = new GameOver();
-
+				new GameOver();
 			}
 		}
 		return false;
@@ -325,6 +320,20 @@ public class Map {
 		if (mobs.size() == 0) {
 			nextWave();
 		}
+	}
+	
+	public void restoreBusy(){
+		for(Ground ground : grounds){
+            if(ground.getClass() == TowerZone.class){
+                for(Tower tower : towers){
+                    if(ground.getBounds().intersects(tower.getBounds())){
+                        tower.setLinkedTowerZone((TowerZone) ground);
+                        ((TowerZone) ground).setBusy(true);
+                        System.out.println(tower.getX() + " " + tower.getY());
+                    }
+                }
+            }
+        }
 	}
 
 	/*

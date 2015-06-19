@@ -5,11 +5,17 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.towerdefense.events.Stopwatch;
+import com.towerdefense.towerdefense.Map;
+import com.towerdefense.towerdefense.entities.Workstation;
+import com.towerdefense.towerdefense.entities.towers.Tower;
+import com.towerdefense.towerdefense.objects.Ground;
 
 public class PanelMenu extends JPanel implements ActionListener {
 
@@ -22,6 +28,23 @@ public class PanelMenu extends JPanel implements ActionListener {
 
 	public PanelMenu() {
 		initMenu();
+		
+		addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                if(Map.getSelectedMap() != null){
+                    for(Tower tower : Map.getSelectedMap().getTowers()){
+                        tower = null;
+                    }
+                    for(Ground ground : Map.getSelectedMap().getGrounds()){
+                         ground = null;
+                    }
+                }
+                if(Workstation.getWorkstation() != null){
+                    Workstation.setWorkstation(null);
+                }
+            }
+        });
 	}
 
 	@Override
@@ -29,7 +52,7 @@ public class PanelMenu extends JPanel implements ActionListener {
 		String action = e.getActionCommand();
 
 		if (action.equals("Play")) {
-			MapAsker mapAsker = new MapAsker();
+			new MapAsker();
 			Window.enableMenuItem();
 			this.repaint();
 			revalidate();
